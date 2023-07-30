@@ -7,19 +7,21 @@ async function createHosteliteTab() {
     await connection.query(`
         CREATE TABLE IF NOT EXISTS hostelites (
           H_id INT AUTO_INCREMENT PRIMARY KEY,
-          F_name VARCHAR(20) NOT NULL,
-          M_name VARCHAR(20),
-          L_name VARCHAR(20),
-          Email_id VARCHAR(40) UNIQUE NOT NULL,
+          f_name VARCHAR(20) NOT NULL,
+          m_name VARCHAR(20),
+          l_name VARCHAR(20),
+          email_id VARCHAR(40) UNIQUE NOT NULL,
+          phone_no BIGINT UNIQUE NOT NULL,
           gender ENUM('Male', 'Female', 'other') NOT NULL,
-          DOB DATE NOT NULL,
-          WORK VARCHAR(20),
-          Age INT ,
-          State VARCHAR(20),
+          dob DATE NOT NULL,
+          work VARCHAR(20),
+          age INT ,
+          state VARCHAR(20),
           city VARCHAR(20),
           street VARCHAR(20),
-          Pincode INT,
-          photo LONGBLOB
+          pincode INT,
+          photo LONGBLOB,
+          password VARCHAR(20)
          )
       `);
     console.log('Hostelites table created successfully');
@@ -28,25 +30,11 @@ async function createHosteliteTab() {
   }
 }
 
-async function createHContactsTab() {
-  try {
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS H_CONTACTS (
-        H_no INT PRIMARY KEY,
-        phone_no BIGINT UNIQUE NOT NULL
-      )
-    `);
-    console.log('H_CONTACTS table created successfully');
-  } catch (err) {
-    console.error('Error creating H_CONTACTS table:', err);
-  }
-}
 
 const createTables = async () => {
   try {
     console.log('Database connected');
     await createHosteliteTab();
-    await createHContactsTab();
   } catch (err) {
     console.error('Error creating tables:', err);
   }
