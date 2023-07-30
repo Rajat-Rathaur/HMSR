@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { addHostelite, getHostelite } = require("../Operations/HosteliteOperations");
+const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword } = require("../Operations/HosteliteOperations");
 const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
 const requireAuth = require("../Middlewares/reqAuth");
 
@@ -43,15 +43,45 @@ router.get('/getHostelite', requireAuth, async (req, res) => {
 
 router.put('/updateHostelite', requireAuth, async (req, res) => {
     const userId = req.id;
-    
+    const hosteliteData = req.body
+    try {
+        const updatedHostelite = await updateHostelite(userId, hosteliteData);
 
-
+        if (updatedHostelite.success) {
+            res.status(200).json(updatedHostelite);
+        }
+        else {
+            res.status(400).json({ error: updatedHostelite.error, success: false });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: "An internal server error occurred while updating the user details: " + error.message,
+            success: false,
+        });
+    }
 });
 
-router.get('/updatePassword', async (req, res) => {
+router.put('/updatePassword', requireAuth, async (req, res) => {
+    const userId = req.id;
+    const hosteliteData = req.body;
+    try {
+        const updatedHostelite = await updatedHostelitePassword(userId, hosteliteData);
+
+        if (updatedHostelite.success) {
+            res.status(200).json({ message: "Password updated successfully" });
+        }
+        else {
+            res.status(400).json({ error: updatedHostelite.error, success: false });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: "An internal server error occurred while updating the user details: " + error.message,
+            success: false,
+        });
+    }
 });
-
-
 
 
 //  ~ HOSTELITE UTILITIES
