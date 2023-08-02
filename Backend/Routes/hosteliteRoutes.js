@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword } = require("../Operations/HosteliteOperations");
-const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
 const requireAuth = require("../Middlewares/reqAuth");
+const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
+const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword } = require("../Operations/HosteliteOperations");
 
 router.use(express.json());
 
@@ -27,6 +27,7 @@ router.post("/addHostelite", addHosteliteValidations, async (req, res) => {
     }
 });
 
+
 router.get('/getHostelite', requireAuth, async (req, res) => {
     try {
         const userId = req.id;
@@ -40,6 +41,7 @@ router.get('/getHostelite', requireAuth, async (req, res) => {
         });
     }
 });
+
 
 router.put('/updateHostelite', requireAuth, async (req, res) => {
     const userId = req.id;
@@ -61,6 +63,7 @@ router.put('/updateHostelite', requireAuth, async (req, res) => {
         });
     }
 });
+
 
 router.put('/updatePassword', requireAuth, async (req, res) => {
     const userId = req.id;
