@@ -12,11 +12,13 @@ dotenv.config({ path: "config.env" });
 
 const hosteliteRoutes = require("./Routes/hosteliteRoutes");
 const loginRoutes = require("./Routes/loginRoutes");
+const branchRoutes = require("./Routes/branchRoutes");
 
 app.use(express.json());
 app.use(cors());
 app.use("/api/hostelite", hosteliteRoutes); // Use correct variable name
 app.use("/api/login", loginRoutes); // Use correct variable name
+app.use("/api/branch", branchRoutes); // Use correct variable name
 
 
 const connection = require('./Connections/connect.js');

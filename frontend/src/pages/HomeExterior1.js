@@ -120,7 +120,7 @@ const HomeExterior1 = () => {
               <span className={styles.tomiwaOyeleduDolapo}>Yenagoa</span>
             </div>
             <div className={styles.nameGroup}>
-              <h3 className={styles.name}>State</h3>
+              <h3 className={styles.name}>state</h3>
               <span className={styles.tomiwaOyeleduDolapo}>Bayelsa</span>
             </div>
             <div className={styles.nameGroup}>
