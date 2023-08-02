@@ -1,7 +1,5 @@
 const connection = require('../Connections/connect.js');
 
-
-
 async function createHosteliteTab() {
   try {
     await connection.query(`
@@ -29,7 +27,6 @@ async function createHosteliteTab() {
     console.error('Error creating hostelites table:', err);
   }
 }
-
 
 const createTables = async () => {
   try {

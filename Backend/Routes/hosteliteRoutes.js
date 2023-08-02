@@ -27,7 +27,6 @@ router.post("/addHostelite", addHosteliteValidations, async (req, res) => {
     }
 });
 
-
 router.get('/getHostelite', requireAuth, async (req, res) => {
     try {
         const userId = req.id;
@@ -41,7 +40,6 @@ router.get('/getHostelite', requireAuth, async (req, res) => {
         });
     }
 });
-
 
 router.put('/updateHostelite', requireAuth, async (req, res) => {
     const userId = req.id;
@@ -64,7 +62,6 @@ router.put('/updateHostelite', requireAuth, async (req, res) => {
     }
 });
 
-
 router.put('/updatePassword', requireAuth, async (req, res) => {
     const userId = req.id;
     const hosteliteData = req.body;
@@ -86,7 +83,6 @@ router.put('/updatePassword', requireAuth, async (req, res) => {
     }
 });
 
-
 //  ~ HOSTELITE UTILITIES
 router.get('/getPaymentDetails', async (req, res) => {
 });
@@ -94,6 +90,5 @@ router.get('/addRequest', async (req, res) => {
 });
 router.get('/getHostelite', async (req, res) => {
 });
-
 
 module.exports = router;

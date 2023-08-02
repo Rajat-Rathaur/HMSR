@@ -101,7 +101,6 @@ async function updateHostelite(h_id, hosteliteData) {
     }
 }
 
-
 async function updatedHostelitePassword(h_id, hosteliteData) {
     try {
         // ! CHECK 1: CHECK IF THE OLD PASSWORD MATCHES BEFORE UPDATING
@@ -129,9 +128,6 @@ async function updatedHostelitePassword(h_id, hosteliteData) {
         return { error: "An error occurred while updating hostelite Password.", success: false };
     }
 }
-
-
-
 
 module.exports = { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword };
 
