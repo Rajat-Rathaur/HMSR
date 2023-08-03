@@ -2,30 +2,30 @@ const express = require("express");
 const router = express.Router();
 
 const requireAuth = require("../Middlewares/reqAuth");
-const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
+const addHosteliteValidations = require("../Validations/admissionDataValidations/addHosteliteValidations");
 const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword } = require("../Operations/HosteliteOperations");
 
 router.use(express.json());
 
-router.post("/addHostelite", addHosteliteValidations, async (req, res) => {
-    try {
-        const hosteliteData = req.body;
-        const result = await addHostelite(hosteliteData);
-        const error = result.error;
+// router.post("/addHostelite", addHosteliteValidations, async (req, res) => {
+//     try {
+//         const hosteliteData = req.body;
+//         const result = await addHostelite(hosteliteData);
+//         const error = result.error;
 
-        if (result.success) {
-            return res.status(200).json({ message: "Hostelite added successfully!", newHosteliteId: result.insertedId, success: true });
-        } else {
-            return res.status(409).json({ error, success: false });
-        }
+//         if (result.success) {
+//             return res.status(200).json({ message: "Hostelite added successfully!", newHosteliteId: result.insertedId, success: true });
+//         } else {
+//             return res.status(409).json({ error, success: false });
+//         }
 
-    } catch (error) {
-        res.status(500).json({
-            error: "An internal server error occurred while adding the user: " + error.message,
-            success: false,
-        });
-    }
-});
+//     } catch (error) {
+//         res.status(500).json({
+//             error: "An internal server error occurred while adding the user: " + error.message,
+//             success: false,
+//         });
+//     }
+// });
 
 router.get('/getHostelite', requireAuth, async (req, res) => {
     try {

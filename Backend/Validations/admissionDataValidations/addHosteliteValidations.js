@@ -2,7 +2,7 @@ const validator = require("validator");
 
 const addHosteliteValidations = async (req, res, next) => {
     try {
-        const { f_name, gender, email_id, dob, work, age, state, city, street, pincode, phone_no } = req.body;
+        const { f_name, gender, email_id, dob, work, age, state, city, street, pincode, phone_no } = req.body.hosteliteData;
         const dobDate = new Date(dob);
 
         if (!f_name || !gender || !dob || !age || !state || !city || !street || !pincode || !work || !phone_no) {
@@ -24,6 +24,7 @@ const addHosteliteValidations = async (req, res, next) => {
         else if (!Number.isInteger(age) || age <= 0) {
             return res.status(400).json({ error: "Invalid age value. age must be a positive integer.", success: false });
         }
+        
         else if (!Number.isInteger(pincode) || pincode < 100000 || pincode > 999999) {
             return res.status(400).json({ error: "Invalid pincode. pincode must be a 6-digit integer.", success: false });
         }

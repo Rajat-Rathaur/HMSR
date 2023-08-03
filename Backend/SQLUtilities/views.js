@@ -36,7 +36,6 @@ async function displayRoomsFreeBeds() {
 }
 
 
-
 const createViews = async () => {
     try {
         console.log('Database connected');

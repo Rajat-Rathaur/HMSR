@@ -57,7 +57,7 @@ async function createBelongsToTab() {
         branchNo INT,
         roomNo INT,
         bedNo INT,
-        dateOfJoin TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        dateOfJoin DATE,
         dateOfExit DATE,
         dateOfLeave DATE
       )
@@ -73,9 +73,9 @@ async function createRoomsTab() {
     await connection.query(`
           CREATE TABLE IF NOT EXISTS rooms (
               roomNo INT NOT NULL,
+              branchNo INT NOT NULL, 
               roomType ENUM('S', 'D') NOT NULL,
-              roomStatus ENUM('Occupied', 'Partially Occupied', 'Empty') NOT NULL
-              
+              roomStatus ENUM('Occupied', 'Partially Occupied', 'Empty') NOT NULL Default 'Empty'  
           )
       `);
     console.log('Rooms table created successfully');
