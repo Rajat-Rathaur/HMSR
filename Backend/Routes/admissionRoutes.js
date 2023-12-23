@@ -31,6 +31,4 @@ router.post("/addNewAdmission", addHosteliteValidations, admissionDataValidation
     }
 });
 
-
-
 module.exports = router;

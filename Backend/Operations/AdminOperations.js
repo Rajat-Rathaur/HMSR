@@ -1,5 +1,3 @@
-
-
 // UPdateWage of Employeee
 // check students fees
 // give student notice
@@ -29,7 +27,6 @@ async function addRoom(roomNo, roomType, branchNo) {
         return { error: `Error adding room data: ${err}`, success: false };
     }
 }
-
 
 
 module.exports = { addRoom }

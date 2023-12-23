@@ -5,7 +5,7 @@ const { addRoom } = require("../Operations/AdminOperations");
 
 router.use(express.json());
 
-// ~ LATER WILL ADD REQADMIN, AD ROOM VALIDATION
+// ~ LATER WILL ADD REQ ADMIN, ADD ROOM VALIDATION
 
 router.post('/addRoom', async (req, res) => {
     try {
@@ -22,6 +22,5 @@ router.post('/addRoom', async (req, res) => {
         res.status(500).json({ error: "An internal server error occurred while adding the room.", success: false });
     }
 });
-
 
 module.exports = router;
