@@ -2,7 +2,7 @@ const connection = require('../Connections/connect.js');
 
 async function createHosteliteTab() {
   try {
-    await connection.query(`
+    const [result] = await connection.query(`
         CREATE TABLE IF NOT EXISTS hostelites (
           H_id INT AUTO_INCREMENT PRIMARY KEY,
           f_name VARCHAR(20) NOT NULL,
@@ -22,7 +22,12 @@ async function createHosteliteTab() {
           password VARCHAR(20)
          )
       `);
-    console.log('Hostelites table created successfully');
+
+    if (result.warningStatus === 0) {
+      console.log('Hostelites table created successfully');
+    } else {
+      console.log('Hostelites table already exists');
+    }
   } catch (err) {
     console.error('Error creating hostelites table:', err);
   }
@@ -30,7 +35,7 @@ async function createHosteliteTab() {
 
 async function createBranchTab() {
   try {
-    await connection.query(`
+    const [result] = await connection.query(`
           CREATE TABLE IF NOT EXISTS branch (
               b_id INT AUTO_INCREMENT PRIMARY KEY,
               b_name VARCHAR(20) NOT NULL,
@@ -43,7 +48,11 @@ async function createBranchTab() {
               phone_no BIGINT UNIQUE NOT NULL
           )
       `);
-    console.log('Branch table created successfully');
+    if (result.warningStatus === 0) {
+      console.log('Branch table created successfully');
+    } else {
+      console.log('Branch table already exists');
+    }
   } catch (err) {
     console.error('Error creating branch table:', err);
   }
@@ -51,7 +60,7 @@ async function createBranchTab() {
 
 async function createBelongsToTab() {
   try {
-    await connection.query(`
+    const [result] = await connection.query(`
       CREATE TABLE IF NOT EXISTS belongs_to (
         hId INT,
         branchNo INT,
@@ -62,7 +71,13 @@ async function createBelongsToTab() {
         dateOfLeave DATE
       )
     `);
-    console.log('belongs_to table created successfully');
+
+    if (result.warningStatus === 0) {
+      console.log('belongs_to table created successfully');
+    } else {
+      console.log('belongs_to table already exists');
+    }
+    
   } catch (err) {
     console.error('Error creating belongs_to table:', err);
   }
@@ -70,7 +85,7 @@ async function createBelongsToTab() {
 
 async function createRoomsTab() {
   try {
-    await connection.query(`
+    const [result] = await connection.query(`
           CREATE TABLE IF NOT EXISTS rooms (
               roomNo INT NOT NULL,
               branchNo INT NOT NULL, 
@@ -78,7 +93,12 @@ async function createRoomsTab() {
               roomStatus ENUM('Occupied', 'Partially Occupied', 'Empty') NOT NULL Default 'Empty'  
           )
       `);
-    console.log('Rooms table created successfully');
+      if (result.warningStatus === 0) {
+        console.log('Rooms table created successfully');
+      } else {
+        console.log('Rooms table already exists');
+      }
+      
   } catch (err) {
     console.error('Error creating rooms table:', err);
   }

@@ -1,33 +1,8 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import NavBar from "../../components/NavBar";
 import styles from "./HomeExterior1.module.css";
 const HomeExterior1 = () => {
-  const navigate = useNavigate();
-
-  const onNotificationsClick = useCallback(() => {
-    navigate("/notifications");
-  }, [navigate]);
-
-  const onAttendanceClick = useCallback(() => {
-    navigate("/attendance");
-  }, [navigate]);
-
-  const onPaymentsClick = useCallback(() => {
-    navigate("/payments");
-  }, [navigate]);
-
-  const onRequestsClick = useCallback(() => {
-    navigate("/request");
-  }, [navigate]);
-
-  const onServicesClick = useCallback(() => {
-    navigate("/services");
-  }, [navigate]);
-
-  const onUpdateClick = useCallback(() => {
-    navigate("/update");
-  }, [navigate]);
+ 
 
   return (
     <div className={styles.homeexterior}>
@@ -181,13 +156,7 @@ const HomeExterior1 = () => {
         <h2 className={styles.heading}>Personal Details</h2>
       </div>
       <NavBar
-        onNotificationsClick={onNotificationsClick}
-        onAttendanceClick={onAttendanceClick}
-        onPaymentsClick={onPaymentsClick}
-        onRequestsClick={onRequestsClick}
-        onServicesClick={onServicesClick}
-        onUpdateClick={onUpdateClick}
-        navBarHeight="850px"
+ 
       />
     </div>
   );

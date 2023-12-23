@@ -25,11 +25,11 @@ const adminRoutes = require("./Routes/adminRoutes");
 
 app.use(express.json());
 app.use(cors());
-app.use("/api/hostelite", hosteliteRoutes); // Use correct variable name
-app.use("/api/login", loginRoutes); // Use correct variable name
-app.use("/api/branch", branchRoutes); // Use correct variable name
-app.use("/api/admission", admissionRoutes); // Use correct variable name
-app.use("/api/admin", adminRoutes); // Use correct variable name
+app.use("/api/hostelite", hosteliteRoutes); 
+app.use("/api/login", loginRoutes); 
+app.use("/api/branch", branchRoutes); 
+app.use("/api/admission", admissionRoutes); 
+app.use("/api/admin", adminRoutes); 
 
 
 // const connection = require('./Connections/connect.js');

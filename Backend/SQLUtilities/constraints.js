@@ -32,7 +32,7 @@ async function belongsToConstraints() {
 
 const createConstraints = async () => {
     try {
-        await belongsToConstraints();
+        // await belongsToConstraints();
 
     } catch (err) {
         console.error('Error creating tables:', err);

@@ -14,22 +14,24 @@ const createToken = (_id) => {
 router.post("/", loginValidations, async (req, res) => {
     try {
         const hosteliteData = req.body;
+
         if (hosteliteData.h_id.startsWith('H')) {
             hosteliteData.h_id = hosteliteData.h_id.substring(1);
+
             const result = await getHostelite(hosteliteData.h_id);
-            if (!result.success) {
-                res.status(404).json({ error: "Incorrect H_id or password", success: false });
-            } else if (!(await bcrypt.compare(hosteliteData.password, result.hostelite.password))) {
-                res.status(404).json({ error: "Incorrect email or password", success: false });
-            } else {
+            if (!result.success)
+                res.status(401).json({ error: "ID Not found", success: false });
+            else if ((await bcrypt.compare(hosteliteData.password, result.hostelite.password)))
+                res.status(401).json({ error: "Incorrect ID or password", success: false });
+
+            else {
                 const token = createToken(result.hostelite.H_id);
-                res.status(200).json({ token, success: true });
+                res.status(200).json({ token, success: true, h_id: hosteliteData.h_id });
             }
 
         } else if (hosteliteData.h_id.startsWith('E')) {
             hosteliteData.h_id = hosteliteData.h_id.substring(1);
             return res.status(500).json({ error: "EMPLOYEE WORK IN PROGRESS", success: false });
-
         }
         else {
             return res.status(400).json({ error: "Invalid ID Type", success: false });

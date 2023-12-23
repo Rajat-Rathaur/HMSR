@@ -1,19 +1,18 @@
 import {
   Routes,
   Route,
+  useNavigationType,
   useLocation,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import HomeExterior1 from "./pages/user/home";
+import HomeExterior1 from "./pages/user/HomeExterior1";
 import RequestExterior from "./pages/RequestExterior";
 import PaymentsExterior from "./pages/PaymentsExterior";
 import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
 import ServicesExterior from "./pages/ServicesExterior";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
-import { useEffect, useState } from "react";
-
-import { Snackbar, Alert } from '@mui/material';
+import { useEffect } from "react";
 
 function App() {
   // const action = useNavigationType();
@@ -79,44 +78,17 @@ function App() {
     }
   }, [pathname]);
 
-
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarType, setSnackbarType] = useState('');
-
-  const handleSnackbarClose = () => {
-    setIsSnackbarOpen(false);
-  };
-
-  const handleSnackbarOpen = (message, type = 'info') => {
-    setSnackbarMessage(message)
-    setIsSnackbarOpen(true);
-    setSnackbarType(type)
-  }
-
   return (
-
-    <>
-      <Snackbar
-        open={isSnackbarOpen}
-        autoHideDuration={5000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarType} sx={{ width: '100%' }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-      <Routes>
-        <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
-        <Route path="/home" element={<HomeExterior1 />} />
-      </Routes>
-    </>
-    // <Route path="/notifications" element={<NotificationsExterior />} />
-    // <Route path="/payments" element={<PaymentsExterior />} />
-    // <Route path="/services" element={<ServicesExterior />} />
-    // <Route path="/request" element={<RequestExterior />} />
-    // <Route path="/update" element={<EditDetailsExterior />} />
-    // <Route path="/attendance" element={<AttendanceExterior />} />
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={<HomeExterior1 />} />
+      <Route path="/request" element={<RequestExterior />} />
+      <Route path="/payments" element={<PaymentsExterior />} />
+      <Route path="/attendance" element={<AttendanceExterior />} />
+      <Route path="/notifications" element={<NotificationsExterior />} />
+      <Route path="/services" element={<ServicesExterior />} />
+      <Route path="/update" element={<EditDetailsExterior />} />
+    </Routes>
   );
 }
 export default App;
