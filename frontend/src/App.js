@@ -14,6 +14,7 @@ import EditDetailsExterior from "./pages/EditDetailsExterior";
 import { useEffect, useState } from "react";
 
 import { Snackbar, Alert } from '@mui/material';
+import NavBar from "./components/NavBar";
 
 function App() {
   // const action = useNavigationType();
@@ -94,22 +95,43 @@ function App() {
     setSnackbarType(type)
   }
 
+  const [loggedIn, setLoggedIn] = useState(false)
+  useEffect(() => {
+    if (sessionStorage.getItem('token'))
+      setLoggedIn(true)
+    else
+      setLoggedIn(false);
+
+    if (pathname === '/')
+      sessionStorage.clear();
+    console.log("object");
+  }, [sessionStorage.getItem('token'), pathname])
+
   return (
 
     <>
       <Snackbar
         open={isSnackbarOpen}
         autoHideDuration={5000}
-        onClose={handleSnackbarClose}
+      // onClose={handleSnackbarClose}
       >
         <Alert onClose={handleSnackbarClose} severity={snackbarType} sx={{ width: '100%' }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
-      <Routes>
-        <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
-        <Route path="/home" element={<HomeExterior1 />} />
-      </Routes>
+      <div className="flex">
+        <div className="w-[320px] ">
+          {loggedIn &&
+            <NavBar />
+          }
+        </div>
+        <div className="w-full">
+          <Routes>
+            <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
+            <Route path="/home" element={<HomeExterior1 />} />
+          </Routes>
+        </div>
+      </div>
     </>
     // <Route path="/notifications" element={<NotificationsExterior />} />
     // <Route path="/payments" element={<PaymentsExterior />} />

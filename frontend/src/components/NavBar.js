@@ -1,123 +1,102 @@
-import { useMemo, useEffect, useCallback } from "react";
-import styles from "./NavBar.module.css";
+import { useMemo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import PaymentIcon from '@mui/icons-material/Payment';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import HomeIcon from '@mui/icons-material/Home';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import NavButton from "../mui/NavButton";
+import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const navBarHeight = "850px";
   const navigate = useNavigate();
-
-  const onNotificationsClick = useCallback(() => {
-    navigate("/notifications");
-  }, [navigate]);
-
-  const onAttendanceClick = useCallback(() => {
-    navigate("/attendance");
-  }, [navigate]);
-
-  const onPaymentsClick = useCallback(() => {
-    navigate("/payments");
-  }, [navigate]);
-
-  const onRequestsClick = useCallback(() => {
-    navigate("/request");
-  }, [navigate]);
-
-  const onServicesClick = useCallback(() => {
-    navigate("/services");
-  }, [navigate]);
-
-  const onUpdateClick = useCallback(() => {
-    navigate("/update");
-  }, [navigate]);
-
-  const navBarStyle = useMemo(() => {
-    return {
-      height: navBarHeight,
-    };
-  }, [navBarHeight]);
+  const [currentPage, setCurrentPage] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
-    const scrollAnimElements = document.querySelectorAll(
-      "[data-animate-on-scroll]"
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting || entry.intersectionRatio > 0) {
-            const targetElement = entry.target;
-            targetElement.classList.add(styles.animate);
-            observer.unobserve(targetElement);
-          }
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
+    setCurrentPage(location.pathname);
+    console.log(location.pathname);
+  }, [location.pathname]);
 
-    for (let i = 0; i < scrollAnimElements.length; i++) {
-      observer.observe(scrollAnimElements[i]);
-    }
+  // useEffect(() => {
+  //   const scrollAnimElements = document.querySelectorAll(
+  //     "[data-animate-on-scroll]"
+  //   );
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       for (const entry of entries) {
+  //         if (entry.isIntersecting || entry.intersectionRatio > 0) {
+  //           const targetElement = entry.target;
+  //           targetElement.classList.add(styles.animate);
+  //           observer.unobserve(targetElement);
+  //         }
+  //       }
+  //     },
+  //     {
+  //       threshold: 0.15,
+  //     }
+  //   );
 
-    return () => {
-      for (let i = 0; i < scrollAnimElements.length; i++) {
-        observer.unobserve(scrollAnimElements[i]);
-      }
-    };
-  }, []);
+  //   for (let i = 0; i < scrollAnimElements.length; i++) {
+  //     observer.observe(scrollAnimElements[i]);
+  //   }
+
+  //   return () => {
+  //     for (let i = 0; i < scrollAnimElements.length; i++) {
+  //       observer.unobserve(scrollAnimElements[i]);
+  //     }
+  //   };
+  // }, []);
 
   return (
     <>
-      <div className="flex w-96">
-        fsd
-      {/* </div> */}
+      <div className="relative flex w-80 bg-stone-100 h-full">
+        <div className="relative flex-col flex w-full p-5 space-y-5">
+          <div>
+            <div className="flex flex-row w-full items-center justify-center mb-5">
 
-      {/* <div className={styles.navbar} style={navBarStyle}> */}
-        <button className={styles.logout}>
-          <img className={styles.vectorIcon} alt="" src="/vector.svg" />
-          <a className={styles.logout1}>Logout</a>
-          <div className={styles.logoutChild} />
-        </button>
-        <button className={styles.notifications} onClick={onNotificationsClick}>
-          <img className={styles.vectorIcon1} alt="" src="/vector1.svg" />
-          <a className={styles.notifications1}>Notifications</a>
-        </button>
-        <img className={styles.navlineIcon} alt="" src="/line-2-1.svg" />
-        <button className={styles.attendance} onClick={onAttendanceClick}>
-          <img className={styles.vectorIcon2} alt="" src="/vector2.svg" />
-          <a className={styles.attendance1}>Attendance</a>
-        </button>
-        <button className={styles.payments} onClick={onPaymentsClick}>
-          <img className={styles.vectorIcon3} alt="" src="/vector3.svg" />
-          <a className={styles.payments1}>Payments</a>
-        </button>
-        <button className={styles.requests} onClick={onRequestsClick}>
-          <a className={styles.requests1}>Requests</a>
-          <img className={styles.iconMsg} alt="" src="/iconmsg.svg" />
-        </button>
-        <button className={styles.services} onClick={onServicesClick}>
-          <img className={styles.iconTasks} alt="" src="/icontasks.svg" />
-          <a className={styles.services1}>Services</a>
-        </button>
-        <button className={styles.update} onClick={onUpdateClick}>
-          <a className={styles.updateDetails}>Update Details</a>
-          <img className={styles.iconSetting} alt="" src="/iconsetting.svg" />
-        </button>
-        <button className={styles.home}>
-          <img className={styles.vectorIcon4} alt="" src="/vector4.svg" />
-          <div className={styles.homeChild} />
-          <a className={styles.home1}>Home</a>
-          <img className={styles.iconHome} alt="" src="/iconhome.svg" />
-        </button>
-        <img
-          className={styles.navphotoIcon}
-          alt=""
-          src="/ellipse-1.svg"
-          data-animate-on-scroll
-        />
-        <b className={styles.navemailid}>Anna George</b>
-        <span className={styles.navname}>HN-512</span>
-      </div>
+              <img
+                className="rounded w-14 h-14"
+                alt=""
+                src="/ellipse-1.svg"
+              // data-animate-on-scroll
+              />
+              <div className="flex flex-col px-4 w-full">
+                <h3 className="flex w-full text-gray-850 font-medium text-lg">Anna George</h3>
+                <p className="text-slate-400 font-medium text-sm">
+                  HN-512
+                </p>
+              </div>
+              <VerifiedIcon className="text-green-700" />
+            </div>
+            <div className="flex-none bg-gray-300 h-[1.5px] " />
+          </div>
+
+          <NavButton icon={<HomeIcon />} name={'Home'} active={currentPage === '/home'} location={'/home'} />
+          <NavButton icon={<ManageAccountsIcon />} name={'Update Details'} active={currentPage === '/updateDetails'} location={'/updateDetails'} />
+          <NavButton icon={<AddBusinessIcon />} name={'Services'} active={currentPage === '/services'} location={'/services'} />
+          <NavButton icon={<NotificationsIcon />} name={'Notification'} active={currentPage === '/notification'} location={'/notification'} />
+          <NavButton icon={<FeedbackIcon />} name={'Requests'} active={currentPage === '/requests'} location={'/requests'} />
+          <NavButton icon={<PaymentIcon />} name={'Payments'} active={currentPage === '/payments'} location={'/payments'} />
+          <NavButton icon={<DateRangeIcon />} name={'Attendance'} active={currentPage === '/attendance'} location={'/attendance'} />
+          <NavButton icon={<NotificationsIcon />} name={'Notification'} active={currentPage === '/notifications'} location={'/notifications'} />
+
+          <div className="bg-gray-300 h-[1.5px] " />
+
+          <div className="flex items-center justify-center py-10">
+            <Button color="error" fullWidth size="large" sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }} endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}>Logout</Button>
+          </div>
+
+        </div>
+
+
+      </div >
     </>
   );
 };
