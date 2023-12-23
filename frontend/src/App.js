@@ -2,6 +2,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
 import HomeExterior1 from "./pages/user/home";
@@ -11,7 +12,7 @@ import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
 import ServicesExterior from "./pages/ServicesExterior";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import { Snackbar, Alert } from '@mui/material';
 import NavBar from "./components/NavBar";
@@ -19,6 +20,7 @@ import NavBar from "./components/NavBar";
 function App() {
   // const action = useNavigationType();
   const location = useLocation();
+  const navigate = useNavigate();
   const pathname = location.pathname;
 
   // useEffect(() => {
@@ -96,7 +98,7 @@ function App() {
   }
 
   const [loggedIn, setLoggedIn] = useState(false)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (sessionStorage.getItem('token'))
       setLoggedIn(true)
     else
@@ -104,8 +106,15 @@ function App() {
 
     if (pathname === '/')
       sessionStorage.clear();
-    console.log("object");
+
+
   }, [sessionStorage.getItem('token'), pathname])
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('token'))
+      navigate('/')
+
+  }, [sessionStorage.getItem('token')])
 
   return (
 
@@ -119,13 +128,13 @@ function App() {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-      <div className="flex">
-        <div className="w-[320px] ">
-          {loggedIn &&
+      <div className="flex relative">
+        {loggedIn &&
+          <div className="w-[320px] ">
             <NavBar />
-          }
-        </div>
-        <div className="w-full">
+          </div>
+        }
+        <div className="w-full relative">
           <Routes>
             <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
             <Route path="/home" element={<HomeExterior1 />} />
