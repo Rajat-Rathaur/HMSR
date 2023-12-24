@@ -49,12 +49,12 @@ const Home = () => {
         
         <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Welcome back to Dask !!</span>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3  gap-y-5 w-full">
-          <section className="">
+        <div className="grid  grid-cols-1 xs:grid-cols-2 lg:grid-cols-3  gap-y-5 w-full">
+          <section className="bg-black">
             <img
-              className="h-64"
+              className="h-40"
               alt=""
-              src="/rectangle-111.svg"
+              // src="/rectangle-111.svg"
             />
           </section>
 
