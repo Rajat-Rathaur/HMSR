@@ -56,10 +56,7 @@ CREATE TABLE `branch` (
   `E_NO` int DEFAULT NULL,
   `E_status` varchar(20) DEFAULT NULL,
   `A_DATE` date DEFAULT NULL
-) CREATE TABLE `e_contacts` (
-  `E_no` int NOT NULL,
-  `phone_no` bigint NOT NULL
-) CREATE TABLE `e_dependents` (
+)  CREATE TABLE `e_dependents` (
   `E_no` int NOT NULL,
   `F_name` varchar(20) NOT NULL,
   `M_name` varchar(20) DEFAULT NULL,
@@ -70,7 +67,8 @@ CREATE TABLE `branch` (
   `city` varchar(20) NOT NULL,
   `street` varchar(20) DEFAULT NULL,
   `pincode` int NOT NULL
-) CREATE TABLE `hostelites` (
+) 
+CREATE TABLE `hostelites` (
   `H_id` int NOT NULL,
   `F_name` varchar(20) NOT NULL,
   `M_name` varchar(20) DEFAULT NULL,
@@ -91,10 +89,6 @@ CREATE TABLE `h_attendance` (
   `H_NO` int DEFAULT NULL,
   `A_status` enum('MARKED', 'UNMARKED') DEFAULT NULL,
   `A_DATE` date DEFAULT NULL
-);
-CREATE TABLE `h_contacts` (
-  `H_no` int NOT NULL,
-  `phone_no` bigint NOT NULL
 );
 CREATE TABLE `h_dependents` (
   `H_no` int NOT NULL,

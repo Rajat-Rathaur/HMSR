@@ -29,7 +29,7 @@ const TopNavBar = () => {
         navigate('/updateDetails')
     }
     return (
-        <div className='flex relative justify-between bg-slate-100 w-full h-14 px-5 shadow-sm sticky z-50'>
+        <div className='flex justify-between bg-slate-100 w-full h-14 px-5 shadow-sm sticky z-50'>
             <div className="items-center justify-center flex">
                 <img src="icons/logo.svg" alt="" className='h-16 w-16' />
             </div>

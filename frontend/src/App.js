@@ -5,12 +5,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import HomeExterior1 from "./pages/user/Home";
+import Home from "./pages/user/Home";
+import Services from "./pages/user/Services";
 import RequestExterior from "./pages/RequestExterior";
 import PaymentsExterior from "./pages/PaymentsExterior";
 import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
-import ServicesExterior from "./pages/ServicesExterior";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
 import { useEffect, useLayoutEffect, useState } from "react";
 
@@ -142,19 +142,19 @@ function App() {
             <TopNavBar />
             <Routes>
               <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
-              <Route path="/home" element={<HomeExterior1 />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/updateDetails" element={<EditDetailsExterior />} />
+              <Route path="/requests" element={<RequestExterior />} />
+              <Route path="/notifications" element={<NotificationsExterior />} />
+              <Route path="/payments" element={<PaymentsExterior />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/attendance" element={<AttendanceExterior />} />
             </Routes>
           </div>
         </div >
       </RecoilRoot>
 
     </>
-    // <Route path="/notifications" element={<NotificationsExterior />} />
-    // <Route path="/payments" element={<PaymentsExterior />} />
-    // <Route path="/services" element={<ServicesExterior />} />
-    // <Route path="/request" element={<RequestExterior />} />
-    // <Route path="/attendance" element={<AttendanceExterior />} />
   );
 }
 export default App;

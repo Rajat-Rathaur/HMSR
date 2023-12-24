@@ -62,7 +62,7 @@ async function createBelongsToTab() {
   try {
     const [result] = await connection.query(`
       CREATE TABLE IF NOT EXISTS belongs_to (
-        hId INT,
+        hNo INT,
         branchNo INT,
         roomNo INT,
         bedNo INT,
@@ -103,7 +103,6 @@ async function createRoomsTab() {
     console.error('Error creating rooms table:', err);
   }
 }
-
 
 const createTables = async () => {
   try {

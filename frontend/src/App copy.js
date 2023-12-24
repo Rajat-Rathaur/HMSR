@@ -10,7 +10,7 @@ import RequestExterior from "./pages/RequestExterior";
 import PaymentsExterior from "./pages/PaymentsExterior";
 import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
-import ServicesExterior from "./pages/ServicesExterior";
+import ServicesExterior from "./pages/user/Services";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
 import { useEffect } from "react";
 
