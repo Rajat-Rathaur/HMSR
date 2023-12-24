@@ -1,6 +1,5 @@
-import { useMemo, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from '@mui/material';
+import { useEffect, useState } from "react";
+import { Button, IconButton } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -12,6 +11,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NavButton from "../mui/NavButton";
 import { useLocation } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const NavBar = () => {
   const [currentPage, setCurrentPage] = useState('');
@@ -54,7 +54,12 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="relative flex w-64 xl:w-80 bg-stone-100 h-full">
+     <div className="sm:hidden fixed top-10 right-0 z-50">
+      <IconButton>
+        <MenuIcon />
+      </IconButton>
+    </div>
+      <div className="relative hidden sm:flex mb:w-20 md:w-64 xl:w-80 bg-stone-100 h-full">
         <div className="relative flex-col flex w-full p-5 space-y-5">
           <div>
             <div className="flex flex-row w-full justify-center mb-5">
@@ -64,9 +69,9 @@ const NavBar = () => {
                 src="/ellipse-1.svg"
               // data-animate-on-scroll
               />
-              <div className="flex flex-col px-1 xl:px-4 w-full">
+              <div className=" hidden md:flex flex-col md:px-1 xl:px-4 w-full">
                 <h3 className="flex w-full text-gray-850 font-medium text-lg">Anna George</h3>
-                <p className="text-slate-400 font-medium text-sm ">
+                <p className="flex text-slate-400 font-medium text-sm ">
                   HN-512
                 </p>
               </div>
@@ -88,10 +93,14 @@ const NavBar = () => {
 
           <div className="bg-gray-300 h-[1.5px] " />
 
-          <div className="flex items-center justify-center py-10">
+          <div className="hidden md:flex items-center justify-center py-10">
             <Button color="error" fullWidth size="large" sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }} endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}>Logout</Button>
           </div>
-
+          <div className="flex md:hidden items-center justify-center py-10">
+            <IconButton>
+              <ExitToAppIcon color="error" />
+            </IconButton>
+          </div>
         </div>
 
 

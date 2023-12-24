@@ -29,8 +29,8 @@ const Home = () => {
       <div className=" m-8 w-full" >
         <div className="flex justify-between">
           <div className="hd-p">DashBoard</div>
-          <div className="text-gray-600 text-xl font-[Gudea]">
-            <IconButton className="mr-3" color="inherit">
+          <div className="text-gray-600 text-xl font-[Gudea] hidden sm:flex sm:justify-center items-center">
+            <IconButton className="mr-3 " color="inherit">
               <SearchIcon className='text-blue-700' />
             </IconButton>
 
@@ -45,12 +45,12 @@ const Home = () => {
             {formattedDate} {' '}
             <span className="text-xs">{formattedTime}</span>
           </div>
-        </div>
-        <span className="text-sm font-medium leading-4 px-1 text-zinc-400">Welcome back to Dask !!</span>
+        </div>  
+        
+        <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Welcome back to Dask !!</span>
 
-        <div className="grid grid-cols-3 gap-y-5 w-full">
-
-          <section className="row-start-1 col-span-1">
+        <div className="grid grid-cols-2 lg:grid-cols-3  gap-y-5 w-full">
+          <section className="">
             <img
               className="h-64"
               alt=""
@@ -58,7 +58,7 @@ const Home = () => {
             />
           </section>
 
-          <section className="row-start-1 col-start-2 flex flex-col justify-around items-baseline">
+          <section className="flex flex-col justify-around items-baseline">
             <h2 className="hd-s">Personal Details</h2>
 
             <div>
@@ -90,7 +90,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section className="row-start-1 col-start-3 flex flex-col justify-around items-baseline gap-3">
+          <section className="lg:row-start-1 lg:col-start-3 xs:row-start-3 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Dask Info</h4>
             <div >
               <h3 className="lb-p">Branch</h3>
@@ -121,7 +121,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section className="row-start-2 col-start-1 flex flex-col justify-around items-baseline gap-3">
+          <section className="lg:row-start-2 lg:col-start-1 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Address Details</h4>
             <div >
               <h3 className="lb-p">Address Line</h3>
@@ -160,7 +160,7 @@ const Home = () => {
 
           </section>
 
-          <section className="row-start-2 col-start-2 flex flex-col justify-around items-baseline gap-3">
+          <section className="lg:row-start-2 lg:col-start-2 xs:row-start-2 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Contact Details</h4>
             <div >
               <h3 className="lb-p">Contact No</h3>
@@ -200,7 +200,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section className="row-start-2 col-start-3 flex flex-col justify-around items-baseline gap-3">
+          <section className="lg:row-start-2 lg:col-start-3 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Additional Details</h4>
             <div >
               <h3 className="lb-p">Date Of Join</h3>
@@ -216,8 +216,6 @@ const Home = () => {
               </span>
             </div>
 
-            <h4 className="hd-s mt-5">Guardian Details</h4>
-
             <div>
               <h3 className="lb-p">Total rent</h3>
               <span className="text-p">
@@ -232,7 +230,6 @@ const Home = () => {
               </span>
             </div>
           </section>
-
         </div>
 
 
