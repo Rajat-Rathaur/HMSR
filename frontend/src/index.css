@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Gudea:wght@700&family=Raleway:wght@100;400&family=Rubik:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .hd-p {
+        @apply text-gray-800 font-bold text-5xl font-[Gudea];
+    }
+
+    .hd-s {
+        @apply text-blue-500 font-semibold text-2xl;
+    }
+
+    .lb-p {
+        @apply font-semibold text-gray-400;
+    }
+
+    .text-p {
+        @apply text-gray-900 font-medium;
+    }
+}

@@ -302,15 +302,6 @@ const EditDetailsExterior = () => {
             <h5 className={styles.guardianDetails}>Personal Details</h5>
           </div>
         </div>
-        <NavBar
-          onNotificationsClick={onNotificationsClick}
-          onAttendanceClick={onAttendanceClick}
-          onPaymentsClick={onPaymentsClick}
-          onRequestsClick={onRequestsClick}
-          onServicesClick={onServicesClick}
-          onUpdateClick={onUpdateClick}
-          navBarHeight="850px"
-        />
       </div>
       {isEditDetailsPopupOpen && (
         <PortalPopup

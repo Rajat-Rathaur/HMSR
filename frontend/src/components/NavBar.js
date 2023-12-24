@@ -14,8 +14,6 @@ import NavButton from "../mui/NavButton";
 import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
-  const navBarHeight = "850px";
-  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState('');
   const location = useLocation();
 
@@ -56,24 +54,25 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="relative flex w-80 bg-stone-100 h-full">
+      <div className="relative flex w-64 xl:w-80 bg-stone-100 h-full">
         <div className="relative flex-col flex w-full p-5 space-y-5">
           <div>
-            <div className="flex flex-row w-full items-center justify-center mb-5">
-
+            <div className="flex flex-row w-full justify-center mb-5">
               <img
-                className="rounded w-14 h-14"
+                className=" w-14 h-14"
                 alt=""
                 src="/ellipse-1.svg"
               // data-animate-on-scroll
               />
-              <div className="flex flex-col px-4 w-full">
+              <div className="flex flex-col px-1 xl:px-4 w-full">
                 <h3 className="flex w-full text-gray-850 font-medium text-lg">Anna George</h3>
-                <p className="text-slate-400 font-medium text-sm">
+                <p className="text-slate-400 font-medium text-sm ">
                   HN-512
                 </p>
               </div>
-              <VerifiedIcon className="text-green-700" />
+              <span className="hidden xl:flex items-center">
+                <VerifiedIcon className="text-green-700" />
+              </span>
             </div>
             <div className="flex-none bg-gray-300 h-[1.5px] " />
           </div>

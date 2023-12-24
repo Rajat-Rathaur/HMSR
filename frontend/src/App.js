@@ -5,7 +5,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import HomeExterior1 from "./pages/user/home";
+import HomeExterior1 from "./pages/user/Home";
 import RequestExterior from "./pages/RequestExterior";
 import PaymentsExterior from "./pages/PaymentsExterior";
 import AttendanceExterior from "./pages/AttendanceExterior";
@@ -130,7 +130,7 @@ function App() {
       </Snackbar>
       <div className="flex relative">
         {loggedIn &&
-          <div className="w-[320px] ">
+          <div className="lg:w-[280px] xl:w-[320px] ">
             <NavBar />
           </div>
         }
@@ -138,6 +138,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
             <Route path="/home" element={<HomeExterior1 />} />
+            <Route path="/updateDetails" element={<EditDetailsExterior />} />
           </Routes>
         </div>
       </div>
@@ -146,7 +147,6 @@ function App() {
     // <Route path="/payments" element={<PaymentsExterior />} />
     // <Route path="/services" element={<ServicesExterior />} />
     // <Route path="/request" element={<RequestExterior />} />
-    // <Route path="/update" element={<EditDetailsExterior />} />
     // <Route path="/attendance" element={<AttendanceExterior />} />
   );
 }
