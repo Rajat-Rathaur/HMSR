@@ -40,6 +40,7 @@ async function getHostelite(h_id) {
         const [existingHostelite] = await connection.query(
             'SELECT * FROM hostelites WHERE H_id = ?', [h_id]
         );
+        
         if (existingHostelite.length === 0) {
             return { error: "Hostelite not found with the provided h_id.", success: false };
         } else {

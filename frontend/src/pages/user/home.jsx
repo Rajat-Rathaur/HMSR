@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { useNavigate } from 'react-router-dom'
+import { hosteliteState } from '../../recoil/state';
+import { useRecoilState } from 'recoil';
+import { formatDate } from '../../utilities/functions';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
+const url = process.env.SERVER_URL || 'http://localhost:4000';
+const token = sessionStorage.getItem('token');
+
 const Home = () => {
+  const [hostelite, setHostelite] = useRecoilState(hosteliteState);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`${url}/api/hostelite/getHostelite`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log(data);
+        setHostelite(data.hostelite)
+
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    }
+    fetchData();
+
+  }, [])
+
+
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
     day: 'numeric',
@@ -16,76 +52,63 @@ const Home = () => {
     minute: '2-digit',
     hour12: false,
   });
+
   const navigate = useNavigate();
-
   const hasNewNotification = true;
-
   const handleNotificationClick = () => {
     navigate('/notifications')
   }
 
+  const handleUpdateDetailsClick = () => {
+    navigate('/updateDetails')
+  }
+
   return (
-    <main className="bg-white w-full flex relative">
-      <div className=" m-8 w-full" >
+    <main className="bg-white w-full flex relative p-8">
+      <div className=" w-full" >
         <div className="flex justify-between">
           <div className="hd-p">DashBoard</div>
-          <div className="text-gray-600 text-xl font-[Gudea] hidden sm:flex sm:justify-center items-center">
-            <IconButton className="mr-3 " color="inherit">
-              <SearchIcon className='text-blue-700' />
-            </IconButton>
+        </div>
 
-            <IconButton className="mr-1" color="inherit" onClick={handleNotificationClick}>
-              <Badge color="error" variant="dot" invisible={!hasNewNotification} >
-                <NotificationsIcon className='text-rose-400' />
-              </Badge>
-            </IconButton>
-
-            <span className='mx-2'>|</span>
-
-            {formattedDate} {' '}
-            <span className="text-xs">{formattedTime}</span>
-          </div>
-        </div>  
-        
         <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Welcome back to Dask !!</span>
 
         <div className="grid  grid-cols-1 xs:grid-cols-2 lg:grid-cols-3  gap-y-5 w-full">
-          <section className="bg-black">
+          <section className="bg-gray-400 my-5 mr-5">
             <img
               className="h-40"
               alt=""
-              // src="/rectangle-111.svg"
+            // src="/rectangle-111.svg"
             />
           </section>
 
-          <section className="flex flex-col justify-around items-baseline">
+          <section className="flex flex-col justify-around items-baseline gap-y-3">
             <h2 className="hd-s">Personal Details</h2>
 
             <div>
               <h3 className="lb-p">Name</h3>
               <span className="text-p">
-                Tomiwa Oyeledu Dolapo
+                {hostelite?.F_name + (hostelite?.M_name && ' ') + hostelite?.M_name + ' ' + hostelite?.L_name}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">Hostelite Id</h3>
               <span className="text-p">
-                H104
+                {'H' + hostelite?.H_id}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">Date of Birth</h3>
               <span className="text-p">
-                August 27th, 1999
+                {formatDate(hostelite?.DOB)}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">Gender</h3>
               <span className="text-p">
-                Male
+                {hostelite?.gender}
               </span>
             </div>
           </section>
@@ -126,28 +149,28 @@ const Home = () => {
             <div >
               <h3 className="lb-p">Address Line</h3>
               <span className="text-p">
-                branchName
+                {hostelite?.street}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">City</h3>
               <span className="text-p">
-                roomNo
+                {hostelite?.city}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">State</h3>
               <span className="text-p">
-                bedNo
+                {hostelite?.State}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">Pincode</h3>
               <span className="text-p">
-                managerName
+                {hostelite?.Pincode}
               </span>
             </div>
             <h4 className="hd-s mt-5">Work Details</h4>
@@ -165,14 +188,14 @@ const Home = () => {
             <div >
               <h3 className="lb-p">Contact No</h3>
               <span className="text-p">
-                branchName
+                {hostelite?.phone_no}
               </span>
             </div>
 
             <div>
               <h3 className="lb-p">Email Id</h3>
               <span className="text-p">
-                roomNo
+                {hostelite?.Email_id}
               </span>
             </div>
 
@@ -235,7 +258,6 @@ const Home = () => {
 
       </div >
     </main >
-
   );
 };
 

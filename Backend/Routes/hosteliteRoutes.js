@@ -31,7 +31,7 @@ router.get('/getHostelite', requireAuth, async (req, res) => {
     try {
         const userId = req.id;
         const user = await getHostelite(userId)
-        res.status(200).json(user);
+        return res.status(200).json(user);
 
     } catch (error) {
         res.status(500).json({
@@ -88,7 +88,7 @@ router.get('/getPaymentDetails', async (req, res) => {
 });
 router.get('/addRequest', async (req, res) => {
 });
-router.get('/getHostelite', async (req, res) => {
-});
+// router.get('/getHostelite', async (req, res) => {
+// });
 
 module.exports = router;

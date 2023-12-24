@@ -17,17 +17,17 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { Snackbar, Alert } from '@mui/material';
 import NavBar from "./components/NavBar";
 
+import {
+  RecoilRoot, useRecoilState,
+} from 'recoil';
+import { hosteliteState } from "./recoil/state";
+import TopNavBar from "./components/TopNavBar";
+
 function App() {
-  // const action = useNavigationType();
   const location = useLocation();
   const navigate = useNavigate();
   const pathname = location.pathname;
 
-  // useEffect(() => {
-  //   if (action !== "POP") {
-  //     window.scrollTo(0, 0);
-  //   }
-  // }, [action, pathname]);
 
   useEffect(() => {
     let title = "";
@@ -97,6 +97,7 @@ function App() {
     setSnackbarType(type)
   }
 
+
   const [loggedIn, setLoggedIn] = useState(false)
   useLayoutEffect(() => {
     if (sessionStorage.getItem('token'))
@@ -116,9 +117,11 @@ function App() {
 
   }, [sessionStorage.getItem('token')])
 
-  return (
 
+
+  return (
     <>
+
       <Snackbar
         open={isSnackbarOpen}
         autoHideDuration={5000}
@@ -128,21 +131,24 @@ function App() {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-      <div className="flex relative">
-        {loggedIn &&
-          <div className="lg:w-[280px] xl:w-[320px] ">
+
+      <RecoilRoot>
+        <div className="flex relative">
+          {loggedIn && <div className="lg:w-[280px] xl:w-[320px] ">
             <NavBar />
           </div>
-        }
-        <div className="w-full relative">
-          <Routes>
-            <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
-            <Route path="/home" element={<HomeExterior1 />} />
-            <Route path="/updateDetails" element={<EditDetailsExterior />} />
-          </Routes>
-        </div>
-      </div>
-      
+          }
+          <div className="w-full relative">
+            <TopNavBar />
+            <Routes>
+              <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
+              <Route path="/home" element={<HomeExterior1 />} />
+              <Route path="/updateDetails" element={<EditDetailsExterior />} />
+            </Routes>
+          </div>
+        </div >
+      </RecoilRoot>
+
     </>
     // <Route path="/notifications" element={<NotificationsExterior />} />
     // <Route path="/payments" element={<PaymentsExterior />} />

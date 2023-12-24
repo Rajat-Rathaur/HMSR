@@ -4,7 +4,6 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PaymentIcon from '@mui/icons-material/Payment';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import HomeIcon from '@mui/icons-material/Home';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import FeedbackIcon from '@mui/icons-material/Feedback';
@@ -54,11 +53,6 @@ const NavBar = () => {
 
   return (
     <>
-     <div className="sm:hidden fixed top-10 right-0 z-50">
-      <IconButton>
-        <MenuIcon />
-      </IconButton>
-    </div>
       <div className="relative hidden sm:flex mb:w-20 md:w-64 xl:w-80 bg-stone-100 h-full">
         <div className="relative flex-col flex w-full p-5 space-y-5">
           <div>
@@ -83,9 +77,8 @@ const NavBar = () => {
           </div>
 
           <NavButton icon={<HomeIcon />} name={'Home'} active={currentPage === '/home'} location={'/home'} />
-          <NavButton icon={<ManageAccountsIcon />} name={'Update Details'} active={currentPage === '/updateDetails'} location={'/updateDetails'} />
+          {/* <NavButton icon={<ManageAccountsIcon />} name={'Update Details'} active={currentPage === '/updateDetails'} location={'/updateDetails'} /> */}
           <NavButton icon={<AddBusinessIcon />} name={'Services'} active={currentPage === '/services'} location={'/services'} />
-          <NavButton icon={<NotificationsIcon />} name={'Notification'} active={currentPage === '/notification'} location={'/notification'} />
           <NavButton icon={<FeedbackIcon />} name={'Requests'} active={currentPage === '/requests'} location={'/requests'} />
           <NavButton icon={<PaymentIcon />} name={'Payments'} active={currentPage === '/payments'} location={'/payments'} />
           <NavButton icon={<DateRangeIcon />} name={'Attendance'} active={currentPage === '/attendance'} location={'/attendance'} />

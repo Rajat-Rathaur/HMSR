@@ -4,7 +4,7 @@ async function createHosteliteTab() {
   try {
     const [result] = await connection.query(`
         CREATE TABLE IF NOT EXISTS hostelites (
-          H_id INT AUTO_INCREMENT PRIMARY KEY,
+          h_id INT AUTO_INCREMENT PRIMARY KEY,
           f_name VARCHAR(20) NOT NULL,
           m_name VARCHAR(20),
           l_name VARCHAR(20),

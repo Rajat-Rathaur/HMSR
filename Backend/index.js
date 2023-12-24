@@ -20,9 +20,6 @@ const admissionRoutes = require("./Routes/admissionRoutes");
 const adminRoutes = require("./Routes/adminRoutes");
 
 
-
-
-
 app.use(express.json());
 app.use(cors());
 app.use("/api/hostelite", hosteliteRoutes); 
