@@ -1,3 +1,8 @@
-./frontendo
-./backend/node_modules
-./frontend/node_modules
+# Ignore node_modules directories
+/backend/node_modules
+/frontend/node_modules
+
+# Ignore the frontendo directory
+/frontendo
+
+# Other rules...
