@@ -35,17 +35,23 @@ const bcrypt = require("bcrypt");
 //     }
 // }
 
+async function checkHosteliteCredentials(h_id, password) {
+    const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
+    if (rows.length === 0)
+        return { error: "Hostelite not found with the provided h_id.", success: false };
 
-async function getHostelite(h_id, password) {
+    const hashedPasswordFromDatabase = rows[0].password;
+    const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
+
+    if (!isPasswordValid)
+        return { error: "Incorrect ID or password", success: false };
+
+    return { success: true };
+}
+
+async function getHostelite(h_id) {
     try {
-        const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
-        if (rows.length === 0)
-            return { error: "Hostelite not found with the provided h_id.", success: false };
-        
-        const hashedPasswordFromDatabase = rows[0].password;
-        const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
-        if (!isPasswordValid)
-            return { error: "Incorrect ID or password", success: false };
+
         const [existingHostelite] = await connection.query(
             `
             SELECT 
@@ -180,6 +186,6 @@ async function updatedHostelitePassword(h_id, hosteliteData) {
     }
 }
 
-module.exports = { getHostelite, updateHostelite, updatedHostelitePassword };
+module.exports = { checkHosteliteCredentials, getHostelite, updateHostelite, updatedHostelitePassword };
 
 

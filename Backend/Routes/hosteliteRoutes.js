@@ -30,6 +30,7 @@ router.use(express.json());
 router.get('/getHostelite', requireAuth, async (req, res) => {
     try {
         const userId = req.id;
+        console.log(userId);
         const user = await getHostelite(userId)
         return res.status(200).json(user);
 

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { getHostelite } = require("../Operations/HosteliteOperations");
+const { getHostelite, checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
 const loginValidations = require("../Validations/loginValidations");
 
 router.use(express.json());
@@ -13,21 +13,18 @@ const createToken = (_id) => {
 
 router.post("/", loginValidations, async (req, res) => {
     try {
-        const hosteliteData = req.body;
-
-        if (hosteliteData.h_id.startsWith('H')) {
-            hosteliteData.h_id = hosteliteData.h_id.substring(1);
-            const result = await getHostelite(hosteliteData.h_id, hosteliteData.password);
-
+        const data = req.body;
+        if (data.id.startsWith('H')) {
+            const h_id = data.id.substring(1);
+            const result = await checkHosteliteCredentials(h_id, data.password);
             if (!result.success)
                 return res.status(401).json({ error: result.error, success: false });
 
-            console.log(result);
-            const token = createToken(result.hostelite.h_id);
-            return res.status(200).json({ token, success: true, h_id: hosteliteData.h_id });
+            const token = createToken(h_id);
+            return res.status(200).json({ token, success: true, h_id });
 
-        } else if (hosteliteData.h_id.startsWith('E')) {
-            hosteliteData.h_id = hosteliteData.h_id.substring(1);
+        } else if (data.id.startsWith('E')) {
+            const e_id = data.id.substring(1);
             return res.status(500).json({ error: "EMPLOYEE WORK IN PROGRESS", success: false });
         }
         else {
