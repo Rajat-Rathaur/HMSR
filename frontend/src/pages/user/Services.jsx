@@ -3,7 +3,6 @@ import { Button, MenuItem, InputLabel, Select, FormControl, TextField } from "@m
 import EditDetailsPopup from "../../components/EditDetailsPopup";
 import PortalPopup from "../../components/PortalPopup";
 import { useNavigate } from "react-router-dom";
-import styles from "../ServicesExterior.module.css";
 const ServicesExterior = () => {
   const [isEditDetailsPopupOpen, setEditDetailsPopupOpen] = useState(false);
   const [isEditDetailsPopup1Open, setEditDetailsPopup1Open] = useState(false);
@@ -74,7 +73,7 @@ const ServicesExterior = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
           <section className="col-span-1 bg-slate-50 p-4 mt-10 rounded-lg">
             <h5 className="hd-s flex justify-center items-center ">Mess Service</h5>
             <div className="bg-gray-400 h-0.5 w-full my-2" />
@@ -87,16 +86,16 @@ const ServicesExterior = () => {
 
             <div className="flex mt-10">
               <div className=" w-full " >
-                <div className="hd-p flex justify-center  text-xl xxs:text-3xl xs:text-4xl">{messCharge['daily']} ₹</div>
+                <div className="hd-p flex justify-center  text-xl xs:text-2xl sm:text-4xl">{messCharge['daily']} ₹</div>
                 <span className="text-xs flex justify-center  font-medium leading-4 px-1 text-zinc-400">Daily Charges</span>
               </div>
 
               <div className=" w-full" >
-                <div className="hd-p flex justify-center text-xl   xxs:text-3xl xs:text-4xl">{messCharge['monthly']} ₹</div>
+                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge['monthly']} ₹</div>
                 <span className="text-xs flex justify-center text-center  font-medium leading-4 px-1 text-zinc-400">Monthly Charges</span>
               </div>
               <div className=" w-full" >
-                <div className="hd-p flex justify-center text-xl xxs:text-3xl xs:text-4xl">{messCharge['yearly']} ₹</div>
+                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge['yearly']} ₹</div>
                 <span className="text-xs flex justify-center font-medium text-center leading-4 px-1 text-zinc-400">Yearly Charges</span>
               </div>
             </div>
@@ -128,8 +127,8 @@ const ServicesExterior = () => {
               />
 
               <div className="w-full" >
-                <div className="hd-p text-3xl">{totalAmountMess} ₹</div>
-                <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Total Amount</span>
+                <div className="hd-p flex justify-center text-3xl text-blue-500">{totalAmountMess} ₹</div>
+                <span className="text-xs flex justify-center font-medium leading-4 px-1 text-zinc-400">Total Amount</span>
               </div>
             </div>
 
@@ -161,14 +160,14 @@ const ServicesExterior = () => {
             <div className="flex mt-10 justify-between">
               <div className="w-full flex items-center justify-center" >
                 <div>
-                  <div className="hd-p flex justify-center text-xl xxs:text-3xl xs:text-4xl">{laundryCharge[1]} ₹</div>
+                  <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{laundryCharge[1]} ₹</div>
                   <span className="flex justify-center text-xs font-medium leading-4 px-1 text-zinc-400">charge per kg</span>
                 </div>
               </div>
 
               <div className=" w-full flex justify-center items-center" >
                 <div className="">
-                  <div className="flex justify-center hd-p text-xl xxs:text-3xl xs:text-4xl">{laundryCharge[15]} ₹</div>
+                  <div className="flex justify-center hd-p text-xl xs:text-2xl sm:text-4xl">{laundryCharge[15]} ₹</div>
                   <span className="flex justify-center text-xs font-medium leading-4 px-1 text-zinc-400">charges per 15 kg</span>
                 </div>
               </div>
@@ -200,7 +199,7 @@ const ServicesExterior = () => {
               />
 
               <div className="w-full" >
-                <div className="hd-p flex justify-center text-xl xxs:text-3xl xs:text-4xl">{totalAmountLaundry} ₹</div>
+                <div className="hd-p flex justify-center text-blue-500 text-3xl">{totalAmountLaundry} ₹</div>
                 <span className="flex justify-center text-xs font-medium leading-4 px-1 text-zinc-400">Total Amount</span>
               </div>
             </div>
@@ -217,6 +216,8 @@ const ServicesExterior = () => {
                 Add more Weight
               </Button>
             </div>
+
+
 
           </section>
 

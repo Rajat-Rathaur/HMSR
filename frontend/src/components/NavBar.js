@@ -79,7 +79,7 @@ const NavBar = () => {
           <NavButton icon={<HomeIcon />} name={'Home'} active={currentPage === '/home'} location={'/home'} />
           {/* <NavButton icon={<ManageAccountsIcon />} name={'Update Details'} active={currentPage === '/updateDetails'} location={'/updateDetails'} /> */}
           <NavButton icon={<AddBusinessIcon />} name={'Services'} active={currentPage === '/services'} location={'/services'} />
-          <NavButton icon={<FeedbackIcon />} name={'Requests'} active={currentPage === '/requests'} location={'/requests'} />
+          <NavButton icon={<FeedbackIcon />} name={'Complaints'} active={currentPage === '/complaints'} location={'/complaints'} />
           <NavButton icon={<PaymentIcon />} name={'Payments'} active={currentPage === '/payments'} location={'/payments'} />
           <NavButton icon={<DateRangeIcon />} name={'Attendance'} active={currentPage === '/attendance'} location={'/attendance'} />
           <NavButton icon={<NotificationsIcon />} name={'Notification'} active={currentPage === '/notifications'} location={'/notifications'} />

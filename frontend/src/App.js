@@ -7,8 +7,8 @@ import {
 import Login from "./pages/Login";
 import Home from "./pages/user/Home";
 import Services from "./pages/user/Services";
-import RequestExterior from "./pages/RequestExterior";
-import PaymentsExterior from "./pages/PaymentsExterior";
+import Complaints from "./pages/user/Complaints";
+import PaymentsExterior from "./pages/user/Payments";
 import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
@@ -42,7 +42,7 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      case "/request":
+      case "/complaints":
         title = "";
         metaDescription = "";
         break;
@@ -144,7 +144,7 @@ function App() {
               <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
               <Route path="/home" element={<Home />} />
               <Route path="/updateDetails" element={<EditDetailsExterior />} />
-              <Route path="/requests" element={<RequestExterior />} />
+              <Route path="/complaints" element={<Complaints />} />
               <Route path="/notifications" element={<NotificationsExterior />} />
               <Route path="/payments" element={<PaymentsExterior />} />
               <Route path="/services" element={<Services />} />

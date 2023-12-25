@@ -8,7 +8,7 @@ const admissionDataValidations = require("../Validations/admissionDataValidation
 
 router.use(express.json());
 
-// ~ LATER WILL ADD REQADMIN
+// ~ LATER WILL ADD REQ ADMIN
 
 router.post("/addNewAdmission", addHosteliteValidations, admissionDataValidations, async (req, res) => {
     try {

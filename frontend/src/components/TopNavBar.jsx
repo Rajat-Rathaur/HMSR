@@ -30,7 +30,7 @@ const TopNavBar = () => {
     }
     return (
         <div className='flex justify-between bg-slate-100 w-full h-14 px-5 shadow-sm sticky z-50'>
-            <div className="items-center justify-center flex">
+            {/* <div className="items-center justify-center flex">
                 <img src="icons/logo.svg" alt="" className='h-16 w-16' />
             </div>
             <div className="text-gray-600 text-xl font-[Gudea] flex justify-center items-center mr-3 space-x-4">
@@ -61,7 +61,7 @@ const TopNavBar = () => {
                     {formattedDate} {' '}
                     <span className="text-xs">{formattedTime}</span>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

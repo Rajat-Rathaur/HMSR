@@ -2,10 +2,10 @@ const validator = require("validator");
 
 const addHosteliteValidations = async (req, res, next) => {
     try {
-        const { f_name, gender, email_id, dob, work, age, state, city, street, pincode, phone_no } = req.body.hosteliteData;
+        const { name, gender, email_id, dob, work, age, state, city, street, pincode, phone_no } = req.body.hosteliteData;
         const dobDate = new Date(dob);
 
-        if (!f_name || !gender || !dob || !age || !state || !city || !street || !pincode || !work || !phone_no) {
+        if (!name || !gender || !dob || !age || !state || !city || !street || !pincode || !work || !phone_no) {
             return res.status(400).json({ error: "Missing required fields.", success: false });
         }
 
@@ -13,7 +13,7 @@ const addHosteliteValidations = async (req, res, next) => {
             return res.status(400).json({ error: "Invalid email address.", success: false });
         }
 
-        else if (typeof f_name !== 'string' || typeof gender !== 'string' || typeof dob !== 'string' || typeof state !== 'string' || typeof city !== 'string' || typeof street !== 'string') {
+        else if (typeof name !== 'string' || typeof gender !== 'string' || typeof dob !== 'string' || typeof state !== 'string' || typeof city !== 'string' || typeof street !== 'string') {
             return res.status(400).json({ error: "Invalid data types for some fields.", success: false });
         }
 
