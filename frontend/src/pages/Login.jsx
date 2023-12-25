@@ -13,7 +13,7 @@ const Login = ({ openSnackbar }) => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    const isValid = /^[EH]\d+$/.test(data.h_id);
+    const isValid = /^[EH]\d+$/.test(data.id);
 
     if (!isValid) {
       openSnackbar('Check id again. It should start with "E" or "H" followed by numbers.');
@@ -31,11 +31,11 @@ const Login = ({ openSnackbar }) => {
 
       const responseData = await resp.json();
       if (responseData.success) {
-        const { token, h_id } = responseData;
+        const { token, id } = responseData;
         sessionStorage.setItem('token', token);
-        sessionStorage.setItem('h_id', h_id);
+        sessionStorage.setItem('id', id);
 
-        navigate(`/home?id=${responseData.h_id}`)
+        navigate(`/home?id=${responseData.id}`)
         openSnackbar('Login successful', 'success');  
       } else {
         openSnackbar(responseData.error, 'error');
@@ -52,8 +52,6 @@ const Login = ({ openSnackbar }) => {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
-
 
   return (
     <>
@@ -76,7 +74,7 @@ const Login = ({ openSnackbar }) => {
                 Welcome Back
               </div>
               <div className="mt-5 mb:mt-10 flex w-full max-w-96 h-auto">
-                <TextField fullWidth label="User ID" placeholder="Enter your ID ex: H001 | E001" {...register("h_id")} required
+                <TextField fullWidth label="User ID" placeholder="Enter your ID ex: H001 | E001" {...register("id")} required
                 />
               </div>
 

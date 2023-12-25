@@ -1,22 +1,46 @@
-import React, { useEffect } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { hosteliteState } from '../../recoil/state';
 import { useRecoilState } from 'recoil';
 import { formatDate } from '../../utilities/functions';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Skeleton from '@mui/material/Skeleton';
 
 const url = process.env.SERVER_URL || 'http://localhost:4000';
 const token = sessionStorage.getItem('token');
 
+const LoadingSkeleton = () => (
+  <section className="flex flex-col justify-around items-baseline gap-y-3">
+    <h2 className="hd-s">Personal Details</h2>
+
+    <div>
+      <h3 className="lb-p">Name</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Hostelite Id</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Date of Birth</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Gender</h3>
+      <Skeleton variant="text" />
+    </div>
+  </section>
+);
+
 const Home = () => {
   const [hostelite, setHostelite] = useRecoilState(hosteliteState);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true)
         const response = await fetch(`${url}/api/hostelite/getHostelite`, {
           method: 'GET',
           headers: {
@@ -31,7 +55,10 @@ const Home = () => {
         const data = await response.json();
         console.log(data);
         setHostelite(data.hostelite)
-
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+        
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
@@ -81,38 +108,40 @@ const Home = () => {
             />
           </section>
 
-          <section className="flex flex-col justify-around items-baseline gap-y-3">
-            <h2 className="hd-s">Personal Details</h2>
+          {isLoading ?
+            <LoadingSkeleton /> :
+            <section className="flex flex-col justify-around items-baseline gap-y-3">
+              <h2 className="hd-s">Personal Details</h2>
 
-            <div>
-              <h3 className="lb-p">Name</h3>
-              <span className="text-p">
-                {hostelite?.F_name + (hostelite?.M_name && ' ') + hostelite?.M_name + ' ' + hostelite?.L_name}
-              </span>
-            </div>
+              <div>
+                <h3 className="lb-p">Name</h3>
+                <span className="text-p">
+                  {hostelite?.F_name + (hostelite?.M_name && ' ') + hostelite?.M_name + ' ' + hostelite?.L_name}
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Hostelite Id</h3>
-              <span className="text-p">
-                {'H' + hostelite?.H_id}
-              </span>
-            </div>
+              <div>
+                <h3 className="lb-p">Hostelite Id</h3>
+                <span className="text-p">
+                  {'H' + hostelite?.H_id}
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Date of Birth</h3>
-              <span className="text-p">
-                {formatDate(hostelite?.DOB)}
-              </span>
-            </div>
+              <div>
+                <h3 className="lb-p">Date of Birth</h3>
+                <span className="text-p">
+                  {formatDate(hostelite?.DOB)}
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Gender</h3>
-              <span className="text-p">
-                {hostelite?.gender}
-              </span>
-            </div>
-          </section>
-
+              <div>
+                <h3 className="lb-p">Gender</h3>
+                <span className="text-p">
+                  {hostelite?.gender}
+                </span>
+              </div>
+            </section>
+          }
           <section className="lg:row-start-1 lg:col-start-3 xs:row-start-3 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Dask Info</h4>
             <div >
