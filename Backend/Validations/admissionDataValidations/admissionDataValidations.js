@@ -4,14 +4,14 @@ const validator = require("validator");
 
 const admissionDataValidations = async (req, res, next) => {
     try {
-        const { branchNo, roomNo, bedNo, dateOfJoin, dateOfExit, dateOfLeave } = req.body.admissionData;
+        const { branchName, roomNo, bedNumber, dateOfJoin, dateOfExit } = req.body.admissionData;
 
-        if (!branchNo || !roomNo || !bedNo || !dateOfJoin) {
+        if (!branchName || !roomNo || !bedNumber || !dateOfJoin) {
             return res.status(400).json({ error: "Missing required fields for admission data.", success: false });
         }
 
-        if (isNaN(branchNo) || isNaN(roomNo) || isNaN(bedNo)) {
-            return res.status(400).json({ error: "BranchNo, roomNo, and bedNo must be numeric values.", success: false });
+        if (isNaN(roomNo) || isNaN(bedNumber)) {
+            return res.status(400).json({ error: "roomNo, and bedNumber must be numeric values.", success: false });
         }
 
         if (!dateOfJoin || isNaN(new Date(dateOfJoin).getTime())) {
@@ -22,7 +22,7 @@ const admissionDataValidations = async (req, res, next) => {
             return res.status(400).json({ error: "Invalid dateOfExit format. It must be a valid date.", success: false });
         }
         
-        if (bedNo > 2){
+        if (bedNumber > 2){
             return res.status(400).json({ error: "Invalid Bed No, must be less than 3", success: false });
         }
 

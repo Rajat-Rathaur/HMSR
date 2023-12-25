@@ -17,17 +17,14 @@ router.post("/", loginValidations, async (req, res) => {
 
         if (hosteliteData.h_id.startsWith('H')) {
             hosteliteData.h_id = hosteliteData.h_id.substring(1);
+            const result = await getHostelite(hosteliteData.h_id, hosteliteData.password);
 
-            const result = await getHostelite(hosteliteData.h_id);
             if (!result.success)
-                res.status(401).json({ error: "ID Not found", success: false });
-            else if ((await bcrypt.compare(hosteliteData.password, result.hostelite.password)))
-                res.status(401).json({ error: "Incorrect ID or password", success: false });
+                return res.status(401).json({ error: result.error, success: false });
 
-            else {
-                const token = createToken(result.hostelite.H_id);
-                res.status(200).json({ token, success: true, h_id: hosteliteData.h_id });
-            }
+            console.log(result);
+            const token = createToken(result.hostelite.h_id);
+            return res.status(200).json({ token, success: true, h_id: hosteliteData.h_id });
 
         } else if (hosteliteData.h_id.startsWith('E')) {
             hosteliteData.h_id = hosteliteData.h_id.substring(1);

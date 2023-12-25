@@ -2,10 +2,10 @@ const validator = require("validator");
 
 const addHosteliteValidations = async (req, res, next) => {
     try {
-        const { name, gender, email_id, dob, work, age, state, city, street, pincode, phone_no } = req.body.hosteliteData;
+        const { name, gender, email_id, dob, work, state, city, street, pincode, phone_no } = req.body.hosteliteData;
         const dobDate = new Date(dob);
 
-        if (!name || !gender || !dob || !age || !state || !city || !street || !pincode || !work || !phone_no) {
+        if (!name || !gender || !dob || !state || !city || !street || !pincode || !work || !phone_no) {
             return res.status(400).json({ error: "Missing required fields.", success: false });
         }
 
@@ -21,11 +21,7 @@ const addHosteliteValidations = async (req, res, next) => {
             return res.status(400).json({ error: "Invalid gender value. Allowed values are 'Male', 'Female', or 'other'.", success: false });
         }
 
-        else if (!Number.isInteger(age) || age <= 0) {
-            return res.status(400).json({ error: "Invalid age value. age must be a positive integer.", success: false });
-        }
-        
-        else if (!Number.isInteger(pincode) || pincode < 100000 || pincode > 999999) {
+        else if (!Number.isInteger(pincode) || pincode < 10000 || pincode > 999999) {
             return res.status(400).json({ error: "Invalid pincode. pincode must be a 6-digit integer.", success: false });
         }
 

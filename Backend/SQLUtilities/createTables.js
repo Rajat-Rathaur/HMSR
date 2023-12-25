@@ -33,8 +33,8 @@ async function createHosteliteTab() {
 
 async function createHDependentsTab() {
   try {
-    const [result] = await connection.query(`
-        CREATE TABLE IF NOT EXISTS h_dependents (
+    const [result] = await connection.query(
+      `CREATE TABLE IF NOT EXISTS h_dependents (
           hNo INT,
           name VARCHAR(20) NOT NULL,
           phone_no BIGINT UNIQUE NOT NULL,
@@ -42,7 +42,7 @@ async function createHDependentsTab() {
           state VARCHAR(20),
           city VARCHAR(20),
           street VARCHAR(20),
-          pincode INT,
+          pincode INT
          )
       `);
 
@@ -105,7 +105,7 @@ async function createEDependentsTab() {
           state varchar(20) NOT NULL,
           city varchar(20) NOT NULL,
           street varchar(20) DEFAULT NULL,
-          pincode int NOT NULL,
+          pincode int NOT NULL
          )
       `);
 
@@ -152,8 +152,7 @@ async function createBelongsToTab() {
         rNo INT,
         bedNumber INT,
         dateOfJoin DATE,
-        dateOfExit DATE,
-        dateOfLeave DATE
+        dateOfExit DATE
       )
     `);
 
@@ -172,12 +171,13 @@ async function createRoomsTab() {
   try {
     const [result] = await connection.query(`
           CREATE TABLE IF NOT EXISTS rooms (
+              r_id INT AUTO_INCREMENT PRIMARY KEY,
               roomNo INT NOT NULL,
               branchNo INT NOT NULL, 
               roomType ENUM('S', 'D') NOT NULL,
-              roomStatus ENUM('Occupied', 'Partially Occupied', 'Empty') NOT NULL Default 'Empty'  
-          )
-      `);
+              roomStatus ENUM('Occupied', 'Partially Occupied', 'Empty') NOT NULL Default 'Empty'
+            );`
+    );
     if (result.warningStatus === 0) {
       console.log('Rooms table created successfully');
     } else {
@@ -192,7 +192,8 @@ async function createRoomsTab() {
 
 const createTables = async () => {
   try {
-    console.log('Database connected');
+    console.log('Table Check Started');
+
     await createHosteliteTab();
     await createHDependentsTab();
     await createEmployeeTab();

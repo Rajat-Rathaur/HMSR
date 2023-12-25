@@ -5,16 +5,21 @@ const addBranchValidations = require("../Validations/BranchValidations/addBranch
 const { addNewAdmission } = require("../Operations/AdmissionOperation");
 const addHosteliteValidations = require("../Validations/admissionDataValidations/addHosteliteValidations");
 const admissionDataValidations = require("../Validations/admissionDataValidations/admissionDataValidations");
+const bcrypt = require('bcrypt');
 
 router.use(express.json());
 
 // ~ LATER WILL ADD REQ ADMIN
-
 router.post("/addNewAdmission", addHosteliteValidations, admissionDataValidations, async (req, res) => {
     try {
-        const { hosteliteData, admissionData } = req.body;
+        const { hosteliteData, admissionData, hosteliteDependentData } = req.body;
 
-        const result = await addNewAdmission(hosteliteData, admissionData);
+        const password = "Temp@123";
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+        hosteliteData.password = hash;
+        
+        const result = await addNewAdmission(hosteliteData, admissionData, hosteliteDependentData);
         const error = result.error;
 
         if (result.success) {

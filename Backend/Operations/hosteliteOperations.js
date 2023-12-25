@@ -1,60 +1,51 @@
 const connection = require('../Connections/connect.js');
 const bcrypt = require("bcrypt");
 
-async function addHostelite(hosteliteData) {
-    try {
-        const existsQuery = 'SELECT * FROM hostelites WHERE email_id = ? OR phone_no = ?';
-        const [existingHostelite] = await _query(existsQuery, [hosteliteData.email_id, hosteliteData.phone_no]);
-
-        if (existingHostelite.length > 0) {
-            if (existingHostelite.some((hostelite) => hostelite.email_id === hosteliteData.email_id)) {
-                return { error: "Hostelite with the provided EmailId already exists", success: false };
-            }
-
-            if (existingHostelite.some((hostelite) => hostelite.phone_no === hosteliteData.phone_no)) {
-                return { error: "Hostelite with the provided phone number already exists", success: false };
-            }
-        }
-
-        else {
-            const salt = await genSalt(10);
-            const password = "Temp@123";
-            hosteliteData.password = await hash(password, salt);
-
-            const query = 'INSERT INTO hostelites SET ?';
-            const [result] = await _query(query, hosteliteData);
-            console.log(result);
-
-            const insertedId = result.insertId;
-            console.log('New hostelite added with H_id:', result.insertId);
-            return { insertedId, success: true };
-        }
-
-    } catch (err) {
-        return { error: `Error adding hostelite : ${err}`, success: false, };
-    }
-}
-
-// async function getHostelite(h_id) {
+// async function addHostelite(hosteliteData) {
 //     try {
-//         const [existingHostelite] = await connection.query(
-//             'SELECT * FROM hostelites WHERE H_id = ?', [h_id]
-//         );
-        
-//         if (existingHostelite.length === 0) {
-//             return { error: "Hostelite not found with the provided h_id.", success: false };
-//         } else {
-//             return { hostelite: existingHostelite[0], success: true };
+//         const existsQuery = 'SELECT * FROM hostelites WHERE email_id = ? OR phone_no = ?';
+//         const [existingHostelite] = await _query(existsQuery, [hosteliteData.email_id, hosteliteData.phone_no]);
+
+//         if (existingHostelite.length > 0) {
+//             if (existingHostelite.some((hostelite) => hostelite.email_id === hosteliteData.email_id)) {
+//                 return { error: "Hostelite with the provided EmailId already exists", success: false };
+//             }
+
+//             if (existingHostelite.some((hostelite) => hostelite.phone_no === hosteliteData.phone_no)) {
+//                 return { error: "Hostelite with the provided phone number already exists", success: false };
+//             }
+//         }
+
+//         else {
+//             const salt = await genSalt(10);
+//             const password = "Temp@123";
+//             hosteliteData.password = await hash(password, salt);
+
+//             const query = 'INSERT INTO hostelites SET ?';
+//             const [result] = await _query(query, hosteliteData);
+//             console.log(result);
+
+//             const insertedId = result.insertId;
+//             console.log('New hostelite added with H_id:', result.insertId);
+//             return { insertedId, success: true };
 //         }
 
 //     } catch (err) {
-//         console.error('Error retrieving hostelite:', err);
-//         return { error: "An error occurred while retrieving hostelite.", success: false };
+//         return { error: `Error adding hostelite : ${err}`, success: false, };
 //     }
 // }
 
-async function getHostelite(h_id) {
+
+async function getHostelite(h_id, password) {
     try {
+        const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
+        if (rows.length === 0)
+            return { error: "Hostelite not found with the provided h_id.", success: false };
+        
+        const hashedPasswordFromDatabase = rows[0].password;
+        const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
+        if (!isPasswordValid)
+            return { error: "Incorrect ID or password", success: false };
         const [existingHostelite] = await connection.query(
             `
             SELECT 
@@ -69,41 +60,41 @@ async function getHostelite(h_id) {
             hostelites.city AS hostelite_city,
             hostelites.street AS hostelite_street,
             hostelites.pincode AS hostelite_pincode,
-        
+            
             branch.b_id,
             branch.b_name,
             branch.mgr_id,
-        
+            
             belongs_to.rNo,
-            belongs_to.bNo,
-            belongs_to.hNo,
-            belongs_to.bedNo,
-        
+            belongs_to.bedNumber,
+            
             h_dependents.name AS h_dependents_name,
             h_dependents.phone_no AS h_dependents_phone_no,
             h_dependents.relationship AS h_dependents_relationship,
-        
-            employee.name AS mgr_name ,
-            employee.phone_no AS employee_phone_no
+            
+            employee.name AS mgr_name,
+            employee.phone_no AS mgr_phone_no
         FROM 
             hostelites
         LEFT JOIN 
             belongs_to ON hostelites.h_id = belongs_to.hNo
         LEFT JOIN 
-            branch ON belongs_to.bNo = branch.b_id
-        LEFT JOIN 
             h_dependents ON hostelites.h_id = h_dependents.hNo
         LEFT JOIN 
-            employee ON branch.mgr_id = employee.e_ID
+            rooms ON belongs_to.rNo = rooms.r_id
+        LEFT JOIN 
+            branch ON rooms.branchNo = branch.b_id
+        LEFT JOIN 
+            employee ON branch.mgr_id = employee.e_id
         WHERE 
-            hostelites.H_id = ?;`,
+            hostelites.h_id = ?;`,
             [h_id]
         );
 
         if (existingHostelite.length === 0) {
             return { error: "Hostelite not found with the provided H_id.", success: false };
         } else {
-            return { existingHostelite: existingHostelite[0], success: true };
+            return { hostelite: existingHostelite[0], success: true };
         }
 
     } catch (err) {
@@ -189,6 +180,6 @@ async function updatedHostelitePassword(h_id, hosteliteData) {
     }
 }
 
-module.exports = { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword };
+module.exports = { getHostelite, updateHostelite, updatedHostelitePassword };
 
 
