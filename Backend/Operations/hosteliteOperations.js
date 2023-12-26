@@ -52,7 +52,7 @@ async function addHostelite(hosteliteData, admissionData, hosteliteDependentData
         }
 
         // get the r_id from room table from roomNo
-        const [rows] = await connection.query('SELECT r_id FROM rooms WHERE roomNo = ?', [roomNo]);
+        const [rows] = await connection.query('SELECT r_id FROM rooms WHERE roomNo = ? AND branchNo = ?', [roomNo, branchNo]);
         let rNo;
         if (rows.length > 0)
             rNo = rows[0].r_id;
