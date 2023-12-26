@@ -4,6 +4,7 @@ const router = express.Router();
 const requireAuth = require("../Middlewares/reqAuth");
 const addHosteliteValidations = require("../Validations/admissionDataValidations/addHosteliteValidations");
 const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite } = require("../Operations/HosteliteOperations");
+const admissionDataValidations = require("../Validations/admissionDataValidations/admissionDataValidations");
 
 router.use(express.json());
 
@@ -16,7 +17,7 @@ router.post("/addHostelite", addHosteliteValidations, admissionDataValidations, 
         const hash = await bcrypt.hash(password, salt);
         hosteliteData.password = hash;
 
-        const result = await addNewAdmission(hosteliteData, admissionData, hosteliteDependentData);
+        const result = await addHostelite(hosteliteData, admissionData, hosteliteDependentData);
         const error = result.error;
 
         if (result.success) {
@@ -96,14 +97,12 @@ router.post('/deleteHostelite', async (req, res) => {
         const result = await deleteHostelite(h_id);
 
         if (result.success) {
-            // Hostelite deleted successfully
             res.status(200).json({ message: 'Hostelite deleted successfully.' });
         } else {
-            // Error in deleting hostelite
             res.status(404).json({ error: result.error });
         }
+
     } catch (err) {
-        // Internal server error
         console.error('Error in deleteHostelite route:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
