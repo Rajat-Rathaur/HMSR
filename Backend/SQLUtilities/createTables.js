@@ -80,7 +80,7 @@ async function createEmployeeTab() {
           dob DATE NOT NULL,
           phone_no BIGINT DEFAULT NULL,
           email_id VARCHAR(50) DEFAULT NULL,
-          password VARCHAR(20)
+          password VARCHAR(60)
         )
     `);
 
@@ -189,6 +189,65 @@ async function createRoomsTab() {
   }
 }
 
+async function createPaymentsTable() {
+  try {
+    const [result] = await connection.query(`
+          CREATE TABLE IF NOT EXISTS payments (
+              payment_id INT AUTO_INCREMENT PRIMARY KEY,
+              from_user_id INT NOT NULL,
+              amount DECIMAL(10, 2) NOT NULL,
+              payment_date DATE NOT NULL,
+              payment_type ENUM('Incoming', 'Outgoing') NOT NULL,
+              to_user_id INT
+          );`
+    );
+    if (result.warningStatus === 0) {
+      console.log('Payments table created successfully');
+    } else {
+      console.log('Payments table already exists');
+    }
+  } catch (err) {
+    console.error('Error creating payments table:', err);
+  }
+}
+
+async function createMessTable() {
+  try {
+    const [result] = await connection.query(`
+        CREATE TABLE IF NOT EXISTS mess (
+          hNo INT PRIMARY KEY,
+          start_date DATE NOT NULL,
+          end_date DATE NOT NULL
+        );`
+    );
+    if (result.warningStatus === 0) {
+      console.log('Mess table created successfully');
+    } else {
+      console.log('Mess table already exists');
+    }
+  } catch (err) {
+    console.error('Error creating Mess table:', err);
+  }
+}
+
+async function createLaundryTable() {
+  try {
+    const [result] = await connection.query(`
+          CREATE TABLE IF NOT EXISTS laundry (
+              hNo INT PRIMARY KEY,
+              weight_left DECIMAL(10, 2) NOT NULL
+          );
+      `);
+
+    if (result.warningStatus === 0) {
+      console.log('Laundry table created successfully');
+    } else {
+      console.log('Laundry table already exists');
+    }
+  } catch (err) {
+    console.error('Error creating laundry table:', err);
+  }
+}
 
 const createTables = async () => {
   try {
@@ -201,6 +260,9 @@ const createTables = async () => {
     await createBranchTab();
     await createBelongsToTab();
     await createRoomsTab();
+    await createPaymentsTable();
+    await createMessTable();
+    await createLaundryTable();
 
   } catch (err) {
     console.error('Error creating tables:', err);
