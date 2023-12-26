@@ -7,7 +7,6 @@ const NavButton = ({ location, name, icon, active }) => {
   const isBiggerScreen = useMediaQuery('(min-width: 768px)');
   const isMediumScreen = useMediaQuery('(min-width: 640px) and (max-width: 768px)');
 
-
   const buttonStyle = {
     display: 'flex',
     alignItems: 'center',

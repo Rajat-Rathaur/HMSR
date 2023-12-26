@@ -1,32 +1,12 @@
-import { useState, useCallback } from "react";
-
-import EditDetailsPopup from "../../components/popups/Popup";
-import PortalPopup from "../../components/PortalPopup";
-import { useNavigate } from "react-router-dom";
 import TwoWayTab from "../../mui/TwoWayTab";
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import Feedback from "../../sections/Feedback";
 import Complaints from "../../sections/Complaints";
-
+import { useSearchParams } from "react-router-dom";
 const FeedbackPage = () => {
-
-  const [isEditDetailsPopupOpen, setEditDetailsPopupOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const openEditDetailsPopup = useCallback(() => {
-    setEditDetailsPopupOpen(true);
-  }, []);
-
-  const closeEditDetailsPopup = useCallback(() => {
-    setEditDetailsPopupOpen(false);
-  }, []);
-
-  const [value, setValue] = useState(0);
-
-  const changeTab = (newValue) => {
-    setValue(newValue);
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
   return (
     <>
       <main className="bg-white w-full flex flex-col relative p-8">
@@ -38,22 +18,13 @@ const FeedbackPage = () => {
         </div>
 
         <div className="my-5">
-          <TwoWayTab changeTab={changeTab} value={value} label1='Feedback' label2='Complaint' icon1={<FeedbackIcon />} icon2={<AssistantIcon />} />
+          <TwoWayTab label1='Feedback' label2='Complaint' icon1={<FeedbackIcon />} icon2={<AssistantIcon />} />
         </div>
-        {value === 0 && <Feedback />}
-        {value === 1 && <Complaints />}
+
+        {tab === 'Feedback' && <Feedback />}
+        {tab === 'Complaint' && <Complaints />}
       </main >
 
-
-      {isEditDetailsPopupOpen && (
-        <PortalPopup
-          overlayColor="rgba(0, 0, 0, 0.7)"
-          placement="Centered"
-          onOutsideClick={closeEditDetailsPopup}
-        >
-          <EditDetailsPopup onClose={closeEditDetailsPopup} />
-        </PortalPopup>
-      )}
     </>
   );
 };

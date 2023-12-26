@@ -16,16 +16,23 @@ import { useForm, Controller } from 'react-hook-form';
 
 const Complaints = () => {
   const { handleSnackbarOpen } = useSnackbar();
-  const { register, control, handleSubmit } = useForm();
+  const defaultValues = {
+    issue: "",
+    description: "",
+    priority: ""
+  }
+  
+  const { register, control, reset, handleSubmit } = useForm({ defaultValues });
 
-  const handleComplaintClick = async (data) => {
+  const handleComplaintClick = async (data, e) => {
     const result = await postData("/api/feeds/complaint", data);
     if (result.success) {
       handleSnackbarOpen('Complaint submitted successful', 'success');
-
-    } else {
-      handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
+      reset();
     }
+    else
+      handleSnackbarOpen('Error while adding Complaint. Please try again later.', 'error');
+
   };
 
   return (

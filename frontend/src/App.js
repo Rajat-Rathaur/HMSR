@@ -122,7 +122,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/updateDetails" element={<EditDetailsExterior />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/feedbacks" element={<FeedbackPage />} />
+            <Route path="/feeds" element={<FeedbackPage />} />
             <Route path="/notifications" element={<NotificationsExterior />} />
             <Route path="/payments" element={<PaymentsExterior />} />
             <Route path="/attendance" element={<AttendanceExterior />} />
