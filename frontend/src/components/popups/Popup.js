@@ -1,12 +1,12 @@
 import styles from "./EditDetailsPopup.module.css";
-const EditDetailsPopup = ({ onClose }) => {
+const Popup = ({ onClose, onSuccess }) => {
   return (
     <div className={styles.editdetailspopup}>
       <div className={styles.logoutYesno}>
         <button className={styles.button} onClick={onClose}>
           <div className={styles.text}>Cancel</div>
         </button>
-        <button className={styles.button1}>
+        <button className={styles.button1} onClick={onSuccess}>
           <div className={styles.text1}>Confirm</div>
         </button>
       </div>
@@ -21,4 +21,4 @@ const EditDetailsPopup = ({ onClose }) => {
   );
 };
 
-export default EditDetailsPopup;
+export default Popup;

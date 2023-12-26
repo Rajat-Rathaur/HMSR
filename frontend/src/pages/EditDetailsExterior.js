@@ -9,7 +9,7 @@ import {
   FormHelperText,
   Select,
 } from "@mui/material";
-import EditDetailsPopup from "../components/EditDetailsPopup";
+import EditDetailsPopup from "../components/popups/Popup";
 import PortalPopup from "../components/PortalPopup";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";

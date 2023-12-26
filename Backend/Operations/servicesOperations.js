@@ -22,7 +22,7 @@ async function getMessData(hNo) {
         if (result.length > 0) {
             const { end_date } = result[0];
             const remainingDays = calculateRemainingDays(end_date);
-            return { success: true, remainingDays };
+            return { success: true, data: remainingDays };
         }
         else
             return { remainingDays: 0, success: true }
@@ -82,10 +82,10 @@ async function getLaundryWeight(hNo) {
 
         if (result.length > 0) {
             const laundryWeight = result[0].weight_left;
-            return { success: true, laundryWeight };
+            return { success: true, data: laundryWeight };
         }
         else
-            return { success: true, laundryWeight: 0 };
+            return { success: true, data: 0 };
 
     } catch (err) {
         console.error('Error getting laundry weight:', err);
@@ -111,9 +111,9 @@ async function addLaundryWeight(hNo, weightToAdd) {
 
         const [updateResult] = await connection.query(query, [newWeight, hNo]);
 
-        if (updateResult.affectedRows > 0) {
-            return { success: true, newWeight, message: 'Laundry weight added successfully.' };
-        }
+        if (updateResult.affectedRows > 0)
+            return { success: true, data: newWeight, message: 'Laundry weight added successfully.' };
+
         else
             return { success: false, error: 'Error adding laundry weight.' };
 

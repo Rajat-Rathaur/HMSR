@@ -124,8 +124,8 @@ function App() {
 
       <Snackbar
         open={isSnackbarOpen}
-        autoHideDuration={5000}
-      // onClose={handleSnackbarClose}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
       >
         <Alert onClose={handleSnackbarClose} severity={snackbarType} sx={{ width: '100%' }}>
           {snackbarMessage}
@@ -144,10 +144,10 @@ function App() {
               <Route path="/" element={<Login openSnackbar={handleSnackbarOpen} />} />
               <Route path="/home" element={<Home />} />
               <Route path="/updateDetails" element={<EditDetailsExterior />} />
+              <Route path="/services" element={<Services openSnackbar={handleSnackbarOpen} />} />
               <Route path="/complaints" element={<Complaints />} />
               <Route path="/notifications" element={<NotificationsExterior />} />
               <Route path="/payments" element={<PaymentsExterior />} />
-              <Route path="/services" element={<Services />} />
               <Route path="/attendance" element={<AttendanceExterior />} />
             </Routes>
           </div>

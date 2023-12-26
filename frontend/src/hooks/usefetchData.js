@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+const hostUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
-const useFetchData = (url, method, body) => {
+const useFetchData = (path) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,25 +11,21 @@ const useFetchData = (url, method, body) => {
     const fetchData = async () => {
       try {
         const options = {
-          method: method,
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
           },
         };
 
-        if (body) {
-          options.body = JSON.stringify(body);
-        }
-
-        const response = await fetch(url, options);
+        const response = await fetch(hostUrl + path, options);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
         const result = await response.json();
+        console.log(result);
         if (result.success) {
-          console.log(result.data);
           setData(result.data);
         }
       } catch (err) {
@@ -39,9 +36,9 @@ const useFetchData = (url, method, body) => {
     };
 
     fetchData();
-  }, [url, method, body, token]);
+  }, [path, token]);
 
-  return { data, isLoading, error };
+  return { data, setData, isLoading, error };
 };
 
 export default useFetchData;

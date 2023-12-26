@@ -3,9 +3,8 @@ import { hosteliteState } from '../../recoil/state';
 import { useRecoilState } from 'recoil';
 import { formatDate } from '../../utilities/functions';
 import Skeleton from '@mui/material/Skeleton';
-import useFetchData from '../../hooks/usefetchData';
+import useFetchData from '../../hooks/useFetchData';
 
-const url = process.env.SERVER_URL || 'http://localhost:4000';
 const token = sessionStorage.getItem('token');
 
 const LoadingSkeletonSection1 = () => (
@@ -152,25 +151,10 @@ const LoadingSkeletonSection5 = () => (
   </section>
 );
 
-
-
 const Home = () => {
 
   const { data: hostelite, isLoading } = useFetchData(
-    `${url}/api/hostelite/getHostelite`, 'GET');
-  console.log(hostelite);
-
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'short',
-  });
-
-  const formattedTime = currentDate.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
+    '/api/hostelite/getHostelite');
 
   return (
     <main className="bg-white w-full flex relative p-8">

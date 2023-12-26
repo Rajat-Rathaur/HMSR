@@ -1,43 +1,101 @@
 import { useState, useCallback, useEffect } from "react";
 import { Button, MenuItem, InputLabel, Select, FormControl, TextField } from "@mui/material";
-import EditDetailsPopup from "../../components/EditDetailsPopup";
+import Popup from "../../components/popups/Popup";
 import PortalPopup from "../../components/PortalPopup";
 import { useNavigate } from "react-router-dom";
-const ServicesExterior = () => {
-  const [isEditDetailsPopupOpen, setEditDetailsPopupOpen] = useState(false);
-  const [isEditDetailsPopup1Open, setEditDetailsPopup1Open] = useState(false);
+import useFetchData from "../../hooks/useFetchData";
+import Skeleton from '@mui/material/Skeleton';
+import useAddData from "../../utilities/postData";
+import postData from "../../utilities/postData";
+import { useRecoilState } from "recoil";
+
+const LoadingDaysLeft = () => (
+  <div className="mt-4 justify-between w-full flex pr-5">
+    <label className="lb-p text-xl">
+      <Skeleton variant="text" width={150} />
+    </label>
+    <span className="text-p xs:text-2xl">
+      <Skeleton variant="text" width={50} />
+    </span>
+  </div>
+);
+
+const LoadingTotalKgLeft = () => (
+  <div className="mt-4 justify-between w-full flex pr-5">
+    <label className="lb-p text-xl">
+      <Skeleton variant="text" width={150} />
+    </label>
+    <span className="text-p text-2xl">
+      <Skeleton variant="text" width={50} />
+    </span>
+  </div>
+);
 
 
-  const navigate = useNavigate();
+const ServicesExterior = ({ openSnackbar }) => {
+  const [isMessPopupOpen, setMessPopupOpen] = useState(false);
+  const [isLaundryPopupOpen, setLaundryPopupOpen] = useState(false);
 
-  const openEditDetailsPopup = useCallback(() => {
-    setEditDetailsPopupOpen(true);
+  const { data: daysLeft, setData: setDaysLeft, isLoading: isLoadingMess } = useFetchData("/api/services/mess");
+  const { data: weightLeft, setData: setWeightLeft, isLoading: isLoadingLaundry } = useFetchData("/api/services/laundry");
+
+  const openMessPopup = useCallback(() => {
+    setMessPopupOpen(true);
   }, []);
 
-  const closeEditDetailsPopup = useCallback(() => {
-    setEditDetailsPopupOpen(false);
+  const closeMessPopup = useCallback(() => {
+    setMessPopupOpen(false);
   }, []);
 
-  const openEditDetailsPopup1 = useCallback(() => {
-    setEditDetailsPopup1Open(true);
+  const handleMessClick = async () => {
+    const daysToAdd = messCount * messType;
+    const result = await postData("/api/services/mess", { daysToAdd });
+    console.log(result);
+    if (result.success) {
+      openSnackbar('Mess Days Increased successful', 'success');
+      setMessCount(0)
+      setDaysLeft(daysLeft + daysToAdd)
+      closeMessPopup()
+    } else {
+      openSnackbar('Error while processing the transaction. Please try again later.', 'error');
+    }
+  };
+
+  const openLaundryPopup = useCallback(() => {
+    setLaundryPopupOpen(true);
   }, []);
 
-  const closeEditDetailsPopup1 = useCallback(() => {
-    setEditDetailsPopup1Open(false);
+  const closeLaundryPopup = useCallback(() => {
+    setLaundryPopupOpen(false);
   }, []);
 
-  const [messType, setMessType] = useState('');
+  const handleLaundryClick = async () => {
+    const weightToAdd = laundryCount * laundryType;
+    const result = await postData("/api/services/laundry", { weightToAdd });
+    if (result.success) {
+      openSnackbar('Laundry Weight Increased successful', 'success');
+      setLaundryCount(0)
+      setWeightLeft(parseInt(weightLeft) + parseInt(weightToAdd))
+      closeLaundryPopup()
+
+    } else {
+      openSnackbar('Error while processing the transaction. Please try again later.', 'error');
+    }
+  };
+
+  const [messType, setMessType] = useState(1);
   const [messCount, setMessCount] = useState(0);
   const [totalAmountMess, setTotalAmountMess] = useState(0);
 
-  const [laundryType, setLaundryType] = useState();
+  const [laundryType, setLaundryType] = useState(1);
   const [laundryCount, setLaundryCount] = useState(0);
   const [totalAmountLaundry, setTotalAmountLaundry] = useState(0);
 
+
   const messCharge = {
-    'daily': 99,   // Daily Charges
-    'monthly': 3499, // Monthly Charges
-    'yearly': 34999 // Yearly Charges
+    1: 99,
+    30: 3499,
+    365: 34999
   };
 
   const laundryCharge = {
@@ -77,25 +135,30 @@ const ServicesExterior = () => {
           <section className="col-span-1 bg-slate-50 p-4 mt-10 rounded-lg">
             <h5 className="hd-s flex justify-center items-center ">Mess Service</h5>
             <div className="bg-gray-400 h-0.5 w-full my-2" />
-            <div className="mt-4 justify-between w-full flex pr-5">
-              <label className="lb-p text-xl ">Number of days Left</label>
-              <span className="text-p xs:text-2xl">
-                10
-              </span>
-            </div>
+            {isLoadingMess ? (
+              <LoadingDaysLeft />
+            ) : (
+              <div className="mt-4 justify-between w-full flex pr-5">
+                <label className="lb-p text-xl">Number of days Left</label>
+                <span className="text-p xs:text-2xl">
+                  {daysLeft}
+                </span>
+              </div>
+            )}
+
 
             <div className="flex mt-10">
               <div className=" w-full " >
-                <div className="hd-p flex justify-center  text-xl xs:text-2xl sm:text-4xl">{messCharge['daily']} ₹</div>
+                <div className="hd-p flex justify-center  text-xl xs:text-2xl sm:text-4xl">{messCharge[1]} ₹</div>
                 <span className="text-xs flex justify-center  font-medium leading-4 px-1 text-zinc-400">Daily Charges</span>
               </div>
 
               <div className=" w-full" >
-                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge['monthly']} ₹</div>
+                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge[30]} ₹</div>
                 <span className="text-xs flex justify-center text-center  font-medium leading-4 px-1 text-zinc-400">Monthly Charges</span>
               </div>
               <div className=" w-full" >
-                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge['yearly']} ₹</div>
+                <div className="hd-p flex justify-center text-xl xs:text-2xl sm:text-4xl">{messCharge[365]} ₹</div>
                 <span className="text-xs flex justify-center font-medium text-center leading-4 px-1 text-zinc-400">Yearly Charges</span>
               </div>
             </div>
@@ -111,9 +174,9 @@ const ServicesExterior = () => {
                   label="Type"
                   onChange={(e) => setMessType(e.target.value)}
                 >
-                  <MenuItem value={'daily'}>Daily</MenuItem>
-                  <MenuItem value={'monthly'}>Monthly</MenuItem>
-                  <MenuItem value={'yearly'}>Yearly</MenuItem>
+                  <MenuItem value={1}>Daily</MenuItem>
+                  <MenuItem value={30}>Monthly</MenuItem>
+                  <MenuItem value={365}>Yearly</MenuItem>
                 </Select>
               </FormControl>
 
@@ -138,7 +201,7 @@ const ServicesExterior = () => {
                 variant="contained"
                 color="success"
                 size="large"
-                onClick={openEditDetailsPopup}
+                onClick={openMessPopup}
                 disabled={!totalAmountMess}
               >
                 Add more days
@@ -150,12 +213,16 @@ const ServicesExterior = () => {
           <section className="col-span-1 bg-slate-50 p-4 mt-10 rounded-lg">
             <h5 className="hd-s flex justify-center items-center ">Laundry Service</h5>
             <div className="bg-gray-400 h-0.5 w-full my-2" />
-            <div className="mt-4 justify-between w-full flex pr-5">
-              <label className="lb-p text-xl ">Total Kg Left</label>
-              <span className="text-p text-2xl">
-                350
-              </span>
-            </div>
+            {isLoadingLaundry ? (
+              <LoadingTotalKgLeft />
+            ) : (
+              <div className="mt-4 justify-between w-full flex pr-5">
+                <label className="lb-p text-xl">Total Kg Left</label>
+                <span className="text-p text-2xl">
+                  {weightLeft} Kg
+                </span>
+              </div>
+            )}
 
             <div className="flex mt-10 justify-between">
               <div className="w-full flex items-center justify-center" >
@@ -210,7 +277,7 @@ const ServicesExterior = () => {
                 variant="contained"
                 color="success"
                 size="large"
-                onClick={openEditDetailsPopup}
+                onClick={openLaundryPopup}
                 disabled={!totalAmountLaundry}
               >
                 Add more Weight
@@ -225,22 +292,22 @@ const ServicesExterior = () => {
 
       </main>
 
-      {isEditDetailsPopupOpen && (
+      {isMessPopupOpen && (
         <PortalPopup
           overlayColor="rgba(0, 0, 0, 0.7)"
           placement="Centered"
-          onOutsideClick={closeEditDetailsPopup}
+          onOutsideClick={closeMessPopup}
         >
-          <EditDetailsPopup onClose={closeEditDetailsPopup} />
+          <Popup onClose={closeMessPopup} onSuccess={handleMessClick} />
         </PortalPopup>
       )}
-      {isEditDetailsPopup1Open && (
+      {isLaundryPopupOpen && (
         <PortalPopup
           overlayColor="rgba(0, 0, 0, 0.7)"
           placement="Centered"
-          onOutsideClick={closeEditDetailsPopup1}
+          onOutsideClick={closeLaundryPopup}
         >
-          <EditDetailsPopup onClose={closeEditDetailsPopup1} />
+          <Popup onClose={closeLaundryPopup} onSuccess={handleLaundryClick} />
         </PortalPopup>
       )}
     </>
