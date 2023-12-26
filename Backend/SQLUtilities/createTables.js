@@ -75,7 +75,7 @@ async function createEmployeeTab() {
             'STAFF',
             'WATCHMAN'
           ) NOT NULL,
-          account_No VARCHAR(17) NOT NULL,
+          account_No VARCHAR(17) UNIQUE NOT NULL,
           ifsc_code VARCHAR(12) NOT NULL,
           dob DATE NOT NULL,
           phone_no BIGINT DEFAULT NULL,

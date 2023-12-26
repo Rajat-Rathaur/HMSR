@@ -315,7 +315,6 @@ const Home = () => {
                 <h3 className="lb-p">Relationship</h3>
                 <span className="text-p">
                   {hostelite?.h_dependents_relationship}
-                  managerName
                 </span>
               </div>
 
