@@ -116,27 +116,20 @@ async function checkHosteliteCredentials(h_id, password) {
  */
 async function deleteHostelite(h_id) {
     try {
-        // Start a database transaction
         await connection.query('START TRANSACTION');
 
-        // Delete hostelite record
-        const [existingHostelite] = await connection.query('DELETE FROM hostelites WHERE h_id = ?', [h_id]);
-        await connection.query('DELETE FROM h_dependent WHERE hNo = ?', [h_id]);
-
-        if (existingHostelite.length === 0) {
-            // Rollback the transaction if hostelite not found
-            await connection.query('ROLLBACK');
-            return { error: "Hostelite not found with the provided H_id.", success: false };
-        }
-
-        // Delete associated details from belongs_to table
-        const [existingBelongsToDetails] = await connection.query('DELETE FROM belongs_to WHERE hNo = ?', [h_id]);
-
+        // Get information about the hostelite Details before deletion
+        const [existingBelongsToDetails] = await connection.query('SELECT rNo FROM belongs_to WHERE hNo = ?', [h_id]);
         if (existingBelongsToDetails.length === 0) {
             // Rollback the transaction if details not found
             await connection.query('ROLLBACK');
             return { error: "Hostelite details not found with the provided H_id.", success: false };
         }
+
+        // Delete hostelite and belongs_to entries
+        await connection.query('DELETE FROM hostelites WHERE h_id = ?', [h_id]);
+        await connection.query('DELETE FROM h_dependents WHERE hNo = ?', [h_id]);
+        await connection.query('DELETE FROM belongs_to WHERE hNo = ?', [h_id]);
 
         // Get room details based on the belongs_to relationship
         const r_id = existingBelongsToDetails[0].rNo;
@@ -152,9 +145,8 @@ async function deleteHostelite(h_id) {
         const newRoomStatus = roomType === 'S' ? 'Empty' : (roomStatus === 'Partially Occupied' ? 'Empty' : 'Partially Occupied');
         await connection.query(updateRoomStatusQuery, [newRoomStatus, roomNo, branchNo]);
 
-        // Commit the transaction
+        
         await connection.query('COMMIT');
-
         console.log(`Hostelite with h_id ${h_id} deleted successfully.`);
         return { success: true };
     } catch (err) {

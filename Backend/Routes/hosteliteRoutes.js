@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
+const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite } = require("../Operations/HosteliteOperations");
 
 const requireAuth = require("../Middlewares/reqAuth");
+
 const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
-const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite } = require("../Operations/HosteliteOperations");
 const admissionDataValidations = require("../Validations/HosteliteValidations/admissionDataValidations");
-const bcrypt = require("bcrypt");
+const deleteHosteliteValidations = require("../Validations/HosteliteValidations/deleteHosteliteValidations");
 
 router.use(express.json());
 
@@ -92,8 +94,9 @@ router.put('/updatePassword', requireAuth, async (req, res) => {
     }
 });
 
-router.post('/deleteHostelite', async (req, res) => {
+router.delete('/deleteHostelite', deleteHosteliteValidations, async (req, res) => {
     const id = req.body.id;
+    const h_id = id.substring(1);
     try {
         const result = await deleteHostelite(h_id);
 
