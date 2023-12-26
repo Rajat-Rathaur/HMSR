@@ -250,6 +250,32 @@ async function createLaundryTable() {
   }
 }
 
+async function createComplaintTable() {
+  try {
+    const [result] = await connection.query(`
+      CREATE TABLE IF NOT EXISTS complaint (
+          c_id INT AUTO_INCREMENT PRIMARY KEY,
+          hNo INT NOT NULL,
+          issue ENUM('Maintenance', 'Security', 'Room Condition', 'Noise Complaint') NOT NULL,
+          priority ENUM('High', 'Regular') NOT NULL,
+          description TEXT,
+          response TEXT,
+          status ENUM('Pending', 'Resolved', 'Ongoing') NOT NULL,
+          start_date DATE,
+          end_date DATE
+      );
+    `);
+
+    if (result.warningStatus === 0) {
+      console.log('Complaint table created successfully');
+    } else {
+      console.log('Complaint table already exists');
+    }
+  } catch (err) {
+    console.error('Error creating complaint table:', err);
+  }
+}
+
 const createTables = async () => {
   try {
     console.log('Table Check Started');
@@ -264,6 +290,7 @@ const createTables = async () => {
     await createPaymentsTable();
     await createMessTable();
     await createLaundryTable();
+    await createComplaintTable();
 
   } catch (err) {
     console.error('Error creating tables:', err);

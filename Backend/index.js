@@ -18,16 +18,18 @@ const branchRoutes = require("./Routes/branchRoutes");
 const adminRoutes = require("./Routes/adminRoutes");
 const servicesRoutes = require("./Routes/servicesRoutes");
 const employeeRoutes = require("./Routes/employeeRoutes");
+const feedsRoutes = require("./Routes/feedsRoutes");
 
 
 app.use(express.json());
 app.use(cors());
-app.use("/api/login", loginRoutes); 
-app.use("/api/admin", adminRoutes); 
-app.use("/api/branch", branchRoutes); 
-app.use("/api/employee", employeeRoutes); 
-app.use("/api/hostelite", hosteliteRoutes); 
-app.use("/api/services", servicesRoutes); 
+app.use("/api/login", loginRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/branch", branchRoutes);
+app.use("/api/employee", employeeRoutes);
+app.use("/api/hostelite", hosteliteRoutes);
+app.use("/api/services", servicesRoutes);
+app.use("/api/feeds", feedsRoutes);
 
 
 app.listen(process.env.PORT, () => {

@@ -91,7 +91,6 @@ async function addMessDays(hNo, daysToAdd, amount) {
     }
 }
 
-
 async function getLaundryWeight(hNo) {
     try {
         const [result] = await connection.query('SELECT weight_left FROM laundry WHERE hNo = ?', [hNo]);
@@ -108,7 +107,7 @@ async function getLaundryWeight(hNo) {
         return { success: false, error: 'Internal server error' };
     }
 }
-
+    
 async function addLaundryWeight(hNo, weightToAdd, amount) {
     try {
         await connection.query('START TRANSACTION');

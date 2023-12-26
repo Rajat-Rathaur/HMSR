@@ -50,7 +50,6 @@ const ServicesExterior = () => {
   const handleMessClick = async () => {
     const daysToAdd = messCount * messType;
     const result = await postData("/api/services/mess", { daysToAdd, amount: totalAmountMess });
-    console.log(result);
     if (result.success) {
       handleSnackbarOpen('Mess Days Increased successful', 'success');
       setMessCount(0)
