@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
 import { hosteliteState } from '../../recoil/state';
 import { useRecoilState } from 'recoil';
 import { formatDate } from '../../utilities/functions';
 import Skeleton from '@mui/material/Skeleton';
+import useFetchData from '../../hooks/usefetchData';
 
 const url = process.env.SERVER_URL || 'http://localhost:4000';
 const token = sessionStorage.getItem('token');
 
-const LoadingSkeleton = () => (
+const LoadingSkeletonSection1 = () => (
   <section className="flex flex-col justify-around items-baseline gap-y-3">
     <h2 className="hd-s">Personal Details</h2>
 
@@ -34,39 +34,37 @@ const LoadingSkeleton = () => (
   </section>
 );
 
+const LoadingSkeletonSection2 = () => (
+  <section className="lg:row-start-1 lg:col-start-3 xs:row-start-3 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
+    <h4 className="hd-s">Dask Info</h4>
+
+    <div>
+      <h3 className="lb-p">Branch</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Room no</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Bed No</h3>
+      <Skeleton variant="text" />
+    </div>
+
+    <div>
+      <h3 className="lb-p">Manager</h3>
+      <Skeleton variant="text" />
+    </div>
+  </section>
+);
+
 const Home = () => {
-  const [hostelite, setHostelite] = useRecoilState(hosteliteState);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true)
-        const response = await fetch(`${url}/api/hostelite/getHostelite`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log(data);
-        setHostelite(data.hostelite)
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 3000);
-        
-      } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-    }
-    fetchData();
-
-  }, [])
-
+  const { data: hostelite, isLoading } = useFetchData(
+    `${url}/api/hostelite/getHostelite`, 'GET');
+  console.log(hostelite);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
@@ -79,16 +77,6 @@ const Home = () => {
     minute: '2-digit',
     hour12: false,
   });
-
-  const navigate = useNavigate();
-  const hasNewNotification = true;
-  const handleNotificationClick = () => {
-    navigate('/notifications')
-  }
-
-  const handleUpdateDetailsClick = () => {
-    navigate('/updateDetails')
-  }
 
   return (
     <main className="bg-white w-full flex relative p-8">
@@ -109,28 +97,28 @@ const Home = () => {
           </section>
 
           {isLoading ?
-            <LoadingSkeleton /> :
+            <LoadingSkeletonSection1 /> :
             <section className="flex flex-col justify-around items-baseline gap-y-3">
               <h2 className="hd-s">Personal Details</h2>
 
               <div>
                 <h3 className="lb-p">Name</h3>
                 <span className="text-p">
-                  {hostelite?.F_name + (hostelite?.M_name && ' ') + hostelite?.M_name + ' ' + hostelite?.L_name}
+                  {hostelite?.hostelite_name}
                 </span>
               </div>
 
               <div>
                 <h3 className="lb-p">Hostelite Id</h3>
                 <span className="text-p">
-                  {'H' + hostelite?.H_id}
+                  {'H' + hostelite?.h_id}
                 </span>
               </div>
 
               <div>
                 <h3 className="lb-p">Date of Birth</h3>
                 <span className="text-p">
-                  {formatDate(hostelite?.DOB)}
+                  {formatDate(hostelite?.dob)}
                 </span>
               </div>
 
@@ -142,36 +130,40 @@ const Home = () => {
               </div>
             </section>
           }
-          <section className="lg:row-start-1 lg:col-start-3 xs:row-start-3 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
-            <h4 className="hd-s">Dask Info</h4>
-            <div >
-              <h3 className="lb-p">Branch</h3>
-              <span className="text-p">
-                branchName
-              </span>
-            </div>
+          {isLoading ?
+            <LoadingSkeletonSection2 />
+            :
+            <section className="lg:row-start-1 lg:col-start-3 xs:row-start-3 xs:col-start-1 flex flex-col justify-around items-baseline gap-3">
+              <h4 className="hd-s">Dask Info</h4>
+              <div >
+                <h3 className="lb-p">Branch</h3>
+                <span className="text-p">
+                  {hostelite.}
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Room no</h3>
-              <span className="text-p">
-                roomNo
-              </span>
-            </div>
+              <div>
+                <h3 className="lb-p">Room no</h3>
+                <span className="text-p">
+                  roomNo
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Bed No</h3>
-              <span className="text-p">
-                bedNo
-              </span>
-            </div>
+              <div>
+                <h3 className="lb-p">Bed No</h3>
+                <span className="text-p">
+                  bedNo
+                </span>
+              </div>
 
-            <div>
-              <h3 className="lb-p">Manager</h3>
-              <span className="text-p">
-                managerName
-              </span>
-            </div>
-          </section>
+              <div>
+                <h3 className="lb-p">Manager</h3>
+                <span className="text-p">
+                  managerName
+                </span>
+              </div>
+            </section>
+          }
 
           <section className="lg:row-start-2 lg:col-start-1 flex flex-col justify-around items-baseline gap-3">
             <h4 className="hd-s">Address Details</h4>
@@ -282,6 +274,7 @@ const Home = () => {
               </span>
             </div>
           </section>
+
         </div>
 
 

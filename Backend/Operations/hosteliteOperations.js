@@ -49,6 +49,62 @@ async function checkHosteliteCredentials(h_id, password) {
     return { success: true };
 }
 
+/**
+ * Deletes a hostelite and associated details from the database.
+ * @param {number} h_id - The ID of the hostelite to be deleted.
+ * @returns {Object} - Object containing success status or error message.
+ */
+async function deleteHostelite(h_id) {
+    try {
+        // Start a database transaction
+        await connection.query('START TRANSACTION');
+
+        // Delete hostelite record
+        const [existingHostelite] = await connection.query('DELETE FROM hostelites WHERE h_id = ?', [h_id]);
+        await connection.query('DELETE FROM h_dependent WHERE hNo = ?', [h_id]);
+
+        if (existingHostelite.length === 0) {
+            // Rollback the transaction if hostelite not found
+            await connection.query('ROLLBACK');
+            return { error: "Hostelite not found with the provided H_id.", success: false };
+        }
+
+        // Delete associated details from belongs_to table
+        const [existingBelongsToDetails] = await connection.query('DELETE FROM belongs_to WHERE hNo = ?', [h_id]);
+
+        if (existingBelongsToDetails.length === 0) {
+            // Rollback the transaction if details not found
+            await connection.query('ROLLBACK');
+            return { error: "Hostelite details not found with the provided H_id.", success: false };
+        }
+
+        // Get room details based on the belongs_to relationship
+        const r_id = existingBelongsToDetails[0].rNo;
+        const [existingRoom] = await connection.query('SELECT * FROM rooms WHERE r_id = ?', [r_id]);
+
+        const roomStatus = existingRoom[0].roomStatus;
+        const roomType = existingRoom[0].roomType;
+        const roomNo = existingRoom[0].roomNo;
+        const branchNo = existingRoom[0].branchNo;
+
+        // Update room status based on room type and occupancy
+        const updateRoomStatusQuery = 'UPDATE rooms SET roomStatus = ? WHERE roomNo = ? AND branchNo = ?';
+        const newRoomStatus = roomType === 'S' ? 'Empty' : (roomStatus === 'Partially Occupied' ? 'Empty' : 'Partially Occupied');
+        await connection.query(updateRoomStatusQuery, [newRoomStatus, roomNo, branchNo]);
+
+        // Commit the transaction
+        await connection.query('COMMIT');
+
+        console.log(`Hostelite with h_id ${h_id} deleted successfully.`);
+        return { success: true };
+    } catch (err) {
+        await connection.query('ROLLBACK');
+        console.error('Error deleting hostelite details:', err);
+        return { error: "An error occurred while deleting hostelite details.", success: false };
+    }
+}
+
+
 async function getHostelite(h_id) {
     try {
 
@@ -186,6 +242,6 @@ async function updatedHostelitePassword(h_id, hosteliteData) {
     }
 }
 
-module.exports = { checkHosteliteCredentials, getHostelite, updateHostelite, updatedHostelitePassword };
+module.exports = { checkHosteliteCredentials, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite };
 
 
