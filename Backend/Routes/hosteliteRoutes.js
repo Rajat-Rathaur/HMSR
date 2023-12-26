@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const requireAuth = require("../Middlewares/reqAuth");
-const addHosteliteValidations = require("../Validations/admissionDataValidations/addHosteliteValidations");
+const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
 const { addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite } = require("../Operations/HosteliteOperations");
-const admissionDataValidations = require("../Validations/admissionDataValidations/admissionDataValidations");
+const admissionDataValidations = require("../Validations/HosteliteValidations/admissionDataValidations");
+const bcrypt = require("bcrypt");
 
 router.use(express.json());
 

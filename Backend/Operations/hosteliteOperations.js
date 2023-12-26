@@ -74,9 +74,12 @@ async function addHostelite(hosteliteData, admissionData, hosteliteDependentData
         const newRoomStatus = (roomType === 'S' ? 'Occupied' : roomStatus === 'Partially Occupied' ? 'Occupied' : 'Partially Occupied');
         await connection.query(updateRoomStatusQuery, [newRoomStatus, roomNo, branchNo]);
 
+        // Adding hNo to h_dependent
+        hosteliteDependentData.hNo = insertedHostelite.insertId;
+
         // Insert the new h_dependent into table
         const insertHosteliteDependentQuery = 'INSERT INTO h_dependents  SET ?';
-        const [insertedHosteliteDependent] = await connection.query(insertHosteliteDependentQuery, hosteliteDependentData);
+        await connection.query(insertHosteliteDependentQuery, hosteliteDependentData);
 
         // Commit the transaction
         await connection.query('COMMIT');
