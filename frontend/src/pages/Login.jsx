@@ -7,7 +7,10 @@ import { useForm } from "react-hook-form";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-const Login = ({ openSnackbar }) => {
+import { useSnackbar } from '../hooks/useSnackbar';
+const Login = () => {
+  const {  handleSnackbarOpen } = useSnackbar();
+
   const { register, handleSubmit } = useForm();
   const url = process.env.SERVER_URL || 'http://localhost:4000';
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ const Login = ({ openSnackbar }) => {
     const isValid = /^[EH]\d+$/.test(data.id);
 
     if (!isValid) {
-      openSnackbar('Check id again. It should start with "E" or "H" followed by numbers.');
+      handleSnackbarOpen('Check id again. It should start with "E" or "H" followed by numbers.');
       return;
     }
 
@@ -36,9 +39,9 @@ const Login = ({ openSnackbar }) => {
         sessionStorage.setItem('id', id);
 
         navigate(`/home?id=${responseData.id}`)
-        openSnackbar('Login successful', 'success');  
+        handleSnackbarOpen('Login successful', 'success');  
       } else {
-        openSnackbar(responseData.error, 'error');
+        handleSnackbarOpen(responseData.error, 'error');
         console.error('Request failed with status:', resp.status);
       }
     } catch (error) {

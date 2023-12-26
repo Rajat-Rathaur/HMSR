@@ -2,12 +2,10 @@ import { useState, useCallback, useEffect } from "react";
 import { Button, MenuItem, InputLabel, Select, FormControl, TextField } from "@mui/material";
 import Popup from "../../components/popups/Popup";
 import PortalPopup from "../../components/PortalPopup";
-import { useNavigate } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 import Skeleton from '@mui/material/Skeleton';
-import useAddData from "../../utilities/postData";
 import postData from "../../utilities/postData";
-import { useRecoilState } from "recoil";
+import { useSnackbar } from "../../hooks/useSnackbar";
 
 const LoadingDaysLeft = () => (
   <div className="mt-4 justify-between w-full flex pr-5">
@@ -32,7 +30,9 @@ const LoadingTotalKgLeft = () => (
 );
 
 
-const ServicesExterior = ({ openSnackbar }) => {
+const ServicesExterior = () => {
+  const { handleSnackbarOpen } = useSnackbar();
+
   const [isMessPopupOpen, setMessPopupOpen] = useState(false);
   const [isLaundryPopupOpen, setLaundryPopupOpen] = useState(false);
 
@@ -49,15 +49,15 @@ const ServicesExterior = ({ openSnackbar }) => {
 
   const handleMessClick = async () => {
     const daysToAdd = messCount * messType;
-    const result = await postData("/api/services/mess", { daysToAdd });
+    const result = await postData("/api/services/mess", { daysToAdd, amount: totalAmountMess });
     console.log(result);
     if (result.success) {
-      openSnackbar('Mess Days Increased successful', 'success');
+      handleSnackbarOpen('Mess Days Increased successful', 'success');
       setMessCount(0)
       setDaysLeft(daysLeft + daysToAdd)
       closeMessPopup()
     } else {
-      openSnackbar('Error while processing the transaction. Please try again later.', 'error');
+      handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
     }
   };
 
@@ -71,15 +71,15 @@ const ServicesExterior = ({ openSnackbar }) => {
 
   const handleLaundryClick = async () => {
     const weightToAdd = laundryCount * laundryType;
-    const result = await postData("/api/services/laundry", { weightToAdd });
+    const result = await postData("/api/services/laundry", { weightToAdd, amount: totalAmountLaundry });
     if (result.success) {
-      openSnackbar('Laundry Weight Increased successful', 'success');
+      handleSnackbarOpen('Laundry Weight Increased successful', 'success');
       setLaundryCount(0)
       setWeightLeft(parseInt(weightLeft) + parseInt(weightToAdd))
       closeLaundryPopup()
 
     } else {
-      openSnackbar('Error while processing the transaction. Please try again later.', 'error');
+      handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
     }
   };
 

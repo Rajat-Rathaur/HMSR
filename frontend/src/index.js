@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css'
 
 import "./global.css";
+import { RecoilRoot } from "recoil";
 
 
 const container = document.getElementById("root");
@@ -13,6 +14,8 @@ const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </BrowserRouter>
 );

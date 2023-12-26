@@ -12,11 +12,12 @@ router.use(requireAuth);
 
 // Your existing route
 router.post('/mess', addMessDaysValidations, async (req, res) => {
-    const { daysToAdd } = req.body;
+    const { daysToAdd, amount } = req.body;
     const hNo = req.id;
 
     try {
-        const result = await addMessDays(hNo, daysToAdd)
+        const result = await addMessDays(hNo, daysToAdd, amount);
+
         if (!result.success)
             return res.status(404).json({ error: result.error });
 
@@ -61,10 +62,10 @@ router.get('/laundry', async (req, res) => {
 
 router.post('/laundry', addLaundryWeightValidation, async (req, res) => {
     const hNo = req.id;
-    const { weightToAdd } = req.body;
+    const { weightToAdd, amount } = req.body;
 
     try {
-        const result = await addLaundryWeight(hNo, weightToAdd);
+        const result = await addLaundryWeight(hNo, weightToAdd, amount);
 
         if (!result.success)
             return res.status(404).json({ error: result.error });

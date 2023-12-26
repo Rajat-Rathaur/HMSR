@@ -39,8 +39,20 @@ function calculateNewEndDate(date, daysToAdd) {
     return newDate;
 }
 
-async function addMessDays(hNo, daysToAdd) {
+async function addMessDays(hNo, daysToAdd, amount) {
     try {
+        await connection.query('START TRANSACTION');
+
+        // Add payment data
+        const paymentDate = new Date();
+            const [paymentResult] = await connection.query('INSERT INTO payments (from_user_id, amount, payment_date, payment_type, payment_category) VALUES (?, ?, ?, ?, ?)', [hNo, amount, paymentDate, 'Incoming', 'Mess']);
+
+        if (paymentResult.affectedRows <= 0) {
+            await connection.query('ROLLBACK');
+            return { success: false, error: 'Error adding payment data.' };
+        }
+
+        // Update or insert mess data
         const [existingResult] = await connection.query('SELECT end_date FROM mess WHERE hNo = ?', [hNo]);
 
         let newEndDate;
@@ -52,20 +64,24 @@ async function addMessDays(hNo, daysToAdd) {
                 newEndDate = calculateNewEndDate(new Date(oldEndDate), daysToAdd);
                 const [updateResult] = await connection.query('UPDATE mess SET end_date = ?, start_date = ? WHERE hNo = ?', [newEndDate, startDate, hNo]);
 
-                if (updateResult.affectedRows > 0)
-                    return { success: true, message: 'Days added successfully.' };
-
+                if (updateResult.affectedRows <= 0) {
+                    await connection.query('ROLLBACK');
+                    return { success: false, error: 'Error updating mess data.' };
+                }
             } else {
                 newEndDate = calculateNewEndDate(startDate, daysToAdd);
                 const [insertResult] = await connection.query('INSERT INTO mess (hNo, end_date, start_date) VALUES (?, ?, ?)', [hNo, newEndDate, startDate]);
 
-                if (insertResult.affectedRows > 0)
-                    return { success: true, message: 'Days added successfully.' };
-
+                if (insertResult.affectedRows <= 0) {
+                    await connection.query('ROLLBACK');
+                    return { success: false, error: 'Error inserting mess data.' };
+                }
             }
 
-            return { success: false, error: 'Error adding days.' };
+            await connection.query('COMMIT');
+            return { success: true, message: 'Days added successfully.' };
         } catch (error) {
+            await connection.query('ROLLBACK');
             console.error('Error in database operation:', error);
             return { success: false, error: 'Internal server error' };
         }
@@ -93,8 +109,10 @@ async function getLaundryWeight(hNo) {
     }
 }
 
-async function addLaundryWeight(hNo, weightToAdd) {
+async function addLaundryWeight(hNo, weightToAdd, amount) {
     try {
+        await connection.query('START TRANSACTION');
+
         const [result] = await connection.query('SELECT weight_left FROM laundry WHERE hNo = ?', [hNo]);
 
         let currentWeight = 0;
@@ -104,24 +122,33 @@ async function addLaundryWeight(hNo, weightToAdd) {
         }
 
         const newWeight = parseInt(currentWeight) + parseInt(weightToAdd);
-        console.log(newWeight, hNo);
+
+        // Update or insert into laundry table
         const query = result.length > 0
             ? 'UPDATE laundry SET weight_left = ? WHERE hNo = ?'
             : 'INSERT INTO laundry (weight_left,hNo) VALUES (?, ?)';
 
         const [updateResult] = await connection.query(query, [newWeight, hNo]);
 
-        if (updateResult.affectedRows > 0)
-            return { success: true, data: newWeight, message: 'Laundry weight added successfully.' };
+        // Insert into payments table
+        const paymentDate = new Date();
+        const [paymentResult] = await connection.query('INSERT INTO payments (from_user_id, amount, payment_date, payment_type, payment_category) VALUES (?, ?, ?, ?, ?)', [hNo, amount, paymentDate, 'Incoming', 'Laundry']);
 
-        else
-            return { success: false, error: 'Error adding laundry weight.' };
+        if (updateResult.affectedRows > 0 && paymentResult.affectedRows > 0) {
+            await connection.query('COMMIT');
+            return { success: true, data: newWeight, message: 'Laundry weight added successfully.' };
+        } else {
+            await connection.query('ROLLBACK');
+            return { success: false, error: 'Error adding laundry weight or payment.' };
+        }
 
     } catch (err) {
+        await connection.query('ROLLBACK');
         console.error('Error adding laundry weight:', err);
         return { success: false, error: 'Internal server error' };
     }
 }
+
 
 
 

@@ -198,6 +198,7 @@ async function createPaymentsTable() {
               amount DECIMAL(10, 2) NOT NULL,
               payment_date DATE NOT NULL,
               payment_type ENUM('Incoming', 'Outgoing') NOT NULL,
+              payment_category ENUM('Mess', 'Laundry', 'Fees', 'Wages', 'Others') NOT NULL,
               to_user_id INT
           );`
     );
