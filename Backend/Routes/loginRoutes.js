@@ -25,6 +25,7 @@ router.post("/", loginValidations, async (req, res) => {
 
         } else if (data.id.startsWith('E')) {
             const e_id = data.id.substring(1);
+            
             return res.status(500).json({ error: "EMPLOYEE WORK IN PROGRESS", success: false });
         }
         else {

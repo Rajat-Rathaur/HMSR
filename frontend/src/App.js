@@ -19,6 +19,8 @@ import NavBar from "./components/NavBar";
 
 import TopNavBar from "./components/TopNavBar";
 import { useSnackbar } from "./hooks/useSnackbar";
+import { useRecoilState } from "recoil";
+import { loggedInState } from "./recoil/state";
 
 function App() {
   const location = useLocation();
@@ -62,6 +64,11 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+
+      default:
+        title = "";
+        metaDescription = "";
+
     }
 
     if (title) {
@@ -78,25 +85,17 @@ function App() {
     }
   }, [pathname]);
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
+
   useLayoutEffect(() => {
-    if (sessionStorage.getItem('token'))
-      setLoggedIn(true)
-    else
-      setLoggedIn(false);
-
-    if (pathname === '/')
-      sessionStorage.clear();
-
-
-  }, [sessionStorage.getItem('token'), pathname])
-
-  useEffect(() => {
-    if (!sessionStorage.getItem('token'))
+    if (!sessionStorage.getItem('token')) {
       navigate('/')
+      sessionStorage.clear();
+    }
+    else
+      setLoggedIn(true);
 
   }, [sessionStorage.getItem('token')])
-
 
   const { isSnackbarOpen, snackbarMessage, snackbarType, handleSnackbarClose } = useSnackbar();
 
@@ -108,7 +107,8 @@ function App() {
         autoHideDuration={3000}
         onClose={handleSnackbarClose}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarType} sx={{ width: '100%' }}>
+        <Alert onClose={handleSnackbarClose} severity={snackbarType}
+          sx={{ width: '100%' }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>

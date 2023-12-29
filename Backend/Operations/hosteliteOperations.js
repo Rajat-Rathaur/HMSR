@@ -180,6 +180,8 @@ async function getHostelite(h_id) {
             
             belongs_to.rNo,
             belongs_to.bedNumber,
+            belongs_to.dateOfJoin,
+            belongs_to.dateOfExit,
             
             h_dependents.name AS h_dependents_name,
             h_dependents.phone_no AS h_dependents_phone_no,

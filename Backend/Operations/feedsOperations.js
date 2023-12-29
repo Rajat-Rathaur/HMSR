@@ -2,13 +2,13 @@ const connection = require("../Connections/connect");
 
 async function getComplaints(hno) {
     try {
-        const [result] = await connection.query('SELECT * FROM complaint WHERE hNo = ?', [hno]);
+        const [result] = await connection.query('SELECT * FROM complaint WHERE hNo = ? ORDER BY start_date DESC', [hno]);
 
-        if (result.length > 0) {
+        if (result.length > 0)
             return { success: true, data: result };
-        } else {
+        else
             return { success: true, data: [] };
-        }
+
     } catch (err) {
         console.error('Error getting complaints:', err);
         return { success: false, error: 'Internal server error' };
@@ -70,17 +70,16 @@ async function updateComplaintStatus(c_id, status, response) {
     }
 }
 
-
 async function getAllComplaintsByStatus(status) {
     try {
         let query;
         let queryParams;
 
         if (status === null) {
-            query = 'SELECT * FROM complaint';
+            query = 'SELECT * FROM complaint ORDER BY start_date DESC';
             queryParams = [];
         } else {
-            query = 'SELECT * FROM complaint WHERE status = ?';
+            query = 'SELECT * FROM complaint WHERE status = ? ORDER BY start_date DESC';
             queryParams = [status];
         }
 

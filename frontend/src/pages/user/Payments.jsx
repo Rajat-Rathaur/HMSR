@@ -1,12 +1,30 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import StepperLine from "../../mui/StepperLine";
 import { TextField, Button, InputAdornment, Typography } from '@mui/material';
-import PaymentTable from "../../mui/PaymentTable";
+import TableCollapsible from "../../mui/TableCollapsible";
+import { formatDate } from "../../utilities/functions";
+import useFetchData from "../../hooks/useFetchData";
+import Skeleton from '@mui/material/Skeleton';
 
 const Payments = () => {
-  const navigate = useNavigate();
+  const { data: hostelite, isLoading } = useFetchData(
+    '/api/hostelite/getHostelite');
 
+  const currentDate = new Date();
+  const dateOfNextInstallment = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+  const dateOfExit = hostelite?.dateOfExit;
+  const dateOfJoining = hostelite?.dateOfJoin;
+  let daysLeft;
+  if (dateOfExit && dateOfJoining) {
+    const exitDateUTC = new Date(dateOfExit).setUTCHours(0, 0, 0, 0);
+    const joinDateUTC = new Date(dateOfJoining).setUTCHours(0, 0, 0, 0);
+
+    const timeDifference = exitDateUTC - joinDateUTC;
+
+    daysLeft = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  } else {
+    console.error('Invalid dates');
+  }
 
   return (
     <>
@@ -20,37 +38,62 @@ const Payments = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           <div className="col-span-1 grid gap-5 mt-10">
-            <div className=" bg-slate-50 p-4 rounded-lg">
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28" >
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Joining Date</h5>
-              <p className="hd-p text-3xl  mt-4 mb-2">Jan 15, 2020 </p>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'80%'} />
+              ) : (
+                <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfJoining)}</p>
+              )}
             </div>
 
-            <div className=" bg-slate-50 p-4 rounded-lg">
-              <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Joining Date</h5>
-              <p className="hd-p text-3xl  mt-4 mb-2"> 15th   Jan 2020 </p>
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
+              <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Date of Exit</h5>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'80%'} />
+              ) : (
+                <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfExit)}</p>
+              )}
             </div>
 
-            <div className=" bg-slate-50 p-4 rounded-lg">
-              <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Joining Date</h5>
-              <p className="hd-p text-3xl   mt-4 mb-2"> 15th Jan 2020 </p>
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
+              <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Next Installment Date</h5>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'80%'} />
+              ) : (
+                <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfNextInstallment)}</p>
+              )}
             </div>
           </div>
 
 
           <div className="col-span-1 grid gap-5 mt-10">
-            <div className=" bg-slate-50 p-4 rounded-lg">
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Total Rent</h5>
-              <p className="hd-p text-3xl  mt-4 mb-2">2020 ₹</p>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'30%'} />
+              ) : (
+                <p className="hd-p text-3xl  mt-4 mb-2">2020 ₹</p>
+
+              )}
             </div>
 
-            <div className=" bg-slate-50 p-4 rounded-lg">
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Rent Paid</h5>
-              <p className="hd-p text-3xl  mt-4 mb-2"> 5000 ₹</p>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'30%'} />
+              ) : (
+                <p className="hd-p text-3xl  mt-4 mb-2"> 5000 ₹</p>
+              )}
             </div>
 
-            <div className=" bg-slate-50 p-4 rounded-lg">
+            <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Rent Left</h5>
-              <p className="hd-p text-3xl   mt-4 mb-2">1135  ₹</p>
+              {isLoading ? (
+                <Skeleton variant="text" height={'80%'} width={'30%'} />
+              ) : (
+                <p className="hd-p text-3xl   mt-4 mb-2">1135  ₹</p>
+              )}
             </div>
           </div>
 
@@ -59,7 +102,7 @@ const Payments = () => {
               ■ Total Days Left to Enjoy
             </h5>
             <div className="w-full flex justify-center items-center p-8">
-              <h2 className="rounded-full flex text-center items-center justify-center border-green-800 border-4 bg-white h-48 w-48 hd-p text-lime-700 text-6xl ">20</h2>
+              <h2 className="rounded-full flex text-center items-center justify-center border-green-800 border-4 bg-white h-48 w-48 hd-p text-lime-700 text-6xl ">{daysLeft }</h2>
             </div>
             <p className="font-bold text-center text-slate-600">Do advance booking and enjoy savings of up to 15%* on your total rent.</p>
           </div>
@@ -107,7 +150,7 @@ const Payments = () => {
 
         <div className="mt-10">
           <h2 className="mb-5 text-xl font-medium leading-4 px-1 text-zinc-400">Previous Transactions</h2>
-          <PaymentTable />
+          {/* <TableCollapsible rowData={null} headers={null}/> */}
         </div>
       </main>
 

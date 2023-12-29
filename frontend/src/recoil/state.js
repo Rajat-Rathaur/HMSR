@@ -19,3 +19,8 @@ export const snackbarTypeState = atom({
     key: 'snackbarTypeState',
     default: 'info',
 });
+
+export const loggedInState = atom({
+    key: 'loggedInState',
+    default: false,
+});

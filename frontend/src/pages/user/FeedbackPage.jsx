@@ -4,9 +4,45 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import Feedback from "../../sections/Feedback";
 import Complaints from "../../sections/Complaints";
 import { useSearchParams } from "react-router-dom";
+import TableCollapsible from "../../mui/TableCollapsible";
+import useFetchData from "../../hooks/useFetchData";
 const FeedbackPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab');
+  const { data: complaintsData, isLoading: isLoadingComplaints } = useFetchData(
+    '/api/feeds/complaint');
+
+  const headers = {
+    'issue': {
+      minWidth: 100,
+      align: 'center'
+    }, 'status': {
+      minWidth: 100,
+      align: 'center'
+    }, 'priority': {
+      minWidth: 100,
+      align: 'center'
+    }, 'start_date': {
+      minWidth: 100,
+      align: 'center',
+      type: 'date'
+    }, 'end_date': {
+      minWidth: 100,
+      align: 'center',
+      type: 'date'
+    }, 'description': {
+      minWidth: 100,
+      align: 'center',
+      hidden: true
+    }, 'response': {
+      minWidth: 100,
+      align: 'center',
+      hidden: true
+    },
+  };
+
+
+
   return (
     <>
       <main className="bg-white w-full flex flex-col relative p-8">
@@ -22,9 +58,16 @@ const FeedbackPage = () => {
         </div>
 
         {tab === 'Feedback' && <Feedback />}
-        {tab === 'Complaint' && <Complaints />}
-      </main >
+        {tab === 'Complaint' && <>
+          <Complaints />
+          <div className="mt-10">
+            <h2 className="mb-5 text-xl font-medium leading-4 px-1 text-zinc-400">Previous Complaints Raised</h2>
+            <TableCollapsible rowData={complaintsData} headers={headers} isLoading={isLoadingComplaints} />
+          </div>
+        </>
+        }
 
+      </main >
     </>
   );
 };

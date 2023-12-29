@@ -109,7 +109,7 @@ const ServicesExterior = () => {
     };
 
     calculateTotalAmountMess();
-  }, [messType, messCount]);
+  }, [messType, messCount, messCharge]);
 
   useEffect(() => {
     const calculateTotalAmountLaundry = () => {
@@ -118,7 +118,7 @@ const ServicesExterior = () => {
     };
 
     calculateTotalAmountLaundry();
-  }, [laundryType, laundryCount]);
+  }, [laundryType, laundryCount, laundryCharge]);
 
   return (
     <>

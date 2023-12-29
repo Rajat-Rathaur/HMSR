@@ -1,5 +1,5 @@
 const express = require('express');
-const { getComplaints, addComplaint, updateComplaintStatus } = require('../Operations/feedbackOperations');
+const { getComplaints, addComplaint, updateComplaintStatus } = require('../Operations/feedsOperations');
 const requireAuth = require('../Middlewares/reqAuth');
 const addComplaintValidations = require('../Validations/FeedValidations.js/AddComplaintValidations');
 const updateComplaintValidations = require('../Validations/FeedValidations.js/updateComplaintValidations');
@@ -14,7 +14,7 @@ router.get('/complaint', async (req, res) => {
     const result = await getComplaints(hid);
 
     if (result.success) {
-      return res.status(200).json(result.data);
+      return res.status(200).json({ data: result.data, success: true });
     } else {
       return res.status(404).json({ error: 'No complaints found' });
     }

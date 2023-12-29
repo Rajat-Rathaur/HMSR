@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { hosteliteState } from '../../recoil/state';
-import { useRecoilState } from 'recoil';
 import { formatDate } from '../../utilities/functions';
 import Skeleton from '@mui/material/Skeleton';
 import useFetchData from '../../hooks/useFetchData';
 
-const token = sessionStorage.getItem('token');
 
 const LoadingSkeletonSection1 = () => (
   <section className="flex flex-col justify-around items-baseline gap-y-3">
@@ -155,7 +152,7 @@ const Home = () => {
 
   const { data: hostelite, isLoading } = useFetchData(
     '/api/hostelite/getHostelite');
-
+  console.log(hostelite);
   return (
     <main className="bg-white w-full flex relative p-8">
       <div className=" w-full" >
@@ -334,15 +331,14 @@ const Home = () => {
               <div >
                 <h3 className="lb-p">Date Of Join</h3>
                 <span className="text-p">
-                  --
-                  {/* {hostelite?.h_dependents_phone_no} */}
+                  {formatDate(hostelite.dateOfJoin)}
                 </span>
               </div>
 
               <div>
                 <h3 className="lb-p">Valid Till</h3>
                 <span className="text-p">
-                  N/A
+                  {formatDate(hostelite.dateOfExit)}
                 </span>
               </div>
 
