@@ -102,7 +102,7 @@ const Payments = () => {
               ■ Total Days Left to Enjoy
             </h5>
             <div className="w-full flex justify-center items-center p-8">
-              <h2 className="rounded-full flex text-center items-center justify-center border-green-800 border-4 bg-white h-48 w-48 hd-p text-lime-700 text-6xl ">{daysLeft }</h2>
+              <h2 className="rounded-full flex text-center items-center justify-center border-green-800 border-4 bg-white h-48 w-48 hd-p text-lime-700 text-6xl ">{daysLeft}</h2>
             </div>
             <p className="font-bold text-center text-slate-600">Do advance booking and enjoy savings of up to 15%* on your total rent.</p>
           </div>

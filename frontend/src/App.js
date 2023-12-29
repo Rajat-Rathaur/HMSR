@@ -7,12 +7,12 @@ import {
 import Login from "./pages/Login";
 import Home from "./pages/user/Home";
 import Services from "./pages/user/Services";
-import FeedbackPage from "./pages/user/FeedbackPage";
+import Feeds from "./pages/user/Feeds";
 import PaymentsExterior from "./pages/user/Payments";
 import AttendanceExterior from "./pages/AttendanceExterior";
 import NotificationsExterior from "./pages/NotificationsExterior";
 import EditDetailsExterior from "./pages/EditDetailsExterior";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import { Snackbar, Alert } from '@mui/material';
 import NavBar from "./components/NavBar";
@@ -122,7 +122,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/updateDetails" element={<EditDetailsExterior />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/feeds" element={<FeedbackPage />} />
+            <Route path="/feeds" element={<Feeds />} />
             <Route path="/notifications" element={<NotificationsExterior />} />
             <Route path="/payments" element={<PaymentsExterior />} />
             <Route path="/attendance" element={<AttendanceExterior />} />

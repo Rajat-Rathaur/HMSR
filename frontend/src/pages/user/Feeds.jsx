@@ -6,12 +6,8 @@ import Complaints from "../../sections/Complaints";
 import { useSearchParams } from "react-router-dom";
 import TableCollapsible from "../../mui/TableCollapsible";
 import useFetchData from "../../hooks/useFetchData";
-const FeedbackPage = () => {
-  const [searchParams] = useSearchParams();
-  const tab = searchParams.get('tab');
-  const { data: complaintsData, isLoading: isLoadingComplaints } = useFetchData(
-    '/api/feeds/complaint');
 
+const ComplaintsTable = () => {
   const headers = {
     'issue': {
       minWidth: 100,
@@ -41,7 +37,17 @@ const FeedbackPage = () => {
     },
   };
 
+  const { data: complaintsData, isLoading: isLoadingComplaints } = useFetchData(
+    '/api/feeds/complaint');
+    console.log(complaintsData);
+  return (
+    <TableCollapsible rowData={complaintsData} headers={headers} isLoading={isLoadingComplaints} />
+  );
+};
 
+const Feeds = () => {
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get('tab');
 
   return (
     <>
@@ -62,7 +68,7 @@ const FeedbackPage = () => {
           <Complaints />
           <div className="mt-10">
             <h2 className="mb-5 text-xl font-medium leading-4 px-1 text-zinc-400">Previous Complaints Raised</h2>
-            <TableCollapsible rowData={complaintsData} headers={headers} isLoading={isLoadingComplaints} />
+            <ComplaintsTable />
           </div>
         </>
         }
@@ -72,4 +78,4 @@ const FeedbackPage = () => {
   );
 };
 
-export default FeedbackPage;
+export default Feeds;
