@@ -9,7 +9,6 @@ const deleteEmployeeValidations = require("../Validations/EmployeeValidations/de
 
 router.use(express.json());
 
-
 router.post("/addEmployee", addEmployeeValidations, async (req, res) => {
     try {
         const { employeeData, admissionData, employeeDependentData } = req.body;
@@ -53,7 +52,5 @@ router.delete('/deleteEmployee', deleteEmployeeValidations, async (req, res) => 
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-
 
 module.exports = router;
