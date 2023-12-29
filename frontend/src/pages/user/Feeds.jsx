@@ -39,7 +39,6 @@ const ComplaintsTable = () => {
 
   const { data: complaintsData, isLoading: isLoadingComplaints } = useFetchData(
     '/api/feeds/complaint');
-    console.log(complaintsData);
   return (
     <TableCollapsible rowData={complaintsData} headers={headers} isLoading={isLoadingComplaints} />
   );
@@ -54,16 +53,21 @@ const Feeds = () => {
       <main className="bg-white w-full flex flex-col relative p-8">
         <div className=" w-full flex justify-center xs:justify-start" >
           <div>
-            <div className="hd-p">Complaints</div>
-            <span className="text-xs font-medium  leading-4 px-1 text-zinc-400">Your satisfaction is our priority.</span>
+            {tab === 'Complaint' && <>
+              <header className="hd-p">Complaints</header>
+              <span className="text-xs font-medium  leading-4 px-1 text-zinc-400">Always ready to resolve your concerns.</span>
+            </>}
+            {tab === 'Feedback' && <>
+              <header className="hd-p">Feedback</header>
+              <span className="text-xs font-medium  leading-4 px-1 text-zinc-400">Your satisfaction is our priority.</span>
+            </>}
           </div>
         </div>
 
         <div className="my-5">
-          <TwoWayTab label1='Feedback' label2='Complaint' icon1={<FeedbackIcon />} icon2={<AssistantIcon />} />
+          <TwoWayTab label1='Complaint' label2='Feedback' icon1={<AssistantIcon />} icon2={<FeedbackIcon />} />
         </div>
 
-        {tab === 'Feedback' && <Feedback />}
         {tab === 'Complaint' && <>
           <Complaints />
           <div className="mt-10">
@@ -72,6 +76,7 @@ const Feeds = () => {
           </div>
         </>
         }
+        {tab === 'Feedback' && <Feedback />}
 
       </main >
     </>

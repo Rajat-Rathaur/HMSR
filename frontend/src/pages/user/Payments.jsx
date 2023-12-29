@@ -31,7 +31,7 @@ const Payments = () => {
       <main className="bg-white w-full flex flex-col relative p-8">
         <div className=" w-full flex justify-center xs:justify-start" >
           <div>
-            <div className="hd-p">Payments</div>
+            <header className="hd-p">Payments</header>
             <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Experience first, pay later.</span>
           </div>
         </div>

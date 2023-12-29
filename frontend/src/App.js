@@ -1,3 +1,8 @@
+import { useEffect, useLayoutEffect } from "react";
+import { Snackbar, Alert } from '@mui/material';
+import { useSnackbar } from "./hooks/useSnackbar";
+import { useRecoilState } from "recoil";
+import { loggedInState } from "./recoil/state";
 import {
   Routes,
   Route,
@@ -7,20 +12,16 @@ import {
 import Login from "./pages/Login";
 import Home from "./pages/user/Home";
 import Services from "./pages/user/Services";
+import Payments from "./pages/user/Payments";
+import Attendance from "./pages/user/Attendance";
 import Feeds from "./pages/user/Feeds";
-import PaymentsExterior from "./pages/user/Payments";
-import AttendanceExterior from "./pages/AttendanceExterior";
-import NotificationsExterior from "./pages/NotificationsExterior";
-import EditDetailsExterior from "./pages/EditDetailsExterior";
-import { useEffect, useLayoutEffect } from "react";
 
-import { Snackbar, Alert } from '@mui/material';
+import Notifications from "./pages/user/Notifications";
+import EditDetailsExterior from "./pages/EditDetailsExterior";
+
 import NavBar from "./components/NavBar";
 
 import TopNavBar from "./components/TopNavBar";
-import { useSnackbar } from "./hooks/useSnackbar";
-import { useRecoilState } from "recoil";
-import { loggedInState } from "./recoil/state";
 
 function App() {
   const location = useLocation();
@@ -101,7 +102,6 @@ function App() {
 
   return (
     <>
-
       <Snackbar
         open={isSnackbarOpen}
         autoHideDuration={3000}
@@ -122,10 +122,10 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/updateDetails" element={<EditDetailsExterior />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/attendance" element={<Attendance />} />
             <Route path="/feeds" element={<Feeds />} />
-            <Route path="/notifications" element={<NotificationsExterior />} />
-            <Route path="/payments" element={<PaymentsExterior />} />
-            <Route path="/attendance" element={<AttendanceExterior />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Routes>
         </div>
       </div >

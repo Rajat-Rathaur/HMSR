@@ -125,7 +125,7 @@ const ServicesExterior = () => {
       <main className="bg-white w-full flex flex-col relative p-8">
         <div className=" w-full flex justify-center xs:justify-start" >
           <div>
-            <div className="hd-p">Services</div>
+            <header className="hd-p">Services</header>
             <span className="text-xs font-medium leading-4 px-1 text-zinc-400">All services at your doorstep..</span>
           </div>
         </div>

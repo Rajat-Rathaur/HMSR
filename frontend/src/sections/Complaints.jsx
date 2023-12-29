@@ -21,7 +21,7 @@ const Complaints = () => {
     description: "",
     priority: ""
   }
-  
+
   const { register, control, reset, handleSubmit } = useForm({ defaultValues });
 
   const handleComplaintClick = async (data, e) => {
@@ -76,28 +76,31 @@ const Complaints = () => {
             </FormControl>
           </div>
 
-          <div className="col-span-full w-full flex">
+          <div className="col-span-full w-full flex flex-col">
+            <h5 className="text-sm font-medium leading-4 px-1 mt-5 mb-2 text-zinc-400">Feel free to sprinkle your thoughts here! ✨</h5>
             <TextField
               className="w-full"
               color="primary"
               variant="outlined"
               multiline
               label="Describe the issue"
-              minRows={6}
+              minRows={5}
               placeholder="Describe your issue"
               {...register("description")}
+              margin='normal'
             />
           </div>
-
-          <Button
-            className="col-span-full sm:col-start-2 justify-self-end sm:max-w-96"
-            fullWidth
-            variant="contained"
-            color="success"
-            size="large"
-            type='submit'
-          // onClick={openEditDetailsPopup}
-          >Submit Complaint</Button>
+          <div className='col-span-full flex items-center justify-center'>
+            <Button
+              className="sm:max-w-96"
+              fullWidth
+              variant="contained"
+              color="success"
+              size="large"
+              type='submit'
+            // onClick={openEditDetailsPopup}
+            >Submit Complaint</Button>
+          </div>
         </section>
       </form>
     </>

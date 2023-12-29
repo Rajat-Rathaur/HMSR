@@ -152,12 +152,11 @@ const Home = () => {
 
   const { data: hostelite, isLoading } = useFetchData(
     '/api/hostelite/getHostelite');
-  console.log(hostelite);
   return (
     <main className="bg-white w-full flex relative p-8">
       <div className=" w-full" >
         <div className="flex justify-between">
-          <div className="hd-p">DashBoard</div>
+          <header className="hd-p">DashBoard</header>
         </div>
 
         <span className="text-xs font-medium leading-4 px-1 text-zinc-400">Welcome back to Dask !!</span>
