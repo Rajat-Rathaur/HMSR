@@ -4,10 +4,58 @@ import TableCollapsible from "../../mui/TableCollapsible";
 import { formatDate } from "../../utilities/functions";
 import useFetchData from "../../hooks/useFetchData";
 import Skeleton from '@mui/material/Skeleton';
+import postData from "../../utilities/postData";
+import { useEffect, useState } from "react";
+import { useSnackbar } from "../../hooks/useSnackbar";
+
+const PaymentsTable = ({ keyToUpdate }) => {
+  const headers = {
+    'payment_category': {
+      label: 'Payment Category',
+      minWidth: 100,
+      align: 'center'
+    }, 'amount': {
+      label: 'Amount',
+      minWidth: 100,
+      align: 'center'
+    }, 'payment_date': {
+      label: 'Payment Date',
+      minWidth: 100,
+      align: 'center',
+      type: 'date'
+    }
+  };
+
+  const { data: paymentsData, isLoading: isLoadingPayments, refreshData } = useFetchData(
+    '/api/payment/getPayment');
+
+  useEffect(() => {
+    refreshData();
+  }, [keyToUpdate]);
+
+  return (
+    <TableCollapsible key={keyToUpdate} rowData={paymentsData} headers={headers} isLoading={isLoadingPayments} collapse={false} />
+  );
+};
 
 const Payments = () => {
-  const { data: hostelite, isLoading } = useFetchData(
+  const { handleSnackbarOpen } = useSnackbar();
+  const [amount, setAmount] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-render
+
+  const { data: hostelite, isLoadingHostelite } = useFetchData(
     '/api/hostelite/getHostelite');
+
+  const handlePayClick = async () => {
+    const result = await postData("/api/payment/addFeesPayment", { amount });
+    if (result.success) {
+      handleSnackbarOpen('Fees Paid successful', 'success');
+      setAmount(0);
+      setRefreshKey((prevKey) => prevKey + 1);
+    } else {
+      handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
+    }
+  };
 
   const currentDate = new Date();
   const dateOfNextInstallment = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
@@ -40,7 +88,7 @@ const Payments = () => {
           <div className="col-span-1 grid gap-5 mt-10">
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28" >
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Joining Date</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'80%'} />
               ) : (
                 <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfJoining)}</p>
@@ -49,7 +97,7 @@ const Payments = () => {
 
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Date of Exit</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'80%'} />
               ) : (
                 <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfExit)}</p>
@@ -58,7 +106,7 @@ const Payments = () => {
 
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Next Installment Date</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'80%'} />
               ) : (
                 <p className="hd-p text-3xl mt-4 mb-2">{formatDate(dateOfNextInstallment)}</p>
@@ -70,7 +118,7 @@ const Payments = () => {
           <div className="col-span-1 grid gap-5 mt-10">
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Total Rent</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
                 <p className="hd-p text-3xl  mt-4 mb-2">2020 ₹</p>
@@ -80,7 +128,7 @@ const Payments = () => {
 
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Rent Paid</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
                 <p className="hd-p text-3xl  mt-4 mb-2"> 5000 ₹</p>
@@ -89,7 +137,7 @@ const Payments = () => {
 
             <div className=" bg-slate-50 p-4 rounded-lg min-h-28">
               <h5 className="text-xs font-medium leading-4 px-1 text-zinc-400">Rent Left</h5>
-              {isLoading ? (
+              {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
                 <p className="hd-p text-3xl   mt-4 mb-2">1135  ₹</p>
@@ -117,6 +165,8 @@ const Payments = () => {
               label="Rent"
               variant="outlined"
               type="number"
+              value={amount}
+              onChange={(event) => setAmount(parseInt(event.target.value))}
               fullWidth
               sx={{
                 "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -141,6 +191,7 @@ const Payments = () => {
               className="max-w-96 w-full"
               variant="contained"
               color="success"
+              onClick={handlePayClick}
             >
               Pay Remaining
             </Button>
@@ -150,7 +201,7 @@ const Payments = () => {
 
         <div className="mt-10">
           <h2 className="mb-5 text-xl font-medium leading-4 px-1 text-zinc-400">Previous Transactions</h2>
-          {/* <TableCollapsible rowData={null} headers={null}/> */}
+          <PaymentsTable keyToUpdate={refreshKey} />
         </div>
       </main>
 

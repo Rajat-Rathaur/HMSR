@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { addEmployee , deleteEmployee} = require("../Operations/employeeOperations");
+const { addEmployee, deleteEmployee, getEmployee } = require("../Operations/employeeOperations");
 
 
 const addEmployeeValidations = require("../Validations/EmployeeValidations/addEmployeeValidation");
-const deleteEmployeeValidations = require("../Validations/EmployeeValidations/deleteEmployeeValidation")
+const deleteEmployeeValidations = require("../Validations/EmployeeValidations/deleteEmployeeValidation");
+const requireAuth = require("../Middlewares/reqAuth");
 
 router.use(express.json());
 
@@ -35,7 +36,7 @@ router.post("/addEmployee", addEmployeeValidations, async (req, res) => {
     }
 });
 
-router.delete('/deleteEmployee', deleteEmployeeValidations, async (req, res) => {
+router.delete('/deleteEmployee', requireAuth, deleteEmployeeValidations, async (req, res) => {
     const id = req.body.id;
     const e_id = id.substring(1);
     try {
@@ -50,6 +51,21 @@ router.delete('/deleteEmployee', deleteEmployeeValidations, async (req, res) => 
     } catch (err) {
         console.error('Error in deleteHostelite route:', err);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.get('/getEmployee', requireAuth, async (req, res) => {
+    try {
+        const userId = req.id;
+        console.log(userId);
+        const user = await getEmployee(userId)
+        return res.status(200).json({ data: user.employee, success: true });
+
+    } catch (error) {
+        res.status(500).json({
+            error: "An internal server error occurred while fetching the employee details: " + error.message,
+            success: false,
+        });
     }
 });
 

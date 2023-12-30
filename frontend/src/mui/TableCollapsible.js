@@ -15,20 +15,23 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState } from 'react';
 import { formatDate } from '../utilities/functions';
 function Row(props) {
-    const { index, row, headers } = props;
+    const { index, row, headers, collapse } = props;
     const [open, setOpen] = useState(false);
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)}
-                    >
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
+
+                {collapse &&
+                    <TableCell>
+                        <IconButton
+                            aria-label="expand row"
+                            size="small"
+                            onClick={() => setOpen(!open)}
+                        >
+                            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        </IconButton>
+                    </TableCell>
+                }
                 {index && <TableCell>{index}</TableCell>}
                 {Object?.keys(headers)?.map((headerKey) => (
                     !headers[headerKey]?.hidden && (
@@ -57,7 +60,7 @@ function Row(props) {
                                     {Object?.keys(row)?.map((property) => (headers[property] && headers[property]?.hidden && (
                                         <TableRow key={property}>
                                             <TableCell >
-                                                {property}
+                                                {headers[property]?.label}
                                             </TableCell>
                                             <TableCell>
                                                 {row[property] || '--'}
@@ -74,7 +77,7 @@ function Row(props) {
     );
 }
 
-export default function TableCollapsible({ rowData, headers, isLoading, srNo = true, key }) {
+export default function TableCollapsible({ rowData, headers, isLoading, srNo = true, key, collapse = true }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const handleChangePage = (event, newPage) => {
@@ -89,16 +92,16 @@ export default function TableCollapsible({ rowData, headers, isLoading, srNo = t
     const visibleHeaders = Object?.keys(headers)?.filter((headerKey) => !headers[headerKey]?.hidden);
     return (
         <Paper>
-                
+
             <TableContainer>
                 <Table aria-label="collapsible table">
                     <TableHead className="bg-slate-900">
                         <TableRow>
-                            <TableCell style={{ color: 'white' }} />
+                            {collapse && <TableCell style={{ color: 'white' }} />}
                             <TableCell style={{ color: 'white' }}>SrNo</TableCell>
                             {visibleHeaders?.map((headerKey) => (
                                 <TableCell key={headerKey} style={{ color: 'white' }} align={headers[headerKey]?.align || 'center'}>
-                                    {headerKey}
+                                    {headers[headerKey]?.label}
                                 </TableCell>
                             ))}
                         </TableRow>
@@ -108,7 +111,7 @@ export default function TableCollapsible({ rowData, headers, isLoading, srNo = t
                         {(rowsPerPage > 0
                             ? rowData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : rowData)?.map((row, index) => (
-                                <Row key={key} row={row} index={index + 1} headers={headers} />
+                                <Row key={key} row={row} index={index + 1} headers={headers} collapse={collapse} />
                             ))}
                     </TableBody>
                 </Table>
@@ -123,7 +126,7 @@ export default function TableCollapsible({ rowData, headers, isLoading, srNo = t
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            
+
         </Paper>
     );
 }

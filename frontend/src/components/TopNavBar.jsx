@@ -45,8 +45,7 @@ const TopNavBar = () => {
 
     return (
         <>
-
-            <nav className='flex bg-slate-100 w-full h-14 lg:px-10 md:px-6 px-3 py-2 shadow-sm sticky z-50'>
+            <nav className='flex bg-slate-100 w-full h-14 lg:px-10 md:px-6 px-3 py-2 shadow-sm sticky top-0 z-50'>
                 <div className="tab:hidden flex mr-1">
                     <IconButton size='small' onClick={toggleSidebar}>
                         <DragHandleIcon className='mx-1' fontSize='small' />

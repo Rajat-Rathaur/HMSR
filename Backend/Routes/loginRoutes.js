@@ -21,12 +21,16 @@ router.post("/", loginValidations, async (req, res) => {
                 return res.status(401).json({ error: result.error, success: false });
 
             const token = createToken(h_id);
-            return res.status(200).json({ token, success: true, h_id });
+            return res.status(200).json({ token, success: true, h_id , role:'Hostelite'});
 
         } else if (data.id.startsWith('E')) {
             const e_id = data.id.substring(1);
-            
-            return res.status(500).json({ error: "EMPLOYEE WORK IN PROGRESS", success: false });
+            const result = await checkEmployeeCredentials(e_id, data.password);
+            if (!result.success)
+                return res.status(401).json({ error: result.error, success: false });
+
+            const token = createToken(e_id);
+            return res.status(200).json({ token, success: true, e_id, role: "Admin" });
         }
         else {
             return res.status(400).json({ error: "Invalid ID Type", success: false });

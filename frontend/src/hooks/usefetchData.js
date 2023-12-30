@@ -5,6 +5,7 @@ const useFetchData = (path) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const token = sessionStorage.getItem('token');
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const useFetchData = (path) => {
         }
 
         const result = await response.json();
+        console.log(result);
         if (result.success) {
           setData(result.data);
         }
@@ -35,9 +37,13 @@ const useFetchData = (path) => {
     };
 
     fetchData();
-  }, [path, token]);
+  }, [path, token, refreshKey]);
 
-  return { data, setData, isLoading, error };
+  const refreshData = () => {
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
+
+  return { data, setData, isLoading, error, refreshData };
 };
 
 export default useFetchData;

@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const NavButton = ({ location, name, icon, active }) => {
   const isLargeScreen = useMediaQuery('(min-width: 1024px)');
   const isBiggerScreen = useMediaQuery('(min-width: 768px)');
-  const isMediumScreen = useMediaQuery('(min-width: 640px) and (max-width: 768px)');
 
   const buttonStyle = {
     display: 'flex',

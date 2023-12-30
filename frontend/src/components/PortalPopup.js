@@ -53,6 +53,9 @@ const PortalPopup = ({
           style.alignItems = "flex-end";
           style.justifyContent = "flex-end";
           break;
+        default:
+          style.alignItems = "center";
+          style.justifyContent = "center";
       }
     }
     style.opacity = 1;
@@ -89,6 +92,10 @@ const PortalPopup = ({
           style.top = relativeY + relativeH + bottom;
           style.left = relativeX + relativeW - containerW - right;
           break;
+
+        default:
+          style.top = relativeY - containerH - top;
+          style.left = relativeX + left;
       }
 
       setRelativeStyle(style);

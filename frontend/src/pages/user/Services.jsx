@@ -29,7 +29,6 @@ const LoadingTotalKgLeft = () => (
   </div>
 );
 
-
 const ServicesExterior = () => {
   const { handleSnackbarOpen } = useSnackbar();
 

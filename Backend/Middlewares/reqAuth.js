@@ -8,7 +8,7 @@ const requireAuth = async (req, res, next) => {
   }
 
   const token = authorization.split(" ")[1];
-
+  
   try {
     const data = jwt.verify(token, process.env.SECRET);
     req.id = data._id;

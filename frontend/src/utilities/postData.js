@@ -2,7 +2,7 @@ const hostUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
 const postData = async (url, body) => {
     const token = sessionStorage.getItem('token');
-
+    console.log(body);
     try {
         const response = await fetch(hostUrl + url, {
             method: 'POST',

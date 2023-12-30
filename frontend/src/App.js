@@ -121,7 +121,7 @@ function App() {
           <NavBar />
           <div className="w-full relative min-h-screen">
             <TopNavBar />
-
+   
             {role === 'Hostelite' &&
               <Routes>
                 <Route path="/home" element={<Home />} />

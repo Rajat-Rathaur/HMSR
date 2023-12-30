@@ -77,12 +77,12 @@ async function deleteEmployee(e_id) {
         }
 
         const designation = employeeDetails[0].designation;
-        
+
         if (designation === 'MANAGER') {
             await connection.query('ROLLBACK');
             return { error: "Cannot delete the manager in the branch. Contact Admin", success: false };
         }
-        
+
         // const bNo = employeeDetails[0].bNo;
         // // Check if the employee is the only manager in the branch
         // if (designation === 'MANAGER') {
@@ -113,11 +113,69 @@ async function deleteEmployee(e_id) {
         return { error: "An error occurred while deleting employee details.", success: false };
     }
 }
-// GET EMPLOYEE
+
+async function checkEmployeeCredentials(e_id, password) {
+    const [rows] = await connection.query('SELECT password FROM employee WHERE e_id = ?', [e_id]);
+    if (rows.length === 0)
+        return { error: "Employee not found with the provided e_id.", success: false };
+
+    const hashedPasswordFromDatabase = rows[0].password;
+    const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
+
+    if (!isPasswordValid)
+        return { error: "Incorrect ID or password", success: false };
+
+    return { success: true };
+}
+
+async function getEmployee(e_id) {
+    try {
+        const [existingEmployee] = await connection.query(
+            `
+            SELECT 
+                employee.e_id,
+                employee.bNo,
+                employee.name AS employee_name,
+                employee.email_id,
+                employee.phone_no,
+                employee.gender,
+                employee.dob,
+                employee.designation,
+                employee.state AS employee_state,
+                employee.city AS employee_city,
+                employee.street AS employee_street,
+                employee.pincode AS employee_pincode,
+            
+                IFNULL(e_dependents.name, '') AS e_dependents_name,
+                IFNULL(e_dependents.phone_no, '') AS e_dependents_phone_no,
+                IFNULL(e_dependents.relation, '') AS e_dependents_relationship
+            
+            FROM 
+                employee
+            
+            LEFT JOIN 
+                e_dependents ON employee.e_id = e_dependents.eNo
+           
+            WHERE 
+                employee.e_id = ?;`,
+            [e_id]
+        );
+
+        if (existingEmployee.length === 0) {
+            return { error: "Employee not found with the provided e_id.", success: false };
+        } else {
+            return { employee: existingEmployee[0], success: true };
+        }
+    } catch (err) {
+        console.error('Error retrieving employee details:', err);
+        return { error: "An error occurred while retrieving employee details.", success: false };
+    }
+}
+
 // EDIT EMPLOYEE
 // UPDATE EMPLOYEE
 
-module.exports = { addEmployee, deleteEmployee }
+module.exports = { addEmployee, deleteEmployee, checkEmployeeCredentials, getEmployee}
 
 
 

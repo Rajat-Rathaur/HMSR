@@ -4,45 +4,6 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 import Feedback from "../../sections/Feedback";
 import Complaints from "../../sections/Complaints";
 import { useSearchParams } from "react-router-dom";
-import TableCollapsible from "../../mui/TableCollapsible";
-import useFetchData from "../../hooks/useFetchData";
-
-const ComplaintsTable = () => {
-  const headers = {
-    'issue': {
-      minWidth: 100,
-      align: 'center'
-    }, 'status': {
-      minWidth: 100,
-      align: 'center'
-    }, 'priority': {
-      minWidth: 100,
-      align: 'center'
-    }, 'start_date': {
-      minWidth: 100,
-      align: 'center',
-      type: 'date'
-    }, 'end_date': {
-      minWidth: 100,
-      align: 'center',
-      type: 'date'
-    }, 'description': {
-      minWidth: 100,
-      align: 'center',
-      hidden: true
-    }, 'response': {
-      minWidth: 100,
-      align: 'center',
-      hidden: true
-    },
-  };
-
-  const { data: complaintsData, isLoading: isLoadingComplaints } = useFetchData(
-    '/api/feeds/complaint');
-  return (
-    <TableCollapsible rowData={complaintsData} headers={headers} isLoading={isLoadingComplaints} />
-  );
-};
 
 const Feeds = () => {
   const [searchParams] = useSearchParams();
@@ -68,14 +29,7 @@ const Feeds = () => {
           <TwoWayTab label1='Complaint' label2='Feedback' icon1={<AssistantIcon />} icon2={<FeedbackIcon />} />
         </div>
 
-        {tab === 'Complaint' && <>
-          <Complaints />
-          <div className="mt-10">
-            <h2 className="mb-5 text-xl font-medium leading-4 px-1 text-zinc-400">Previous Complaints Raised</h2>
-            <ComplaintsTable />
-          </div>
-        </>
-        }
+        {tab === 'Complaint' && <Complaints />}
         {tab === 'Feedback' && <Feedback />}
 
       </main >
