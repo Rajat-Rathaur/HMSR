@@ -9,7 +9,6 @@ import {
     Select,
     Skeleton
 } from "@mui/material";
-import EditDetailsPopup from "../components/popups/Popup";
 import PortalPopup from "../components/PortalPopup";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -18,6 +17,7 @@ import useFetchData from "../hooks/useFetchData";
 import { useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
 import { useCallback, useState } from 'react';
+import Popup from '../components/popups/Popup';
 
 const UpdateDetails = () => {
 
@@ -36,9 +36,14 @@ const UpdateDetails = () => {
         setEditDetailsPopupOpen(false);
     }, []);
 
-    const { control, handleSubmit, } = useForm();
+    const { control, handleSubmit } = useForm();
+
     const onSubmit = (formData) => {
         console.log(formData);
+    };
+
+    const handleFormSubmit = () => {
+        handleSubmit(onSubmit)();
     };
 
     const contactDetails = [
@@ -62,7 +67,7 @@ const UpdateDetails = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 mt-10 gap-x-5">
+            <form className="grid grid-cols-1 sm:grid-cols-2 mt-10 gap-x-5">
                 <div className="flex flex-col space-y-5">
                     <h2 className="hd-s">Personal Details</h2>
                     {isLoading ? (
@@ -260,8 +265,8 @@ const UpdateDetails = () => {
                         color="success"
                         variant="contained"
                         size="large"
-                        // onClick={openEditDetailsPopup}
-                        type="submit"
+                        onClick={openEditDetailsPopup}
+                        type="button"
                     >
                         Update Details
                     </Button>
@@ -274,7 +279,13 @@ const UpdateDetails = () => {
                     placement="Centered"
                     onOutsideClick={closeEditDetailsPopup}
                 >
-                    <EditDetailsPopup onClose={closeEditDetailsPopup} />
+                    <Popup
+                        heading="Confirm changes"
+                        subText="Please confirm the changes you made. Once confirmed, they cannot be undone."
+                        icon="/icons/edit.svg"
+                        onClose={closeEditDetailsPopup}
+                        onConfirm={handleFormSubmit}
+                    />
                 </PortalPopup>
             )}
         </>
