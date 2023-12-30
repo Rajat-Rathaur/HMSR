@@ -25,6 +25,7 @@ const TopNavBar = () => {
         minute: '2-digit',
         hour12: false,
     });
+
     const navigate = useNavigate();
     const hasNewNotification = true;
 
@@ -33,11 +34,11 @@ const TopNavBar = () => {
     }
 
     const handleUpdateDetailsClick = () => {
-        navigate('/updateDetails')
+        navigate('/updateDetails/?tab=Update+Details')
     }
 
     const toggleSidebar = () => {
-        setOpen(!false)
+        setOpen(!open)
     }
     const [open, setOpen] = useRecoilState(sideDrawerState);
 
@@ -53,7 +54,7 @@ const TopNavBar = () => {
                 </div>
 
                 <div className="flex items-center justify-center relative">
-                    <img src="icons/logo.svg" alt="" className='h-12 w-12' />
+                    <img src="/icons/logo.svg" alt="" className='h-12 w-12' />
                 </div>
 
                 <div className="flex justify-end items-center text-gray-600 flex-grow text-xl font-[Gudea] tab:space-x-4 space-x-1">
@@ -81,7 +82,7 @@ const TopNavBar = () => {
 
                     <span >|</span>
                     <div>
-                        <span className='text-sm'>{formattedDate} {' '}</span>
+                        <span className='sm:text-xl text-sm'>{formattedDate} {' '}</span>
                         <span className="text-xs">{formattedTime}</span>
                     </div>
 

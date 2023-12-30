@@ -20,7 +20,6 @@ const servicesRoutes = require("./Routes/servicesRoutes");
 const employeeRoutes = require("./Routes/employeeRoutes");
 const feedsRoutes = require("./Routes/feedsRoutes");
 
-
 app.use(express.json());
 app.use(cors());
 app.use("/api/login", loginRoutes);

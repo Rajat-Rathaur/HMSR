@@ -93,7 +93,7 @@ const NavBar = () => {
 
   return (
     <>
-      <SideDrawer tabs={tabs}/>
+      <SideDrawer tabs={tabs} />
 
       <nav className="lg:w-[280px] xl:w-[320px] ">
         <div className="relative hidden tab:flex mb:w-20 tab:w-64 xl:w-80 bg-slate-100 h-full">
@@ -126,7 +126,7 @@ const NavBar = () => {
             <div className="bg-gray-300 h-[1.5px] " />
 
             <div className="pt-5">
-              <NavButton icon={<ManageAccountsIcon />} name={'User Settings'} active={currentPage === '/updateDetails'} location={'/updateDetails'} />
+              <NavButton icon={<ManageAccountsIcon />} name={'User Settings'} active={currentPage.startsWith('/updateDetails')} location={'/updateDetails?tab=Update+Details'} />
             </div>
 
             <div className="hidden tab:flex flex-col items-center justify-center ">

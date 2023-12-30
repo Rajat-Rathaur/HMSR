@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { formatDate } from '../../utilities/functions';
 import Skeleton from '@mui/material/Skeleton';
 import useFetchData from '../../hooks/useFetchData';
+import { useForm } from 'react-hook-form';
 
 
 const LoadingSkeletonSection1 = () => (
@@ -152,6 +152,8 @@ const Home = () => {
 
   const { data: hostelite, isLoading } = useFetchData(
     '/api/hostelite/getHostelite');
+
+
   return (
     <main className="bg-white w-full flex relative px-3 py-5 sm:p-8">
       <div className=" w-full" >
