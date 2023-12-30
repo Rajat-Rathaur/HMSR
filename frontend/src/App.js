@@ -119,7 +119,7 @@ function App() {
       {role &&
         <div className="flex relative h-full ">
           <NavBar />
-          <div className="w-full relative min-h-screen tab:ml-72 xl:ml-80">
+          <div className="w-full relative min-h-screen tab:ml-[300px]">
             <TopNavBar />
 
             {role === 'Hostelite' &&

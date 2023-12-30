@@ -11,6 +11,9 @@ module.exports = {
         'xs': '465px',
         'tab': '890px',
       },
+      width: {
+        'w-75': '300px'
+      },
       colors: {
         'green-cust-300': '#E0F7F0',
         'green-cust-100': '#EEF7F4',

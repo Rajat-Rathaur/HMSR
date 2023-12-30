@@ -16,7 +16,7 @@ const NavButton = ({ location, name, icon, active }) => {
   };
 
   return (
-    <Link to={location} >
+    <Link to={location} className='px-5'>
       {isBiggerScreen &&
         <Button
           variant=""
