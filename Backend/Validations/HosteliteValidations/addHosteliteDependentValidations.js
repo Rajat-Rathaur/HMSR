@@ -9,13 +9,9 @@ const addHosteliteDependentValidations = async (req, res, next) => {
             return res.status(400).json({ error: "Missing required fields.", success: false });
         }
 
-      
-
         else if (typeof name !== 'string'|| typeof state !== 'string' || typeof city !== 'string' || typeof street !== 'string') {
             return res.status(400).json({ error: "Invalid data types for some fields.", success: false });
         }
-
-   
 
         else if (!Number.isInteger(pincode) || pincode < 10000 || pincode > 999999) {
             return res.status(400).json({ error: "Invalid pincode. pincode must be a 6-digit integer.", success: false });
