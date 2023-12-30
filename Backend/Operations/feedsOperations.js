@@ -92,4 +92,20 @@ async function getAllComplaintsByStatus(status) {
     }
 }
 
-module.exports = { getComplaints, addComplaint, updateComplaintStatus, getAllComplaintsByStatus };
+async function addFeedback(hNo, rating, description) {
+    try {
+        await connection.query('START TRANSACTION');
+        const insertFeedbackQuery = 'INSERT INTO feedback (hNo, rating, description) VALUES (?, ?, ?)';
+        await connection.query(insertFeedbackQuery, [hNo, rating, description]);
+        await connection.query('COMMIT');
+
+        return { success: true, message: 'Feedback added successfully.'};
+    } catch (err) {
+        await connection.query('ROLLBACK');
+        console.error('Error adding feedback:', err);
+        return { success: false, error: 'Internal server error' };
+    }
+}
+
+
+module.exports = { getComplaints, addComplaint, updateComplaintStatus, getAllComplaintsByStatus, addFeedback };

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getComplaints, addComplaint, updateComplaintStatus } = require('../Operations/feedsOperations');
+const { getComplaints, addComplaint, updateComplaintStatus, addFeedback } = require('../Operations/feedsOperations');
 const requireAuth = require('../Middlewares/reqAuth');
 const addComplaintValidations = require('../Validations/FeedValidations.js/AddComplaintValidations');
 const updateComplaintValidations = require('../Validations/FeedValidations.js/updateComplaintValidations');
@@ -77,5 +77,25 @@ router.get('/complaint/:status', async (req, res) => {
   }
 });
 
+router.post('/feedback', async (req, res) => {
+  try {
+    const h_id = req.id;
+    const { rating, description } = req.body;
+
+    const result = await addFeedback(h_id, rating, description);
+  
+    if (result.success)
+      res.status(200).json({ message: 'Feedback added successfully', success: true });
+    else
+      res.status(500).json({ error: result.error, success: false });
+
+  } catch (error) {
+    console.error('Error in addFeedback route:', error);
+    res.status(500).json({
+      error: 'An internal server error occurred while adding feedback: ' + error.message,
+      success: false,
+    });
+  }
+});
 
 module.exports = router;

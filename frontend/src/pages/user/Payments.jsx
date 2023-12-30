@@ -7,6 +7,8 @@ import Skeleton from '@mui/material/Skeleton';
 import postData from "../../utilities/postData";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "../../hooks/useSnackbar";
+import PortalPopup from "../../components/PortalPopup";
+import Popup from "../../components/popups/Popup";
 
 const PaymentsTable = ({ keyToUpdate }) => {
   const headers = {
@@ -41,7 +43,16 @@ const PaymentsTable = ({ keyToUpdate }) => {
 const Payments = () => {
   const { handleSnackbarOpen } = useSnackbar();
   const [amount, setAmount] = useState(0);
-  const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-render
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [paymentPopup, setPaymentPopup] = useState(false);
+
+  const openPaymentPopup = () => {
+    setPaymentPopup(true);
+  }
+
+  const closePaymentPopup = () => {
+    setPaymentPopup(false);
+  }
 
   const { data: hostelite, isLoadingHostelite } = useFetchData(
     '/api/hostelite/getHostelite');
@@ -52,6 +63,7 @@ const Payments = () => {
       handleSnackbarOpen('Fees Paid successful', 'success');
       setAmount(0);
       setRefreshKey((prevKey) => prevKey + 1);
+      closePaymentPopup()
     } else {
       handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
     }
@@ -122,7 +134,6 @@ const Payments = () => {
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
                 <p className="hd-p text-3xl  mt-4 mb-2">2020 ₹</p>
-
               )}
             </div>
 
@@ -178,6 +189,7 @@ const Payments = () => {
               }}
               InputProps={{
                 inputProps: { min: 0 },
+
                 endAdornment: (
                   <InputAdornment position="end">
                     <Typography variant="body1" color="textSecondary">
@@ -191,7 +203,7 @@ const Payments = () => {
               className="max-w-96 w-full"
               variant="contained"
               color="success"
-              onClick={handlePayClick}
+              onClick={openPaymentPopup}
             >
               Pay Remaining
             </Button>
@@ -205,7 +217,21 @@ const Payments = () => {
         </div>
       </main>
 
-
+      {paymentPopup && (
+        <PortalPopup
+          overlayColor="rgba(0, 0, 0, 0.7)"
+          placement="Centered"
+          onOutsideClick={closePaymentPopup}
+        >
+          <Popup
+            heading="Payment Confirmation"
+            subText="Please note that the payment will be adjusted accordingly and cannot be refunded once deducted."
+            icon="/icons/edit.svg"
+            onClose={closePaymentPopup}
+            onConfirm={handlePayClick}
+          />
+        </PortalPopup>
+      )}
 
 
     </>

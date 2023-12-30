@@ -276,6 +276,25 @@ async function createComplaintTable() {
   }
 }
 
+async function createFeedbackTable() {
+  try {
+    const [result] = await connection.query(`
+        CREATE TABLE IF NOT EXISTS feedback (
+          hNo INT NOT NULL,
+          rating INT NOT NULL,
+          description TEXT
+        );`
+    );
+    if (result.warningStatus === 0) {
+      console.log('Feedback table created successfully');
+    } else {
+      console.log('Feedback table already exists');
+    }
+  } catch (err) {
+    console.error('Error creating feedback table:', err);
+  }
+}
+
 const createTables = async () => {
   try {
     console.log('Table Check Started');
@@ -291,6 +310,8 @@ const createTables = async () => {
     await createMessTable();
     await createLaundryTable();
     await createComplaintTable();
+    await createFeedbackTable();
+
 
   } catch (err) {
     console.error('Error creating tables:', err);
