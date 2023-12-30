@@ -143,7 +143,7 @@ const ServicesExterior = () => {
             ) : (
               <div className="mt-4 justify-between w-full flex pr-5">
                 <label className="lb-p text-xl">Number of days Left</label>
-                <span className="text-p xs:text-2xl">
+                <span className="text-p text-lg xs:text-2xl">
                   {daysLeft}
                 </span>
               </div>
@@ -221,7 +221,7 @@ const ServicesExterior = () => {
             ) : (
               <div className="mt-4 justify-between w-full flex pr-5">
                 <label className="lb-p text-xl">Total Kg Left</label>
-                <span className="text-p text-2xl">
+                <span className="text-p text-lg xs:text-2xl">
                   {weightLeft} Kg
                 </span>
               </div>

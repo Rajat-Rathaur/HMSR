@@ -10,8 +10,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Skeleton from '@mui/material/Skeleton';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useRecoilState } from 'recoil';
-import { loggedInState } from '../recoil/state';
 
 const Login = () => {
   const { handleSnackbarOpen } = useSnackbar();
@@ -20,7 +18,6 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const url = process.env.SERVER_URL || 'http://localhost:4000';
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
 
   const onSubmit = async (data) => {
     const isValid = /^[EH]\d+$/.test(data.id);
@@ -44,7 +41,7 @@ const Login = () => {
         const { token, id } = responseData;
         sessionStorage.setItem('token', token);
         sessionStorage.setItem('id', id);
-        setLoggedIn(true)
+        sessionStorage.setItem('role', 'Hostelite');
         navigate('/home')
         handleSnackbarOpen('Login successful', 'success');
       } else {

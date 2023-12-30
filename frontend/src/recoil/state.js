@@ -24,3 +24,8 @@ export const loggedInState = atom({
     key: 'loggedInState',
     default: false,
 });
+
+export const sideDrawerState = atom({
+    key: 'sideDrawerState',
+    default: false,
+});

@@ -22,6 +22,7 @@ import EditDetailsExterior from "./pages/EditDetailsExterior";
 import NavBar from "./components/NavBar";
 
 import TopNavBar from "./components/TopNavBar";
+import SideDrawer from "./mui/SideDrawer";
 
 function App() {
   const location = useLocation();
@@ -86,17 +87,19 @@ function App() {
     }
   }, [pathname]);
 
-  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
+  const role = sessionStorage.getItem('role');
 
-  useLayoutEffect(() => {
-    if (!sessionStorage.getItem('token')) {
-      navigate('/')
+  useEffect(() => {
+    if (!role) {
       sessionStorage.clear();
+      navigate('/login')
     }
-    else
-      setLoggedIn(true);
+  }, [navigate, role])
 
-  }, [sessionStorage.getItem('token')])
+  useEffect(() => {
+    if (pathname === '/login')
+      sessionStorage.clear();
+  }, [pathname])
 
   const { isSnackbarOpen, snackbarMessage, snackbarType, handleSnackbarClose } = useSnackbar();
 
@@ -113,22 +116,39 @@ function App() {
         </Alert>
       </Snackbar>
 
-      <div className="flex relative">
-        {loggedIn && <NavBar />}
-        <div className="w-full relative min-h-screen">
-          {loggedIn && <TopNavBar />}
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/updateDetails" element={<EditDetailsExterior />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/payments" element={<Payments />} />
-            <Route path="/attendance" element={<Attendance />} />
-            <Route path="/feeds" element={<Feeds />} />
-            <Route path="/notifications" element={<Notifications />} />
-          </Routes>
-        </div>
-      </div >
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+
+      {role &&
+        <div className="flex relative">
+          <NavBar />
+          <div className="w-full relative min-h-screen">
+            <TopNavBar />
+
+
+            {role === 'Hostelite' &&
+
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/updateDetails" element={<EditDetailsExterior />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/attendance" element={<Attendance />} />
+                <Route path="/feeds" element={<Feeds />} />
+                <Route path="/notifications" element={<Notifications />} />
+              </Routes>
+            }
+
+
+            {role === 'Admin' &&
+              <Routes>
+                <Route path="/home" element={<Home />} />
+              </Routes>
+            }
+          </div>
+        </div >
+      }
     </>
   );
 }
