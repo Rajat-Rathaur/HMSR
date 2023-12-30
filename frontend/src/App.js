@@ -117,11 +117,11 @@ function App() {
       </Routes>
 
       {role &&
-        <div className="flex relative">
+        <div className="flex relative h-full ">
           <NavBar />
-          <div className="w-full relative min-h-screen">
+          <div className="w-full relative min-h-screen tab:ml-72 xl:ml-80">
             <TopNavBar />
-   
+
             {role === 'Hostelite' &&
               <Routes>
                 <Route path="/home" element={<Home />} />
