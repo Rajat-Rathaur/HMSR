@@ -75,7 +75,6 @@ const ServicesExterior = () => {
       setLaundryCount(0)
       setWeightLeft(parseInt(weightLeft) + parseInt(weightToAdd))
       closeLaundryPopup()
-
     } else {
       handleSnackbarOpen('Error while processing the transaction. Please try again later.', 'error');
     }
@@ -300,7 +299,10 @@ const ServicesExterior = () => {
           placement="Centered"
           onOutsideClick={closeMessPopup}
         >
-          <Popup onClose={closeMessPopup} onSuccess={handleMessClick} />
+          <Popup heading="Increase Mess Days Confirmation"
+            subText=" Please note that the payment will not be refunded once deducted."
+            icon={'/icons/edit.svg'} onClose={closeMessPopup} onConfirm={handleMessClick} />
+
         </PortalPopup>
       )}
       {isLaundryPopupOpen && (
@@ -309,7 +311,13 @@ const ServicesExterior = () => {
           placement="Centered"
           onOutsideClick={closeLaundryPopup}
         >
-          <Popup onClose={closeLaundryPopup} onSuccess={handleLaundryClick} />
+          <Popup
+            heading="Increase Laundry Weight Confirmation"
+            subText="Please note that the payment will be adjusted accordingly and cannot be refunded once deducted."
+            icon="/icons/edit.svg"
+            onClose={closeLaundryPopup}
+            onConfirm={handleLaundryClick}
+          />
         </PortalPopup>
       )}
     </>

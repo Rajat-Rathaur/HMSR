@@ -126,7 +126,8 @@ const UpdateDetails = () => {
                     {isLoading ? (
                         <>
                             {contactDetails.map((detail) => (
-                                <Skeleton key={`skeleton_${detail.name}`} variant="rectangular" width='60%' height={50} />
+                                <Skeleton key={`skeleton_${detail.name}`} variant="rectangular" width='60%' height={50}
+                                />
                             ))}
                         </>
                     ) : (
@@ -145,6 +146,17 @@ const UpdateDetails = () => {
                                             type={detail.type}
                                             className="sm:max-w-80 w-full"
                                             size={isSmallScreen ? 'small' : "medium"}
+                                            sx={{
+                                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                                    display: "none",
+                                                },
+                                                "& input[type=number]": {
+                                                    MozAppearance: "textfield",
+                                                },
+                                            }}
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
                                         />
                                     )}
                                 />

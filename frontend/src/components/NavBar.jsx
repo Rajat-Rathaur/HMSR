@@ -9,13 +9,33 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import NavButton from "../mui/NavButton";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SideDrawer from "../mui/SideDrawer";
+import PortalPopup from "./PortalPopup";
+import Popup from "./popups/Popup";
+import { useSnackbar } from "../hooks/useSnackbar";
 
 const NavBar = () => {
-  const [currentPage, setCurrentPage] = useState('');
+  const { handleSnackbarOpen } = useSnackbar();
+
   const location = useLocation();
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState('');
+  const [logoutPopup, setLogoutPopup] = useState(false);
+
+  const openLogoutPopup = () => {
+    setLogoutPopup(true);
+  }
+
+  const closeLogoutPopup = () => {
+    setLogoutPopup(false);
+  }
+  const onLogout = () => {
+    sessionStorage.clear();
+    navigate('/login');
+    handleSnackbarOpen('Logged Out Successfully', 'success')
+  }
 
   useEffect(() => {
     setCurrentPage(location.pathname);
@@ -123,14 +143,26 @@ const NavBar = () => {
 
           <div className="px-5">
             <NavButton icon={<ManageAccountsIcon />} name={'User Settings'} active={currentPage.startsWith('/updateDetails')} location={'/updateDetails?tab=Update+Details'} />
-            
+
             <div className="hidden tab:flex items-center justify-center">
-              <Button color="error" fullWidth size="large" sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }} endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}>Logout</Button>
+              <Button
+                color="error"
+                fullWidth
+                size="large"
+                sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }}
+                endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}
+                onClick={openLogoutPopup}
+              >Logout</Button>
             </div>
           </div>
         </div>
       </nav>
-
+      <>
+        {logoutPopup &&
+          <PortalPopup overlayColor="rgba(0, 0, 0, 0.7)" placement="Centered" onOutsideClick={closeLogoutPopup} >
+            <Popup heading='Do you want to Logout ?' subText='You will be logged out of the session.' icon={'/icons/edit.svg'} onClose={closeLogoutPopup} onConfirm={onLogout} />
+          </PortalPopup>}
+      </>
     </>
 
   );

@@ -1,22 +1,27 @@
-import styles from "./EditDetailsPopup.module.css";
-const Popup = ({ onClose, onSuccess }) => {
+import { Button } from "@mui/material";
+
+// ~ ***** A SIMPLE POPUP WITH 2 OPTION CANCEL AND SUBMIT
+
+const Popup = ({ onClose, heading, subText, icon, onConfirm }) => {
+
   return (
-    <div className={styles.editdetailspopup}>
-      <div className={styles.logoutYesno}>
-        <button className={styles.button} onClick={onClose}>
-          <div className={styles.text}>Cancel</div>
-        </button>
-        <button className={styles.button1} onClick={onSuccess}>
-          <div className={styles.text1}>Confirm</div>
-        </button>
+    <div className="bg-white grid grid-cols-12 px-[26px] pt-[26px] pb-10 bg-bgPrimary h-fit min-h-[196px] min-w-[510px] w-fit max-w-[600px] rounded-2xl">
+      <img className="col-span-2 w-12 h-12" alt="" src={icon} />
+      <div className="col-span-10 grid gap-9 font-[Poppins]">
+        <div className="grid w-full h-fit">
+          <p className=" text-slate-900 text-lg font-semibold">{heading}</p>
+          <p className="text-[#475467] text-sm">{subText}</p>
+        </div>
+        <div className="flex justify-between h-fit mr-8">
+          <Button size="large" variant="outlined" color="error" type='button' onClick={onClose} className="px-8">Cancel</Button>
+          <Button
+            size="large" color="success" type="submit" variant="contained"
+            className="ml-10 px-8 bg-green-700 z-1"
+            onClick={onConfirm}
+          >Confirm
+          </Button>
+        </div>
       </div>
-      <div className={styles.textAndSupportingText}>
-        <p className={styles.text2}>{`Edit Details `}</p>
-        <p className={styles.supportingText}>
-          Are you sure you want to Edit Details ?
-        </p>
-      </div>
-      <img className={styles.featuredIcon} alt="" src="/featured-icon.svg" />
     </div>
   );
 };

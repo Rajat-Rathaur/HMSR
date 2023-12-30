@@ -62,7 +62,7 @@ const TopNavBar = () => {
                             <IconButton size={isTabScreen ? 'small' : 'medium'}>
                                 <SearchIcon className='mx-1' fontSize={isTabScreen ? 'small' : 'medium'} />
                             </IconButton>
-                            <input type="text" placeholder='Type here...' className='hidden ml-1 items-center justify-center sm:flex font-sans font-medium text-gray-900 ' style={{ outline: 'none', padding: '2px', fontSize: '14px' }} />
+                            <input type="text" placeholder='Type here...' className='hidden ml-1 items-center justify-center sm:flex font-sans font-medium text-gray-900 ' style={{ outline: 'none', padding: '2px', fontSize: '15px' }} />
                         </div>
                     </div>
 
