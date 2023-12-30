@@ -153,7 +153,7 @@ const Home = () => {
   const { data: hostelite, isLoading } = useFetchData(
     '/api/hostelite/getHostelite');
   return (
-    <main className="bg-white w-full flex relative p-8">
+    <main className="bg-white w-full flex relative px-3 py-5 sm:p-8">
       <div className=" w-full" >
         <div className="flex justify-between">
           <header className="hd-p">DashBoard</header>

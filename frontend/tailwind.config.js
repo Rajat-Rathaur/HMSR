@@ -9,6 +9,7 @@ module.exports = {
         'mb': '350px',
         'xss': '400px',
         'xs': '465px',
+        'tab': '890px',
       },
       colors: {
         'green-cust-300': '#E0F7F0',

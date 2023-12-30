@@ -18,7 +18,7 @@ const NavButton = ({ location, name, icon, active }) => {
 
   return (
     <Link to={location} >
-      {isMediumScreen &&
+      {/* {isMediumScreen &&
         <IconButton
           sx={{
             backgroundColor: active ? '#faf5ff' : 'inherit',
@@ -27,7 +27,7 @@ const NavButton = ({ location, name, icon, active }) => {
         >
           {icon}
         </IconButton>
-      }
+      } */}
 
       {isBiggerScreen &&
         <Button

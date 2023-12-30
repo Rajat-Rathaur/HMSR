@@ -115,7 +115,7 @@ function App() {
 
       <div className="flex relative">
         {loggedIn && <NavBar />}
-        <div className="w-full relative">
+        <div className="w-full relative min-h-screen">
           {loggedIn && <TopNavBar />}
           <Routes>
             <Route path="/" element={<Login />} />

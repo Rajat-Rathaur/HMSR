@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Button, MenuItem, InputLabel, Select, FormControl, TextField } from "@mui/material";
 import Popup from "../../components/popups/Popup";
 import PortalPopup from "../../components/PortalPopup";
@@ -102,23 +102,27 @@ const ServicesExterior = () => {
     15: 200,
   };
 
+  const memoizedMessCharge = useMemo(() => messCharge, []);
+  const memoizedLaundryCharge = useMemo(() => laundryCharge, []);
+
+
   useEffect(() => {
     const calculateTotalAmountMess = () => {
-      const amount = messCharge[messType] * messCount;
+      const amount = memoizedMessCharge[messType] * messCount;
       setTotalAmountMess(amount);
     };
 
     calculateTotalAmountMess();
-  }, [messType, messCount, messCharge]);
+  }, [messType, messCount, memoizedMessCharge]);
 
   useEffect(() => {
     const calculateTotalAmountLaundry = () => {
-      const amount = laundryCharge[laundryType] * laundryCount;
+      const amount = memoizedLaundryCharge[laundryType] * laundryCount;
       setTotalAmountLaundry(amount);
     };
 
     calculateTotalAmountLaundry();
-  }, [laundryType, laundryCount, laundryCharge]);
+  }, [laundryType, laundryCount, memoizedLaundryCharge]);
 
   return (
     <>
