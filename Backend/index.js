@@ -30,7 +30,7 @@ const feedsRoutes = require("./Routes/feedsRoutes");
 
 app.use("/", startRoutes);
 
-// app.use("/api/login", loginRoutes);
+app.use("/api/login", loginRoutes);
 app.use("/api/hostelite", hosteliteRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);

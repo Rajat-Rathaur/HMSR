@@ -5,8 +5,6 @@ const {  checkHosteliteCredentials } = require("../Operations/hosteliteOperation
 const { checkEmployeeCredentials } = require("../Operations/employeeOperations");
 const loginValidations = require("../Validations/loginValidations");
 
-
-
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
