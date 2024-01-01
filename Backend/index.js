@@ -13,7 +13,7 @@ const createConstraints = require("./SQLUtilities/constraints");
 
 // initializeDatabase();
 
-dotenv.config({ path: "config.env" });
+dotenv.config({ path: "./config.env" });
 
 const startRoutes = require("./Routes/startRoutes");
 const hosteliteRoutes = require("./Routes/hosteliteRoutes");
