@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const {  checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
-// const { checkEmployeeCredentials } = require("../Operations/employeeOperations");
+const {  checkHosteliteCredentials } = require("../Operations/hosteliteOperations");
+const { checkEmployeeCredentials } = require("../Operations/employeeOperations");
 const loginValidations = require("../Validations/loginValidations");
 
 
