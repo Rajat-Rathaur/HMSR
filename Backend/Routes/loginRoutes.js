@@ -6,6 +6,7 @@ const {  checkHosteliteCredentials } = require("../Operations/HosteliteOperation
 const loginValidations = require("../Validations/loginValidations");
 
 
+
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
