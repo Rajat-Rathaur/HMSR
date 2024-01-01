@@ -1,6 +1,6 @@
 {
-    "version": 2,
-    "name": "dask-server",
+    "version": 1,
+    "name": "backend",
     "builds": [
         {
             "src": "./index.js",
