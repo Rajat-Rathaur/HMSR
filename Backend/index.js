@@ -26,7 +26,7 @@ const startRoutes = require("./Routes/startRoutes");
 const branchRoutes = require("./Routes/branchRoutes");
 const servicesRoutes = require("./Routes/servicesRoutes");
 const paymentRoutes = require("./Routes/paymentRoutes");
-const feedsRoutes = require("./Routes/feedsRoutes");
+// const feedsRoutes = require("./Routes/feedsRoutes");
 
 app.use("/", startRoutes);
 
@@ -37,7 +37,7 @@ app.use("/api/branch", branchRoutes);
 // app.use("/api/hostelite", hosteliteRoutes);
 app.use("/api/services", servicesRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/feeds", feedsRoutes);
+// app.use("/api/feeds", feedsRoutes);
 
 
 app.listen(PORT, () => {
