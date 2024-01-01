@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
-const cors = require("cors");
+// const dotenv = require("dotenv");
+// const cors = require("cors");
 
 const createTables = require("./SQLUtilities/createTables");
 const createConstraints = require("./SQLUtilities/constraints");
@@ -13,7 +13,7 @@ const createConstraints = require("./SQLUtilities/constraints");
 
 // initializeDatabase();
 
-dotenv.config({ path: "./config.env" });
+// dotenv.config({ path: "./config.env" });
 
 const startRoutes = require("./Routes/startRoutes");
 const hosteliteRoutes = require("./Routes/hosteliteRoutes");
@@ -40,6 +40,6 @@ app.use("/", startRoutes);
 // app.use("/api/payment", paymentRoutes);
 
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 4000, () => {
     console.log("Listening on: http://localhost:" + process.env.PORT);
 });
