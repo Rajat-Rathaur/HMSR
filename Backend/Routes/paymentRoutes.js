@@ -3,7 +3,6 @@ const router = express.Router();
 const { getPaymentsHostelite, getPaymentsAdmin, addFeesPayment } = require("../Operations/paymentOperations");
 const requireAuth = require("../Middlewares/reqAuth");
 const addPaymentsValidations = require("../Validations/PaymentValidations/paymentValidations");
-router.use(express.json());
 
 router.get('/getPayment', requireAuth, async (req, res) => {
     try {
