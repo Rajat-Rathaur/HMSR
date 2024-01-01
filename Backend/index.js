@@ -23,6 +23,9 @@ const paymentRoutes = require("./Routes/paymentRoutes");
 
 app.use(express.json());
 app.use(cors());
+app.use('/',(req, res)=>{
+    res.send("Welcome to DASK Server")
+})
 app.use("/api/login", loginRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/branch", branchRoutes);
