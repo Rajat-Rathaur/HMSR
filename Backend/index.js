@@ -23,10 +23,10 @@ const startRoutes = require("./Routes/startRoutes");
 // const hosteliteRoutes = require("./Routes/hosteliteRoutes");
 // const adminRoutes = require("./Routes/adminRoutes");
 const branchRoutes = require("./Routes/branchRoutes");
-const servicesRoutes = require("./Routes/servicesRoutes");
-const employeeRoutes = require("./Routes/employeeRoutes");
-const feedsRoutes = require("./Routes/feedsRoutes");
-const paymentRoutes = require("./Routes/paymentRoutes");
+// const servicesRoutes = require("./Routes/servicesRoutes");
+// const employeeRoutes = require("./Routes/employeeRoutes");
+// const feedsRoutes = require("./Routes/feedsRoutes");
+// const paymentRoutes = require("./Routes/paymentRoutes");
 
 app.use("/", startRoutes);
 
