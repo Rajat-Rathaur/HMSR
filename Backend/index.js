@@ -6,12 +6,16 @@ const cors = require("cors");
 const createTables = require("./SQLUtilities/createTables");
 const createConstraints = require("./SQLUtilities/constraints");
 
-createTables();
-createConstraints();
+const initializeDatabase = async () => {
+    await createTables();
+    await createConstraints();
+};
 
+initializeDatabase();
 
 dotenv.config({ path: "config.env" });
 
+const startRoutes = require("./Routes/startRoutes");
 const hosteliteRoutes = require("./Routes/hosteliteRoutes");
 const loginRoutes = require("./Routes/loginRoutes");
 const branchRoutes = require("./Routes/branchRoutes");
@@ -23,9 +27,9 @@ const paymentRoutes = require("./Routes/paymentRoutes");
 
 app.use(express.json());
 app.use(cors());
-app.use('/',(req, res)=>{
-    res.send("Welcome to DASK Server")
-})
+
+app.use("/", startRoutes);
+
 app.use("/api/login", loginRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/branch", branchRoutes);
