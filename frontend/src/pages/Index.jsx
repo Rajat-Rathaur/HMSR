@@ -179,7 +179,7 @@ const Index = () => {
                     </div>
                 </div>
                 <div id='aboutUs' className='mt-10 py-12 px-3 xs:px-10 xl:px-40  col-span-full'>
-                    <div className='grid grid-cols-2'>
+                    <div className='grid grid-cols-1 tab:grid-cols-2'>
                         <div className=''>
                             <img className='w-20 h-12' src="/icons/logo.svg" alt="" />
                             <p className='text-zinc-400 text-sm leading-7'>That's essentially our story in one sentence.
@@ -187,35 +187,47 @@ const Index = () => {
                                 That’s why we created Pedophiles - a place designed by people who've been in your shoes.
                                 Understand you. And are inspired by you.
                             </p>
-                            <p className='flex space-x-3 mt-3'>
+                            <p className='hidden tab:flex space-x-3 mt-3'>
                                 <Link><Facebook sx={{ color: '#2981DE' }} /></Link>
                                 <Link><Twitter sx={{ color: '#4AD3F7' }} /></Link>
                                 <Link><Instagram sx={{ color: '#E435AD' }} /></Link>
                                 <Link><WhatsApp sx={{ color: '#51BA5E' }} /></Link>
                             </p>
                         </div>
-                        <div className='grid grid-cols-2 ml-32'>
-                            <div className='flex flex-col space-y-3'>
-                                <h5 className='font-bold text-slate-800'>At DASK</h5>
-                                <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Noticeboard</a>
-                                <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>FAQs</a>
-                                <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Hostel Rules</a>
-                                <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Privacy Policy</a>
+                        <div className='grid grid-cols-2 mt-10 tab:mt-0 lg:ml-32'>
+                            <div className='flex justify-center'>
+                                <div className='flex flex-col space-y-3'>
+                                    <h5 className='font-bold text-slate-800'>At DASK</h5>
+                                    <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Noticeboard</a>
+                                    <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>FAQs</a>
+                                    <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Hostel Rules</a>
+                                    <a href='/' className='text-zinc-600 font-normal hover:text-blue-700'>Privacy Policy</a>
+                                </div>
                             </div>
 
-                            <div className='flex flex-col space-y-3'>
-                                <h5 className='font-bold text-slate-800'>Contact</h5>
-                                <p className='text-zinc-600 font-normal'>21 Narayan peth</p>
-                                <p className='text-zinc-600 font-normal'>
-                                    <a href="tel:+91987654321">+91 987654321</a>
-                                </p>
-                                <p className='text-zinc-600 font-normal'>
-                                    <a href="mailto:info@dask.com">info@dask.com</a>
-                                </p>
+                            <div className='flex justify-center'>
+                                <div className='flex flex-col space-y-3'>
+                                    <h5 className='font-bold text-slate-800'>Contact</h5>
+                                    <p className='text-zinc-600 font-normal'>21 Narayan peth</p>
+                                    <p className='text-zinc-600 font-normal'>
+                                        <a href="tel:+91987654321">+91 987654321</a>
+                                    </p>
+                                    <p className='text-zinc-600 font-normal'>
+                                        <a href="mailto:info@dask.com">info@dask.com</a>
+                                    </p>
+                                </div>
                             </div>
 
                         </div>
+                        <p className='tab:hidden mt-10 flex space-x-5 tab:space-x-3  items-center justify-center'>
+                            <Link><Facebook sx={{ color: '#2981DE' }} /></Link>
+                            <Link><Twitter sx={{ color: '#4AD3F7' }} /></Link>
+                            <Link><Instagram sx={{ color: '#E435AD' }} /></Link>
+                            <Link><WhatsApp sx={{ color: '#51BA5E' }} /></Link>
+                        </p>
+
                     </div>
+                    <p className='text-center mt-3 tab:mt-5 text-5xl'>. . .</p>
                 </div>
             </div >
         </>
