@@ -148,8 +148,4 @@ async function addLaundryWeight(hNo, weightToAdd, amount) {
     }
 }
 
-
-
-
-
 module.exports = { getMessData, addMessDays, getLaundryWeight, addLaundryWeight }
