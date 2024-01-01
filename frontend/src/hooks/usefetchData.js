@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const hostUrl = process.env.SERVER_URL || 'http://localhost:4000';
+const HOST_URL = process.env.REACT_APP_SERVER_URL;
 
 const useFetchData = (path) => {
   const [data, setData] = useState(null);
@@ -19,7 +19,7 @@ const useFetchData = (path) => {
           },
         };
 
-        const response = await fetch(hostUrl + path, options);
+        const response = await fetch(HOST_URL + path, options);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

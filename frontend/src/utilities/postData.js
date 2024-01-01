@@ -1,10 +1,10 @@
-const hostUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
+const HOST_URL = process.env.REACT_APP_SERVER_URL;
 const postData = async (url, body) => {
     const token = sessionStorage.getItem('token');
 
     try {
-        const response = await fetch(hostUrl + url, {
+        const response = await fetch(HOST_URL + url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
