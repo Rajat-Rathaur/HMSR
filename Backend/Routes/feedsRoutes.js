@@ -24,23 +24,23 @@ router.get('/complaint', async (req, res) => {
   }
 });
 
-// router.post('/complaint', addComplaintValidations, async (req, res) => {
-//   const { issue, priority, description } = req.body;
-//   const hid = req.id;
+router.post('/complaint', addComplaintValidation, async (req, res) => {
+  const { issue, priority, description } = req.body;
+  const hid = req.id;
 
-//   try {
-//     const result = await addComplaint(hid, issue, priority, description);
+  try {
+    const result = await addComplaint(hid, issue, priority, description);
 
-//     if (result.success) {
-//       return res.status(201).json(result);
-//     } else {
-//       return res.status(400).json(result);
-//     }
-//   } catch (err) {
-//     console.error('Error in add complaint route:', err);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
+    if (result.success) {
+      return res.status(201).json(result);
+    } else {
+      return res.status(400).json(result);
+    }
+  } catch (err) {
+    console.error('Error in add complaint route:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 router.put('/complaint/:c_id', updateComplaintValidations, async (req, res) => {
   const { c_id } = req.params;
