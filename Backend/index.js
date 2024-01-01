@@ -7,12 +7,15 @@ const createTables = require("./SQLUtilities/createTables");
 const createConstraints = require("./SQLUtilities/constraints");
 
 const PORT = process.env.PORT || 4000;
-// const initializeDatabase = async () => {
-//     await createTables();
-//     await createConstraints();
-// };
+const initializeDatabase = async () => {
+    await createTables();
+    await createConstraints();
+};
 
-// initializeDatabase();
+initializeDatabase();
+
+app.use(express.json());
+app.use(cors());
 
 
 // const startRoutes = require("./Routes/startRoutes");
@@ -24,9 +27,6 @@ const PORT = process.env.PORT || 4000;
 // const employeeRoutes = require("./Routes/employeeRoutes");
 // const feedsRoutes = require("./Routes/feedsRoutes");
 // const paymentRoutes = require("./Routes/paymentRoutes");
-
-// app.use(express.json());
-// app.use(cors());
 
 // app.use("/", startRoutes);
 
