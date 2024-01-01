@@ -19,9 +19,9 @@ app.use(cors());
 
 
 const startRoutes = require("./Routes/startRoutes");
-const loginRoutes = require("./Routes/loginRoutes");
+// const loginRoutes = require("./Routes/loginRoutes");
 // const hosteliteRoutes = require("./Routes/hosteliteRoutes");
-// const branchRoutes = require("./Routes/branchRoutes");
+const branchRoutes = require("./Routes/branchRoutes");
 // const adminRoutes = require("./Routes/adminRoutes");
 // const servicesRoutes = require("./Routes/servicesRoutes");
 // const employeeRoutes = require("./Routes/employeeRoutes");
@@ -30,9 +30,9 @@ const loginRoutes = require("./Routes/loginRoutes");
 
 app.use("/", startRoutes);
 
-app.use("/api/login", loginRoutes);
+// app.use("/api/login", loginRoutes);
 // app.use("/api/admin", adminRoutes);
-// app.use("/api/branch", branchRoutes);
+app.use("/api/branch", branchRoutes);
 // app.use("/api/employee", employeeRoutes);
 // app.use("/api/hostelite", hosteliteRoutes);
 // app.use("/api/services", servicesRoutes);
