@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { addEmployee, deleteEmployee, getEmployee } = require("../Operations/employeeOperations");
+// const { addEmployee, deleteEmployee, getEmployee } = require("../Operations/employeeOperations");
 
 
 const addEmployeeValidations = require("../Validations/EmployeeValidations/addEmployeeValidation");
 const deleteEmployeeValidations = require("../Validations/EmployeeValidations/deleteEmployeeValidation");
 const requireAuth = require("../Middlewares/reqAuth");
-
-router.use(express.json());
 
 router.post("/addEmployee", addEmployeeValidations, async (req, res) => {
     try {
