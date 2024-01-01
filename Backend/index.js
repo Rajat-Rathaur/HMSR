@@ -30,7 +30,7 @@ const loginRoutes = require("./Routes/loginRoutes");
 
 app.use("/", startRoutes);
 
-// app.use("/api/login", loginRoutes);
+app.use("/api/login", loginRoutes);
 // app.use("/api/admin", adminRoutes);
 // app.use("/api/branch", branchRoutes);
 // app.use("/api/employee", employeeRoutes);

@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { getHostelite, checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
+const {  checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
 const loginValidations = require("../Validations/loginValidations");
 
-router.use(express.json());
 
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
