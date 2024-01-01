@@ -2,12 +2,10 @@ const express = require("express");
 const router = express.Router();
 const requireAuth = require("../Middlewares/reqAuth");
 
-const { addRoom } = require("../Operations/AdminOperations");
 const { getMessData, addMessDays, getLaundryWeight, addLaundryWeight } = require("../Operations/servicesOperations");
 const addMessDaysValidations = require("../Validations/ServiceValidations/messDaysValidations");
 const addLaundryWeightValidation = require("../Validations/ServiceValidations/laundryWeightValidations");
 
-router.use(express.json());
 router.use(requireAuth);
 
 // Your existing route
