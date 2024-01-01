@@ -1,4 +1,4 @@
-const connection = require('../Connections/connect.js');
+const connection = require('../Connections/connect');
 const bcrypt = require("bcrypt");
 
 async function addEmployee(employeeData, admissionData, employeeDependentData) {

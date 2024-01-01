@@ -1,4 +1,4 @@
-const connection = require('../Connections/connect.js');
+const connection = require('../Connections/connect');
 
 /**
  * Retrieves payments for a hostelite by hostelite ID, sorted by date in descending order.

@@ -3,7 +3,7 @@
 // give student notice
 
 // Add Room
-const connection = require('../Connections/connect.js');
+const connection = require('../Connections/connect');
 
 async function addRoom(roomNo, roomType, branchNo) {
     try {
