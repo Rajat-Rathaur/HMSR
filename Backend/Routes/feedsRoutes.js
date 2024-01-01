@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getComplaints, addComplaint, updateComplaintStatus, addFeedback } = require('../Operations/feedsOperations');
 const requireAuth = require('../Middlewares/reqAuth');
-const addComplaintValidation = require('../Validations/FeedValidations/addComplaintValidation');
+const addComplaintValidations = require('../Validations/FeedValidations/addComplaintValidation');
 const updateComplaintValidations = require('../Validations/FeedValidations/updateComplaintValidations');
 
 router.use(requireAuth);
@@ -24,7 +24,7 @@ router.get('/complaint', async (req, res) => {
   }
 });
 
-router.post('/complaint', addComplaintValidation, async (req, res) => {
+router.post('/complaint', addComplaintValidations, async (req, res) => {
   const { issue, priority, description } = req.body;
   const hid = req.id;
 
