@@ -6,12 +6,12 @@ const cors = require("cors");
 const createTables = require("./SQLUtilities/createTables");
 const createConstraints = require("./SQLUtilities/constraints");
 
-const initializeDatabase = async () => {
-    await createTables();
-    await createConstraints();
-};
+// const initializeDatabase = async () => {
+//     await createTables();
+//     await createConstraints();
+// };
 
-initializeDatabase();
+// initializeDatabase();
 
 dotenv.config({ path: "config.env" });
 
@@ -30,14 +30,14 @@ app.use(cors());
 
 app.use("/", startRoutes);
 
-app.use("/api/login", loginRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/branch", branchRoutes);
-app.use("/api/employee", employeeRoutes);
-app.use("/api/hostelite", hosteliteRoutes);
-app.use("/api/services", servicesRoutes);
-app.use("/api/feeds", feedsRoutes);
-app.use("/api/payment", paymentRoutes);
+// app.use("/api/login", loginRoutes);
+// app.use("/api/admin", adminRoutes);
+// app.use("/api/branch", branchRoutes);
+// app.use("/api/employee", employeeRoutes);
+// app.use("/api/hostelite", hosteliteRoutes);
+// app.use("/api/services", servicesRoutes);
+// app.use("/api/feeds", feedsRoutes);
+// app.use("/api/payment", paymentRoutes);
 
 
 app.listen(process.env.PORT, () => {
