@@ -19,7 +19,7 @@ app.use(cors());
 
 
 const startRoutes = require("./Routes/startRoutes");
-const loginRoutes = require("./Routes/loginRoutes");
+// const loginRoutes = require("./Routes/loginRoutes");
 const hosteliteRoutes = require("./Routes/hosteliteRoutes");
 const adminRoutes = require("./Routes/adminRoutes");
 const employeeRoutes = require("./Routes/employeeRoutes");
