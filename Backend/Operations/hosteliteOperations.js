@@ -1,4 +1,4 @@
-const connection = require('../Connections/connect');
+// const connection = require('../Connections/connect');
 const bcrypt = require("bcrypt");
 
 async function addHostelite(hosteliteData, admissionData, hosteliteDependentData) {
