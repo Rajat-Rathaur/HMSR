@@ -3,7 +3,7 @@ const router = express.Router();
 
 const requireAuth = require("../Middlewares/reqAuth");
 const addBranchValidations = require("../Validations/BranchValidations/addBranchValidations");
-const { addBranch, getBranch, updateBranch } = require("../Operations/branchOperations");
+const { addBranch, getBranch, updateBranch } = require("../Operations/branchOperation");
 router.use(requireAuth);
 
 // ~ LATER WILL ADD REQADMIN
