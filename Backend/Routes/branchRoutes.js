@@ -6,6 +6,7 @@ const addBranchValidations = require("../Validations/BranchValidations/addBranch
 const { addBranch, getBranch, updateBranch } = require("../Operations/BranchOperations");
 
 router.use(express.json());
+router.use(requireAuth);
 
 // ~ LATER WILL ADD REQADMIN
 
