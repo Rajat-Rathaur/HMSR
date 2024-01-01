@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { addEmployee, deleteEmployee, getEmployee } = require("../Operations/employeeOperation");
+const { addEmployee, deleteEmployee, getEmployee } = require("../Operations/employeeOperations");
 
 
 const addEmployeeValidations = require("../Validations/EmployeeValidations/addEmployeeValidation");
