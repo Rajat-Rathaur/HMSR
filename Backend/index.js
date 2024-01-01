@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
+dotenv.config({ path: "config.env" });
 // const cors = require("cors");
+// const createTables = require("./SQLUtilities/createTables");
+// const createConstraints = require("./SQLUtilities/constraints");
 
-const createTables = require("./SQLUtilities/createTables");
-const createConstraints = require("./SQLUtilities/constraints");
-
+const PORT = process.env.PORT || 4000;
 // const initializeDatabase = async () => {
 //     await createTables();
 //     await createConstraints();
@@ -13,22 +14,21 @@ const createConstraints = require("./SQLUtilities/constraints");
 
 // initializeDatabase();
 
-// dotenv.config({ path: "./config.env" });
 
-const startRoutes = require("./Routes/startRoutes");
-const hosteliteRoutes = require("./Routes/hosteliteRoutes");
-const loginRoutes = require("./Routes/loginRoutes");
-const branchRoutes = require("./Routes/branchRoutes");
-const adminRoutes = require("./Routes/adminRoutes");
-const servicesRoutes = require("./Routes/servicesRoutes");
-const employeeRoutes = require("./Routes/employeeRoutes");
-const feedsRoutes = require("./Routes/feedsRoutes");
-const paymentRoutes = require("./Routes/paymentRoutes");
+// const startRoutes = require("./Routes/startRoutes");
+// const hosteliteRoutes = require("./Routes/hosteliteRoutes");
+// const loginRoutes = require("./Routes/loginRoutes");
+// const branchRoutes = require("./Routes/branchRoutes");
+// const adminRoutes = require("./Routes/adminRoutes");
+// const servicesRoutes = require("./Routes/servicesRoutes");
+// const employeeRoutes = require("./Routes/employeeRoutes");
+// const feedsRoutes = require("./Routes/feedsRoutes");
+// const paymentRoutes = require("./Routes/paymentRoutes");
 
-app.use(express.json());
-app.use(cors());
+// app.use(express.json());
+// app.use(cors());
 
-app.use("/", startRoutes);
+// app.use("/", startRoutes);
 
 // app.use("/api/login", loginRoutes);
 // app.use("/api/admin", adminRoutes);
@@ -40,6 +40,6 @@ app.use("/", startRoutes);
 // app.use("/api/payment", paymentRoutes);
 
 
-app.listen(process.env.PORT || 4000, () => {
-    console.log("Listening on: http://localhost:" + process.env.PORT);
+app.listen(PORT, () => {
+    console.log("Listening on: http://localhost:" + PORT);
 });
