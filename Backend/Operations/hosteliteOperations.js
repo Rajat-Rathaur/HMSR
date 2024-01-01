@@ -106,7 +106,7 @@ function checkHosteliteCredentials(h_id, password) {
     // if (!isPasswordValid)
     //     return { error: "Incorrect ID or password", success: false };
 
-    return { success: true };
+    // return { success: true };
 }
 
 // /**
