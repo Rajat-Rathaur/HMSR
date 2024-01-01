@@ -7,12 +7,12 @@ const createTables = require("./SQLUtilities/createTables");
 const createConstraints = require("./SQLUtilities/constraints");
 
 const PORT = process.env.PORT || 4000;
-const initializeDatabase = async () => {
-    await createTables();
-    await createConstraints();
-};
+// const initializeDatabase = async () => {
+//     await createTables();
+//     await createConstraints();
+// };
 
-initializeDatabase();
+// initializeDatabase();
 
 
 const startRoutes = require("./Routes/startRoutes");
