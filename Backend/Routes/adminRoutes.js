@@ -3,8 +3,6 @@ const router = express.Router();
 
 const { addRoom } = require("../Operations/AdminOperations");
 
-router.use(express.json());
-
 // ~ LATER WILL ADD REQ ADMIN, ADD ROOM VALIDATION
 
 router.post('/addRoom', async (req, res) => {
