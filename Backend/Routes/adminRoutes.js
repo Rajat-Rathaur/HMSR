@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { addRoom } = require("../Operations/adminOperations");
+const { addRoom } = require("../Operations/adminOperation");
 
 // ~ LATER WILL ADD REQ ADMIN, ADD ROOM VALIDATION
 
