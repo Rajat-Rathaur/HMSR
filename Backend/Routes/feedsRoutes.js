@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { getComplaints, addComplaint, updateComplaintStatus, addFeedback } = require('../Operations/feedsOperations');
 const requireAuth = require('../Middlewares/reqAuth');
-// const addComplaintValidations = require('../Validations/FeedValidations.js/AddComplaintValidations');
-const updateComplaintValidations = require('../Validations/FeedValidations.js/updateComplaintValidations');
+const addComplaintValidations = require('../Validations/FeedValidations/AddComplaintValidations');
+const updateComplaintValidations = require('../Validations/FeedValidations/updateComplaintValidations');
 
 router.use(requireAuth);
 
