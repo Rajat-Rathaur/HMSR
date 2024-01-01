@@ -12,5 +12,4 @@ const updateComplaintValidations = (req, res, next) => {
     next();
 };
 
-// Export the middleware
 module.exports = updateComplaintValidations;
