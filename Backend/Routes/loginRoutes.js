@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {  checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
+// const {  checkHosteliteCredentials } = require("../Operations/HosteliteOperations");
 const loginValidations = require("../Validations/loginValidations");
 
 
@@ -15,7 +14,7 @@ router.post("/", loginValidations, async (req, res) => {
         const data = req.body;
         if (data.id.startsWith('H')) {
             const h_id = data.id.substring(1);
-            const result = await checkHosteliteCredentials(h_id, data.password);
+            // const result = await checkHosteliteCredentials(h_id, data.password);
             if (!result.success)
                 return res.status(401).json({ error: result.error, success: false });
 
@@ -24,7 +23,7 @@ router.post("/", loginValidations, async (req, res) => {
 
         } else if (data.id.startsWith('E')) {
             const e_id = data.id.substring(1);
-            const result = await checkEmployeeCredentials(e_id, data.password);
+            // const result = await checkEmployeeCredentials(e_id, data.password);
             if (!result.success)
                 return res.status(401).json({ error: result.error, success: false });
 
