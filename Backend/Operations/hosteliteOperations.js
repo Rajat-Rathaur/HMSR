@@ -110,10 +110,7 @@ function checkHosteliteCredentials(h_id, password) {
 }
 
 // /**
-//  * Deletes a hostelite and associated details from the database.
-//  * @param {number} h_id - The ID of the hostelite to be deleted.
-//  * @returns {Object} - Object containing success status or error message.
-//  */
+
 // async function deleteHostelite(h_id) {
 //     try {
 //         await connection.query('START TRANSACTION');
