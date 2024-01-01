@@ -1,5 +1,5 @@
-// const connection = require('../Connections/connect');
-// const bcrypt = require("bcrypt");
+const connection = require('../Connections/connect.js');
+const bcrypt = require("bcrypt");
 
 // async function addHostelite(hosteliteData, admissionData, hosteliteDependentData) {
 
@@ -95,22 +95,26 @@
 //     }
 // }
 
-function checkHosteliteCredentials(h_id, password) {
-    // const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
-    // if (rows.length === 0)
-    //     return { error: "Hostelite not found with the provided h_id.", success: false };
+const checkHosteliteCredentials = async (h_id, password) => {
+    const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
 
-    // const hashedPasswordFromDatabase = rows[0].password;
-    // const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
+    if (rows.length === 0)
+        return { error: "Hostelite not found with the provided h_id.", success: false };
 
-    // if (!isPasswordValid)
-    //     return { error: "Incorrect ID or password", success: false };
+    const hashedPasswordFromDatabase = rows[0].password;
+    const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
 
-    // return { success: true };
-}
+    if (!isPasswordValid)
+        return { error: "Incorrect ID or password", success: false };
 
-// /**
+    return { success: true };
+};
 
+/**
+ * Deletes a hostelite and associated details from the database.
+ * @param {number} h_id - The ID of the hostelite to be deleted.
+ * @returns {Object} - Object containing success status or error message.
+ */
 // async function deleteHostelite(h_id) {
 //     try {
 //         await connection.query('START TRANSACTION');
@@ -142,7 +146,7 @@ function checkHosteliteCredentials(h_id, password) {
 //         const newRoomStatus = roomType === 'S' ? 'Empty' : (roomStatus === 'Partially Occupied' ? 'Empty' : 'Partially Occupied');
 //         await connection.query(updateRoomStatusQuery, [newRoomStatus, roomNo, branchNo]);
 
-        
+
 //         await connection.query('COMMIT');
 //         console.log(`Hostelite with h_id ${h_id} deleted successfully.`);
 //         return { success: true };
@@ -170,20 +174,20 @@ function checkHosteliteCredentials(h_id, password) {
 //             hostelites.city AS hostelite_city,
 //             hostelites.street AS hostelite_street,
 //             hostelites.pincode AS hostelite_pincode,
-            
+
 //             branch.b_id,
 //             branch.b_name,
 //             branch.mgr_id,
-            
+
 //             belongs_to.rNo,
 //             belongs_to.bedNumber,
 //             belongs_to.dateOfJoin,
 //             belongs_to.dateOfExit,
-            
+
 //             h_dependents.name AS h_dependents_name,
 //             h_dependents.phone_no AS h_dependents_phone_no,
 //             h_dependents.relationship AS h_dependents_relationship,
-            
+
 //             employee.name AS mgr_name,
 //             employee.phone_no AS mgr_phone_no
 //         FROM 
@@ -292,8 +296,9 @@ function checkHosteliteCredentials(h_id, password) {
 //     }
 // }
 
-module.exports = { checkHosteliteCredentials,
-    //  addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite
-    };
+module.exports = {
+    checkHosteliteCredentials,
+    // addHostelite, getHostelite, updateHostelite, updatedHostelitePassword, deleteHostelite
+};
 
 
