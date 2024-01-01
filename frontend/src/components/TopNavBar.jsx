@@ -5,10 +5,10 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { useNavigate } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import { useRecoilState } from 'recoil';
 import { sideDrawerState } from '../recoil/state';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 const TopNavBar = () => {

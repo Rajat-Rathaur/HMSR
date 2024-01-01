@@ -14,7 +14,7 @@ router.post("/", loginValidations, async (req, res) => {
         const data = req.body;
         if (data.id.startsWith('H')) {
             const h_id = data.id.substring(1);
-            const result =  checkHosteliteCredentials(h_id, data.password);
+            const result =  await checkHosteliteCredentials(h_id, data.password);
             if (!result.success)
                 return res.status(401).json({ error: result.error, success: false });
 

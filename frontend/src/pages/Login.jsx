@@ -65,7 +65,7 @@ const Login = () => {
             <div className="flex flex-col xs:p-8 p-6 items-center w-full">
 
               <div className="flex items-center justify-center w-full">
-                <IconButton className="xs:h-12 xs:w-12 h-6 w-6" type='button'>
+                <IconButton className="xs:h-12 xs:w-12 h-6 w-6" type='button' onClick={() => navigate('/')}>
                   <ArrowBackIosNewIcon />
                 </IconButton>
                 <div className="flex-grow flex-shrink-0 h-16 xss:h-20 xs:h-24 md:h-20 lg:h-28 mx-auto">
