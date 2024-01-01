@@ -24,7 +24,7 @@ router.get('/complaint', async (req, res) => {
   }
 });
 
-router.post('/complaint', addComplaintValidations, async (req, res) => {
+router.post('/complaint', addComplaintValidation, async (req, res) => {
   const { issue, priority, description } = req.body;
   const hid = req.id;
 
