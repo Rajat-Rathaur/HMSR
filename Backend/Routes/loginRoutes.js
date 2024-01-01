@@ -21,7 +21,7 @@ router.post("/", loginValidations, async (req, res) => {
                 return res.status(401).json({ error: result.error, success: false });
 
             const token = createToken(h_id);
-            return res.status(200).json({ token, success: true, h_id , role:'Hostelite'});
+            return res.status(200).json({ data: { token, success: true, h_id, role: 'user' }, success: true });
 
         } else if (data.id.startsWith('E')) {
             const e_id = data.id.substring(1);
@@ -30,7 +30,7 @@ router.post("/", loginValidations, async (req, res) => {
                 return res.status(401).json({ error: result.error, success: false });
 
             const token = createToken(e_id);
-            return res.status(200).json({ token, success: true, e_id, role: "Admin" });
+            return res.status(200).json({ data: { token, success: true, e_id, role: 'admin' }, success: true });
         }
         else {
             return res.status(400).json({ error: "Invalid ID Type", success: false });

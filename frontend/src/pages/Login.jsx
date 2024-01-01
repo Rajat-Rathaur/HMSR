@@ -9,13 +9,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Skeleton from '@mui/material/Skeleton';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import postData from '../utilities/postData';
 
 const Login = () => {
   const { handleSnackbarOpen } = useSnackbar();
   const isSmallScreen = useMediaQuery('(max-width:450px)');
 
   const { register, handleSubmit } = useForm();
-  const url = process.env.SERVER_URL || 'http://localhost:4000';
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -26,29 +26,18 @@ const Login = () => {
       return;
     }
 
-    try {
-      const resp = await fetch(`${url}/api/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    const url = '/api/login';
+    const result = await postData(url, data);
 
-      const responseData = await resp.json();
-      if (responseData.success) {
-        const { token, id } = responseData;
-        sessionStorage.setItem('token', token);
-        sessionStorage.setItem('id', id);
-        sessionStorage.setItem('role', 'Hostelite');
-        navigate('/home')
-        handleSnackbarOpen('Login successful', 'success');
-      } else {
-        handleSnackbarOpen(responseData.error, 'error');
-        console.error('Request failed with status:', resp.status);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+    if (result.success) {
+      const { token, id, role } = result.data;
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('id', id);
+      sessionStorage.setItem('role', role);
+      navigate('/home');
+      handleSnackbarOpen('Login successful', 'success');
+    } else {
+      handleSnackbarOpen('Invalid Credentials', 'error');
     }
   };
 
@@ -73,7 +62,7 @@ const Login = () => {
       <div className="grid relative w-full grid-cols-2 h-screen">
         <div className="col-span-full md:col-span-1 bg-slate-50 flex flex-col w-full">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col p-6 items-center w-full">
+            <div className="flex flex-col xs:p-8 p-6 items-center w-full">
 
               <div className="flex items-center justify-center w-full">
                 <IconButton className="xs:h-12 xs:w-12 h-6 w-6" type='button'>

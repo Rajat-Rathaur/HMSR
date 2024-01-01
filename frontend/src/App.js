@@ -5,7 +5,6 @@ import {
   Routes,
   Route,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -20,9 +19,11 @@ import Notifications from "./pages/user/Notifications";
 import NavBar from "./components/NavBar";
 
 import TopNavBar from "./components/TopNavBar";
+import Index from "./pages/Index";
+import useAuthenticate from "./hooks/useAuthenticate";
+import DefaultPage from "./pages/DefaultPage";
 function App() {
   const location = useLocation();
-  const navigate = useNavigate();
   const pathname = location.pathname;
 
   useEffect(() => {
@@ -30,43 +31,41 @@ function App() {
     let metaDescription = "";
 
     switch (pathname) {
-      case "/":
-        title = "";
-        metaDescription = "";
+      case "/login":
+        title = "Dask - Login";
+        metaDescription = "Welcome to the Home page. Explore personalized content and features based on your role.";
         break;
-      case "/homeexterior":
-        title = "";
-        metaDescription = "";
+      case "/home":
+        title = "Dask - Home";
+        metaDescription = "Welcome to the Home page. Explore personalized content and features based on your role.";
         break;
-      case "/feedbacks":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/payments":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/attendance":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/notifications":
-        title = "";
-        metaDescription = "";
+      case "/updateDetails":
+        title = "Dask - Update Details";
+        metaDescription = "Update your personal details and preferences. Keep your information up-to-date for a better user experience.";
         break;
       case "/services":
-        title = "";
-        metaDescription = "";
+        title = "Dask - Services";
+        metaDescription = "Discover and access a variety of services available to you. Explore the different service offerings tailored to your needs.";
         break;
-      case "/update":
-        title = "";
-        metaDescription = "";
+      case "/payments":
+        title = "Dask - Payments";
+        metaDescription = "Manage your payments and financial transactions. Stay informed about your payment history and make secure transactions.";
         break;
-
+      case "/attendance":
+        title = "Dask - Attendance";
+        metaDescription = "Keep track of your attendance records. View your attendance history and stay updated on your attendance status.";
+        break;
+      case "/feeds":
+        title = "Dask - Feeds";
+        metaDescription = "Stay connected with the latest updates and feeds. Explore a dynamic feed of information, news, and events.";
+        break;
+      case "/notifications":
+        title = "Dask - Notifications";
+        metaDescription = "Receive important notifications and updates. Stay informed about critical announcements and personalized messages.";
+        break;
       default:
-        title = "";
-        metaDescription = "";
-
+        title = "404 Page Not Found";
+        metaDescription = "Default description for pages without specific titles.";
     }
 
     if (title) {
@@ -83,20 +82,7 @@ function App() {
     }
   }, [pathname]);
 
-  const role = sessionStorage.getItem('role');
-
-  useEffect(() => {
-    if (!role) {
-      sessionStorage.clear();
-      navigate('/login')
-    }
-  }, [navigate, role])
-
-  useEffect(() => {
-    if (pathname === '/login')
-      sessionStorage.clear();
-  }, [pathname])
-
+  const { isUser, isAdmin } = useAuthenticate();
   const { isSnackbarOpen, snackbarMessage, snackbarType, handleSnackbarClose } = useSnackbar();
 
   return (
@@ -114,34 +100,34 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Index />} />
       </Routes>
 
-      {role &&
-        <div className="flex relative h-full ">
-          <NavBar />
-          <div className="w-full relative min-h-screen tab:ml-[300px]">
-            <TopNavBar />
+      {(isUser || isAdmin) && <div className="flex relative h-full ">
+        <NavBar />
+        <div className="w-full relative min-h-screen tab:ml-[300px]">
+          <TopNavBar />
 
-            {role === 'Hostelite' &&
-              <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/updateDetails" element={<EditDetails />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/payments" element={<Payments />} />
-                <Route path="/attendance" element={<Attendance />} />
-                <Route path="/feeds" element={<Feeds />} />
-                <Route path="/notifications" element={<Notifications />} />
-              </Routes>
-            }
+          {isUser &&
+            <Routes>
+              <Route path="*" element={<DefaultPage />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/updateDetails" element={<EditDetails />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/payments" element={<Payments />} />
+              <Route path="/attendance" element={<Attendance />} />
+              <Route path="/feeds" element={<Feeds />} />
+              <Route path="/notifications" element={<Notifications />} />
+            </Routes>
+          }
 
-
-            {role === 'Admin' &&
-              <Routes>
-                <Route path="/home" element={<Home />} />
-              </Routes>
-            }
-          </div>
-        </div >
+          {isAdmin &&
+            <Routes>
+              <Route path="/home" element={<Home />} />
+            </Routes>
+          }
+        </div>
+      </div >
       }
     </>
   );

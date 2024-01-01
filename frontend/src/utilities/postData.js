@@ -2,7 +2,6 @@ const hostUrl = process.env.SERVER_URL || 'http://localhost:4000';
 
 const postData = async (url, body) => {
     const token = sessionStorage.getItem('token');
-    console.log(body);
 
     try {
         const response = await fetch(hostUrl + url, {
@@ -14,13 +13,11 @@ const postData = async (url, body) => {
             body: JSON.stringify(body),
         });
         const result = await response.json();
-        console.log(result);
         if (!result.success)
             throw new Error('Network response was not ok');
 
         return { success: true, data: result.data };
     } catch (err) {
-        console.error('Error:', err);
         return { success: false, error: err.message };
     }
 };
