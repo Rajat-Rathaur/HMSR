@@ -39,7 +39,6 @@ app.use("/api/services", servicesRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/feeds", feedsRoutes);
 
-
 app.listen(PORT, () => {
     console.log("Listening on: http://localhost:" + PORT);
 });
