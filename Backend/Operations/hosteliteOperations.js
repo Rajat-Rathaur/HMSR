@@ -95,7 +95,7 @@
 //     }
 // }
 
-async function checkHosteliteCredentials(h_id, password) {
+function checkHosteliteCredentials(h_id, password) {
     // const [rows] = await connection.query('SELECT password FROM hostelites WHERE h_id = ?', [h_id]);
     // if (rows.length === 0)
     //     return { error: "Hostelite not found with the provided h_id.", success: false };
