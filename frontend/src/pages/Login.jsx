@@ -13,7 +13,6 @@ import postData from '../utilities/postData';
 
 const Login = () => {
   const { handleSnackbarOpen } = useSnackbar();
-  const isSmallScreen = useMediaQuery('(max-width:450px)');
 
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -82,8 +81,6 @@ const Login = () => {
               </div>
               <div className="mt-5 mb:mt-10 flex w-full max-w-96 h-auto">
                 <TextField fullWidth label="User ID" placeholder="Enter your ID ex: H001 | E001" {...register("id")} required
-                  size={isSmallScreen ? 'small' : 'medium'}
-
                 />
               </div>
 
@@ -104,14 +101,13 @@ const Login = () => {
                     ),
                   }}
                   required
-                  size={isSmallScreen ? 'small' : 'medium'}
                 />
                 <Link className="text-green-500 text-mb cursor-pointer mt-2">Forgot password?</Link>
               </div>
 
               <div className="my-4 w-full max-w-96 " >
                 <Button variant="contained" color="success" type="submit"
-                  size={isSmallScreen ? 'small' : 'large'}
+                  size='large'
                   fullWidth >
                   Submit
                 </Button>
