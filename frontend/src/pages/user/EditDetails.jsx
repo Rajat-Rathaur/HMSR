@@ -9,7 +9,6 @@ const EditDetailsExterior = () => {
   const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab');
 
-
   return (
     <>
       <main className="bg-white w-full flex flex-col relative p-8">

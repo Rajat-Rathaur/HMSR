@@ -101,9 +101,9 @@ async function checkHosteliteCredentials(h_id, password) {
         return { error: "Hostelite not found with the provided h_id.", success: false };
     const hashedPasswordFromDatabase = rows[0].password;
     const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDatabase);
-    
+
     if (!isPasswordValid)
-    return { error: "Incorrect ID or password", success: false };
+        return { error: "Incorrect ID or password", success: false };
 
     return { success: true };
 }
@@ -144,7 +144,7 @@ async function deleteHostelite(h_id) {
         const newRoomStatus = roomType === 'S' ? 'Empty' : (roomStatus === 'Partially Occupied' ? 'Empty' : 'Partially Occupied');
         await connection.query(updateRoomStatusQuery, [newRoomStatus, roomNo, branchNo]);
 
-        
+
         await connection.query('COMMIT');
         console.log(`Hostelite with h_id ${h_id} deleted successfully.`);
         return { success: true };
@@ -217,8 +217,9 @@ async function getHostelite(h_id) {
     }
 }
 
-async function updateHostelite(h_id, hosteliteData) {
+async function updateHostelite(h_id, hosteliteData, hosteliteDependentData) {
     try {
+        await connection.query('START TRANSACTION');
         // ! CHECK 1 : NEW EMAIL OR PHONE_NO SHOULD NOT BELONG TO OTHER EXISTING HOSTELITES
         const [existingHostelite] = await connection.query(
             'SELECT * FROM hostelites WHERE (email_id = ? OR phone_no = ?) AND h_id != ?', [hosteliteData.email_id, hosteliteData.phone_no, h_id]
@@ -249,18 +250,24 @@ async function updateHostelite(h_id, hosteliteData) {
             updateQuery = updateQuery.slice(0, -2); // Remove the last comma and space
             updateQuery += ' WHERE H_id = ?';
             updateValues.push(h_id);
-
             await connection.query(updateQuery, updateValues);
 
-            const [updatedHostelite] = await connection.query(
-                'SELECT * FROM hostelites WHERE H_id = ?', [h_id]
-            );
+            // update hosteliteDependentData
+            const updateDependentQuery = 'UPDATE h_dependents SET name = ?, phone_no = ?, relationship = ? WHERE hNo = ?;';
+            const updateDependentValues = [
+                hosteliteDependentData.name,
+                hosteliteDependentData.phone_no,
+                hosteliteDependentData.relationship,
+                h_id
+            ];
+            await connection.query(updateDependentQuery, updateDependentValues);
 
-            delete updatedHostelite[0].password;
-            return { hostelite: updatedHostelite[0], success: true };
+            await connection.query('COMMIT');
+            return { message: 'Hostelite updated successfully', success: true };
         }
 
     } catch (err) {
+        await connection.query('ROLLBACK');
         console.error('Error updating hostelite:', err);
         return { error: "An error occurred while updating hostelite.", success: false };
     }

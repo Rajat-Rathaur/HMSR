@@ -8,6 +8,7 @@ const requireAuth = require("../Middlewares/reqAuth");
 const addHosteliteValidations = require("../Validations/HosteliteValidations/addHosteliteValidations");
 const admissionDataValidations = require("../Validations/HosteliteValidations/admissionDataValidations");
 const deleteHosteliteValidations = require("../Validations/HosteliteValidations/deleteHosteliteValidations");
+const updateHosteliteValidations = require("../Validations/HosteliteValidations/updateHosteliteValidations");
 
 router.use(express.json());
 
@@ -52,11 +53,26 @@ router.get('/getHostelite', requireAuth, async (req, res) => {
     }
 });
 
-router.put('/updateHostelite', requireAuth, async (req, res) => {
-    const userId = req.id;
-    const hosteliteData = req.body
+router.post('/updateHostelite', requireAuth, updateHosteliteValidations, async (req, res) => {
+    const userId = parseInt(req.id);
+    const { name, gender, email_id, dob, work,
+        state, city, street, pincode, phone_no,
+        h_dependents_name, h_dependents_phone_no, h_dependents_relationship
+    } = req.body;
+    const dobDate = new Date(dob);
+    const hosteliteData = {
+        name, gender, email_id, dob: dobDate, work, state,
+        city, street, pincode, phone_no
+    };
+
+    const hosteliteDependentData = {
+        name: h_dependents_name,
+        phone_no: h_dependents_phone_no,
+        relationship: h_dependents_relationship
+    };
+    console.log(hosteliteData, hosteliteDependentData)
     try {
-        const updatedHostelite = await updateHostelite(userId, hosteliteData);
+        const updatedHostelite = await updateHostelite(userId, hosteliteData, hosteliteDependentData);
 
         if (updatedHostelite.success) {
             res.status(200).json(updatedHostelite);

@@ -12,6 +12,7 @@ const postData = async (url, body) => {
             },
             body: JSON.stringify(body),
         });
+        console.log(response)
         const result = await response.json();
         if (!result.success)
             throw new Error('Network response was not ok');

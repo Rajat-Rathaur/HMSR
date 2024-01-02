@@ -18,11 +18,15 @@ import { useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
 import { useCallback, useState } from 'react';
 import Popup from '../components/popups/Popup';
+import postData from '../utilities/postData';
+import { useSnackbar } from '../hooks/useSnackbar';
 
 const UpdateDetails = () => {
 
     const { data: hostelite, isLoading } = useFetchData(
         '/api/hostelite/getHostelite');
+    const { handleSnackbarOpen } = useSnackbar();
+
 
     const isSmallScreen = useMediaQuery('(max-width:465px)');
 
@@ -37,14 +41,22 @@ const UpdateDetails = () => {
     }, []);
 
     const { control, handleSubmit } = useForm();
+    const [formData, setFormData] = useState();
 
     const onSubmit = (formData) => {
-        console.log(formData);
+        setFormData(formData)
+        openEditDetailsPopup();
     };
 
-    const handleFormSubmit = () => {
-        handleSubmit(onSubmit)();
-    };
+    const handleFormSubmit = async () => {
+        const result = await postData("/api/hostelite/updateHostelite", { ...formData, dob: formData.dob['$d'] });
+        if (result.success) {
+            handleSnackbarOpen('Hostelite updated Successfully', 'success');
+            closeEditDetailsPopup()
+        } else {
+            handleSnackbarOpen('Error while updating the Hostelite.', 'error');
+        }
+    }
 
     const contactDetails = [
         { name: "phone_no", label: "Phone Number", type: "number", defaultValue: 'phone_no' },
@@ -55,7 +67,7 @@ const UpdateDetails = () => {
         { name: "street", label: "Street", type: "text", defaultValue: 'hostelite_street' },
         { name: "city", label: "City", type: "text", defaultValue: 'hostelite_city' },
         { name: "state", label: "State", type: "text", defaultValue: 'hostelite_state' },
-        { name: "pincode", label: "Pincode", type: "text", defaultValue: 'hostelite_pincode' },
+        { name: "pincode", label: "Pincode", type: "number", defaultValue: 'hostelite_pincode' },
     ];
 
     const guardianFields = [
@@ -67,7 +79,7 @@ const UpdateDetails = () => {
 
     return (
         <>
-            <form className="grid grid-cols-1 sm:grid-cols-2 mt-10 gap-x-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 mt-10 gap-x-5">
                 <div className="flex flex-col space-y-5">
                     <h2 className="hd-s">Personal Details</h2>
                     {isLoading ? (
@@ -79,11 +91,12 @@ const UpdateDetails = () => {
                     ) : (
                         <>
                             <Controller
-                                name="hostelite_name"
+                                name="name"
                                 control={control}
                                 defaultValue={hostelite.hostelite_name}
                                 render={({ field }) => (
                                     <TextField
+                                        required
                                         label="Name"
                                         variant="outlined"
                                         type="text"
@@ -98,6 +111,7 @@ const UpdateDetails = () => {
                                 <Controller
                                     name="dob"
                                     control={control}
+                                    rules={{ required: true }}
                                     defaultValue={dayjs(hostelite.dob)}
                                     render={({ field }) => (
                                         <DatePicker
@@ -109,7 +123,7 @@ const UpdateDetails = () => {
                                 />
                             </LocalizationProvider>
 
-                            <FormControl className="sm:max-w-80 w-full" variant="outlined" size={isSmallScreen ? 'small' : "medium"}>
+                            <FormControl required className="sm:max-w-80 w-full" variant="outlined" size={isSmallScreen ? 'small' : "medium"}>
                                 <InputLabel>Gender</InputLabel>
                                 <Controller
                                     name="gender"
@@ -145,6 +159,7 @@ const UpdateDetails = () => {
                                     defaultValue={hostelite[detail.defaultValue]}
                                     render={({ field }) => (
                                         <TextField
+                                            required
                                             key={detail.name}
                                             label={detail.label}
                                             {...field}
@@ -180,6 +195,7 @@ const UpdateDetails = () => {
                             defaultValue={hostelite.work}
                             render={({ field }) => (
                                 <TextField
+                                    required
                                     label="Profession"
                                     variant="outlined"
                                     type="text"
@@ -212,13 +228,25 @@ const UpdateDetails = () => {
                                     defaultValue={hostelite[detail.defaultValue]}
                                     render={({ field }) => (
                                         <TextField
+                                            required
                                             key={`textfield_${field.name}`}
                                             label={detail.label}
                                             variant="outlined"
                                             {...field}
-                                            type={field.type}
+                                            type={detail.type}
                                             className="sm:max-w-80 w-full"
                                             size={isSmallScreen ? 'small' : "medium"}
+                                            sx={{
+                                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                                    display: "none",
+                                                },
+                                                "& input[type=number]": {
+                                                    MozAppearance: "textfield",
+                                                },
+                                            }}
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
                                         />
                                     )}
                                 />
@@ -244,13 +272,25 @@ const UpdateDetails = () => {
                                     defaultValue={hostelite[detail.defaultValue]}
                                     render={({ field }) => (
                                         <TextField
+                                            required
                                             key={`textfield_${field.name}`}
                                             label={detail.label}
                                             variant="outlined"
                                             {...field}
-                                            type={field.type}
+                                            type={detail.type}
                                             className="sm:max-w-80 w-full"
                                             size={isSmallScreen ? 'small' : "medium"}
+                                            sx={{
+                                                "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+                                                    display: "none",
+                                                },
+                                                "& input[type=number]": {
+                                                    MozAppearance: "textfield",
+                                                },
+                                            }}
+                                            InputProps={{
+                                                inputProps: { min: 0 }
+                                            }}
                                         />
                                     )}
                                 />
@@ -265,8 +305,7 @@ const UpdateDetails = () => {
                         color="success"
                         variant="contained"
                         size="large"
-                        onClick={openEditDetailsPopup}
-                        type="button"
+                        type="submit"
                     >
                         Update Details
                     </Button>

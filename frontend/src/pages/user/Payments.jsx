@@ -133,7 +133,7 @@ const Payments = () => {
               {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
-                <p className="hd-p text-3xl  mt-4 mb-2">2020 ₹</p>
+                <p className="hd-p text-3xl  mt-4 mb-2">10000 ₹</p>
               )}
             </div>
 
@@ -142,7 +142,7 @@ const Payments = () => {
               {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
-                <p className="hd-p text-3xl  mt-4 mb-2"> 5000 ₹</p>
+                <p className="hd-p text-3xl  mt-4 mb-2"> 8500 ₹</p>
               )}
             </div>
 
@@ -151,7 +151,7 @@ const Payments = () => {
               {isLoadingHostelite ? (
                 <Skeleton variant="text" height={'80%'} width={'30%'} />
               ) : (
-                <p className="hd-p text-3xl   mt-4 mb-2">1135  ₹</p>
+                <p className="hd-p text-3xl   mt-4 mb-2">1500  ₹</p>
               )}
             </div>
           </div>
