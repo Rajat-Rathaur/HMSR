@@ -20,11 +20,11 @@ const TopNavBar = () => {
         month: 'short',
     });
 
-    const formattedTime = currentDate.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-    });
+    const hours = currentDate.getHours().toString().padStart(2, '0');
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+
+    const formattedTime = `${hours}:${minutes}`;
+
 
     const navigate = useNavigate();
     const hasNewNotification = true;
