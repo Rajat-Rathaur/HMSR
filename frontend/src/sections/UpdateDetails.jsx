@@ -28,7 +28,7 @@ const UpdateDetails = () => {
     const { handleSnackbarOpen } = useSnackbar();
 
 
-    const isSmallScreen = useMediaQuery('(max-width:465px)');
+    const isSmallScreen = useMediaQuery('(max-width:640px)');
 
     const [isEditDetailsPopupOpen, setEditDetailsPopupOpen] = useState(false);
 
@@ -84,9 +84,9 @@ const UpdateDetails = () => {
                     <h2 className="hd-s">Personal Details</h2>
                     {isLoading ? (
                         <>
-                            <Skeleton variant="rectangular" width='60%' height={50} />
-                            <Skeleton variant="rectangular" width='60%' height={50} />
-                            <Skeleton variant="rectangular" width='60%' height={50} />
+                            <Skeleton variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
+                            <Skeleton variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
+                            <Skeleton variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
                         </>
                     ) : (
                         <>
@@ -102,7 +102,6 @@ const UpdateDetails = () => {
                                         type="text"
                                         {...field}
                                         className="sm:max-w-80 w-full"
-                                        size={isSmallScreen ? 'small' : "medium"}
                                     />
                                 )}
                             />
@@ -117,13 +116,12 @@ const UpdateDetails = () => {
                                         <DatePicker
                                             {...field}
                                             className="sm:max-w-80 w-full"
-                                            slotProps={{ textField: { size: isSmallScreen ? 'small' : "medium" } }}
                                         />
                                     )}
                                 />
                             </LocalizationProvider>
 
-                            <FormControl required className="sm:max-w-80 w-full" variant="outlined" size={isSmallScreen ? 'small' : "medium"}>
+                            <FormControl required className="sm:max-w-80 w-full" variant="outlined" >
                                 <InputLabel>Gender</InputLabel>
                                 <Controller
                                     name="gender"
@@ -145,7 +143,7 @@ const UpdateDetails = () => {
                     {isLoading ? (
                         <>
                             {contactDetails.map((detail) => (
-                                <Skeleton key={`skeleton_${detail.name}`} variant="rectangular" width='60%' height={50}
+                                <Skeleton key={`skeleton_${detail.name}`} variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50}
                                 />
                             ))}
                         </>
@@ -165,7 +163,6 @@ const UpdateDetails = () => {
                                             {...field}
                                             type={detail.type}
                                             className="sm:max-w-80 w-full"
-                                            size={isSmallScreen ? 'small' : "medium"}
                                             sx={{
                                                 "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
                                                     display: "none",
@@ -186,7 +183,7 @@ const UpdateDetails = () => {
 
                     <h2 className="hd-s mt-3">Work Details</h2>
                     {isLoading ? (
-                        <Skeleton variant="rectangular" width='60%' height={50} />
+                        <Skeleton variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
 
                     ) : (
                         <Controller
@@ -201,7 +198,6 @@ const UpdateDetails = () => {
                                     type="text"
                                     {...field}
                                     className="sm:max-w-80 w-full"
-                                    size={isSmallScreen ? 'small' : "medium"}
                                 />
                             )}
                         />
@@ -215,7 +211,7 @@ const UpdateDetails = () => {
                     {isLoading ? (
                         <>
                             {addressFields.map((field) => (
-                                <Skeleton key={`skeleton_${field.name}`} variant="rectangular" width='60%' height={50} />
+                                <Skeleton key={`skeleton_${field.name}`} variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
                             ))}
                         </>
                     ) : (
@@ -235,7 +231,6 @@ const UpdateDetails = () => {
                                             {...field}
                                             type={detail.type}
                                             className="sm:max-w-80 w-full"
-                                            size={isSmallScreen ? 'small' : "medium"}
                                             sx={{
                                                 "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
                                                     display: "none",
@@ -259,7 +254,7 @@ const UpdateDetails = () => {
                     {isLoading ? (
                         <>
                             {guardianFields.map((field) => (
-                                <Skeleton key={`skeleton_${field.name}`} variant="rectangular" width='60%' height={50} />
+                                <Skeleton key={`skeleton_${field.name}`} variant="rectangular" width={isSmallScreen ? '100%' :'60%'} height={50} />
                             ))}
                         </>
                     ) : (
@@ -279,7 +274,6 @@ const UpdateDetails = () => {
                                             {...field}
                                             type={detail.type}
                                             className="sm:max-w-80 w-full"
-                                            size={isSmallScreen ? 'small' : "medium"}
                                             sx={{
                                                 "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
                                                     display: "none",
