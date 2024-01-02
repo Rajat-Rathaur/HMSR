@@ -14,8 +14,13 @@ import Instagram from '@mui/icons-material/Instagram';
 import Twitter from '@mui/icons-material/Twitter';
 import WhatsApp from '@mui/icons-material/WhatsApp';
 import SearchIcon from '@mui/icons-material/EmailOutlined';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { sideDrawerState } from '../recoil/state';
+import SideDrawer from '../mui/SideDrawer';
 
 
 
@@ -56,6 +61,7 @@ const Index = () => {
     }
 
     const smoothScrollTo = (elementId) => {
+        console.log(elementId)
         const element = document.getElementById(elementId);
         if (element) {
             window.scrollTo({
@@ -64,10 +70,38 @@ const Index = () => {
             });
         }
     };
+
+    const [open, setOpen] = useRecoilState(sideDrawerState);
+    const toggleSidebar = () => {
+        setOpen(!open)
+    }
+
+    const tabs = [
+        {
+            name: "Home",
+            section: "home"
+        },
+        {
+            name: "Services",
+            section: "services"
+        },
+        {
+            name: "Connect",
+            section: "connect"
+        },
+        {
+            name: "About us",
+            section: "aboutUs"
+        },
+
+    ];
+
     return (
         <>
+            <SideDrawer tabs={tabs} onLinkClick={smoothScrollTo} />
+
             <nav className='flex flex-row justify-between bg-slate-100 w-full h-14 lg:px-10 md:px-6 px-3 py-2 shadow-sm sticky top-0 z-50'>
-                <div className='flex space-x-5 justify-center items-center'>
+                <div className='md:flex hidden space-x-5 justify-center items-center'>
                     <Button onClick={() => smoothScrollTo('home')}
                         sx={{ bgcolor: '#f8fafc', px: '15px', color: 'black' }}
                     >Home</Button>
@@ -79,11 +113,16 @@ const Index = () => {
                         sx={{ bgcolor: '#f8fafc', px: '15px', color: 'black' }}
                     >About Us</Button>
                 </div>
+                <div className='md:hidden flex' >
+                    <IconButton onClick={toggleSidebar}>
+                        <DragHandleIcon />
+                    </IconButton>
+                </div>
                 <div className='flex space-x-5 justify-center items-center' >
-                    <Button onClick={() => smoothScrollTo('connect')}
-                        sx={{ bgcolor: '#f8fafc', px: '15px', color: 'black' }}
+                    <Button className='md:flex hidden' onClick={() => smoothScrollTo('connect')}
+                        sx={{ bgcolor: '#f8fafc', px: '15px', color: 'black', display: isSmallScreen && 'none' }}
                     > Connect</Button>
-                    <span>|</span>
+                    <span className={isSmallScreen && 'hidden'}>|</span>
                     <Button sx={{ bgcolor: '#f8fafc', px: '15px', color: 'black' }} onClick={onClickLogin}>Login</Button>
                 </div>
             </nav>
@@ -151,7 +190,7 @@ const Index = () => {
                 </div>
 
                 <div id='connect' className='col-span-full lg:px-16 xl:px-40 sm:py-12  '>
-                    <div className='relative bg-[#D2F2E8] h-60 md:h-80 rounded-3xl w-full flex flex-col gap-y-8 items-center justify-center'>
+                    <div className='relative bg-[#D2F2E8] h-60 md:h-80 sm:rounded-3xl w-full flex flex-col gap-y-8 items-center justify-center'>
                         <img src='/icons/index/img1.png' alt='YourImage' className='hidden xl:flex absolute top-8 left-60' />
                         <img src='/icons/index/img2.png' alt='YourImage' className='hidden md:flex absolute top-40 left-16' />
                         <img src='/icons/index/img3.png' alt='YourImage' className='hidden md:flex absolute top-20 right-16' />
@@ -169,7 +208,7 @@ const Index = () => {
                             <IconButton size={isTabScreen ? 'small' : 'medium'}>
                                 <SearchIcon color='warning' className='mx-1' fontSize={isTabScreen ? 'small' : 'medium'} />
                             </IconButton>
-                            <input type="text" placeholder='Get in Touch with us...' className='lg:w-96 ml-1 items-center justify-center font-sans font-medium text-gray-900 ' style={{ outline: 'none', padding: '2px', fontSize: '15px' }} />
+                            <input type="text" placeholder='Get in Touch with us...' className='lg:w-96 xs:w-auto w-32 ml-1 items-center justify-center font-sans font-medium text-gray-900 ' style={{ outline: 'none', padding: '2px', fontSize: '15px' }} />
                             <div className='mr-5'>
                                 <Button sx={{ bgcolor: '#f0fdf4' }} size={isSmallScreen ? 'small' : 'medium'} color='success'>Subscribe Now</Button>
                             </div>
@@ -178,13 +217,14 @@ const Index = () => {
 
                     </div>
                 </div>
+
                 <div id='aboutUs' className='mt-10 py-12 px-3 xs:px-10 xl:px-40  col-span-full'>
                     <div className='grid grid-cols-1 tab:grid-cols-2'>
                         <div className=''>
                             <img className='w-20 h-12' src="/icons/logo.svg" alt="" />
                             <p className='text-zinc-400 text-sm leading-7'>That's essentially our story in one sentence.
                                 Crammed up hostels or cooped up PGs - not much of a choice, is it?
-                                That’s why we created Pedophiles - a place designed by people who've been in your shoes.
+                                That’s why we created Dask - a place designed by people who've been in your shoes.
                                 Understand you. And are inspired by you.
                             </p>
                             <p className='hidden tab:flex space-x-3 mt-3'>

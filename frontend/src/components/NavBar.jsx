@@ -113,7 +113,7 @@ const NavBar = () => {
 
   return (
     <>
-      <SideDrawer tabs={tabs} />
+      <SideDrawer tabs={tabs} header={true} logout={true} onLogout={onLogout} />
 
       <nav className=" hidden tab:flex tab:w-[300px] bg-slate-100 fixed h-screen overflow-y-auto">
         <div className="flex flex-col w-full space-y-5">

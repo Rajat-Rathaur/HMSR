@@ -37,10 +37,10 @@ const TopNavBar = () => {
         navigate('/updateDetails/?tab=Update+Details')
     }
 
+    const [open, setOpen] = useRecoilState(sideDrawerState);
     const toggleSidebar = () => {
         setOpen(!open)
     }
-    const [open, setOpen] = useRecoilState(sideDrawerState);
 
 
     return (

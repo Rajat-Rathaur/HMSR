@@ -14,7 +14,7 @@ import { useRecoilState } from 'recoil';
 import { sideDrawerState } from '../recoil/state';
 import { Link } from 'react-router-dom';
 
-export default function SideDrawer({ tabs }) {
+export default function SideDrawer({ tabs, header, logout, onLinkClick, onLogout }) {
     const [open, setOpen] = useRecoilState(sideDrawerState);
 
     const toggleDrawer = () => {
@@ -28,31 +28,33 @@ export default function SideDrawer({ tabs }) {
             onClick={toggleDrawer}
             onKeyDown={toggleDrawer}
         >
-            <div className="bg-slate-100 h-12 flex flex-row w-full justify-center items-center p-3 py-9">
-                <img
-                    className=" w-10 h-10"
-                    alt=""
-                    src="/ellipse-1.svg"
-                // data-animate-on-scroll
-                />
+            {header && <>
+                <div className="bg-slate-100 h-12 flex flex-row w-full justify-center items-center p-3 py-9">
+                    <img
+                        className=" w-10 h-10"
+                        alt=""
+                        src="/ellipse-1.svg"
+                    // data-animate-on-scroll
+                    />
 
-                <div className=" tab:flex flex-col px-3 w-full">
-                    <h3 className="flex w-full text-gray-850 font-medium text-lg">Anna George</h3>
-                    <p className="flex text-slate-400 font-medium text-sm ">
-                        HN-512
-                    </p>
+                    <div className=" tab:flex flex-col px-3 w-full">
+                        <h3 className="flex w-full text-gray-850 font-medium text-lg">Anna George</h3>
+                        <p className="flex text-slate-400 font-medium text-sm ">
+                            HN-512
+                        </p>
+                    </div>
+
+                    <span className="flex items-center">
+                        <VerifiedIcon className="text-green-700" />
+                    </span>
                 </div>
 
-                <span className="flex items-center">
-                    <VerifiedIcon className="text-green-700" />
-                </span>
-            </div>
-
-            <Divider />
+                <Divider />
+            </>}
 
             <List>
                 {tabs.map((tab) => (
-                    <Link to={tab.location}>
+                    <Link to={tab.location} onClick={() => { tab.section && onLinkClick(tab.section) }}>
                         <ListItem key={tab.name} disablePadding>
                             <ListItemButton disableRipple sx={{
                                 backgroundColor: tab?.active ? '#faf5ff' : 'inherit',
@@ -72,10 +74,9 @@ export default function SideDrawer({ tabs }) {
             <Divider />
 
             <List>
-                <ListItem >
-                    <Button color="error" fullWidth size="large" sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }} endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}>Logout</Button>
-                </ListItem>
-
+                {logout && <ListItem >
+                    <Button onClick={onLogout} color="error" fullWidth size="large" sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }} endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}>Logout</Button>
+                </ListItem>}
             </List>
         </Box>
     );
