@@ -18,8 +18,8 @@ const updateHosteliteValidations = async (req, res, next) => {
             return res.status(400).json({ error: "Invalid data types for some fields.", success: false });
         }
 
-        else if (gender !== 'Male' && gender !== 'Female' && gender !== 'Others') {
-            return res.status(400).json({ error: "Invalid gender value. Allowed values are 'Male', 'Female', or 'Others'.", success: false });
+        else if (gender !== 'Male' && gender !== 'Female' && gender !== 'other') {
+            return res.status(400).json({ error: "Invalid gender value. Allowed values are 'Male', 'Female', or 'other'.", success: false });
         }
 
         else if (parseInt(pincode) < 10000 || parseInt(pincode) > 999999) {
