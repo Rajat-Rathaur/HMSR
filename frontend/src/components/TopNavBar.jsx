@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import IconButton from '@mui/material/IconButton';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Badge from '@mui/material/Badge';
@@ -14,7 +14,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const TopNavBar = () => {
     const isTabScreen = useMediaQuery('(max-width:890px)');
 
-    const currentDate = new Date();
+    const [currentDate, setCurrentDate] = useState(new Date());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentDate(new Date());
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const formattedDate = currentDate.toLocaleDateString('en-US', {
         day: 'numeric',
         month: 'short',
