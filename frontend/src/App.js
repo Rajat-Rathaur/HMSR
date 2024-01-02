@@ -31,6 +31,8 @@ function App() {
     let metaDescription = "";
 
     switch (pathname) {
+      case '/':
+        break;
       case "/login":
         title = "Dask - Login";
         metaDescription = "Welcome to the Home page. Explore personalized content and features based on your role.";
