@@ -8,7 +8,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useSnackbar } from '../hooks/useSnackbar';
 import Skeleton from '@mui/material/Skeleton';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import postData from '../utilities/postData';
 
 const Login = () => {
@@ -61,8 +60,7 @@ const Login = () => {
       <div className="grid relative w-full grid-cols-2 h-screen">
         <div className="col-span-full md:col-span-1 bg-slate-50 flex flex-col w-full">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col xs:p-8 p-6 items-center w-full">
-
+            <div className="flex flex-col xs:p-8 p-6 mt-10 items-center w-full">
               <div className="flex items-center justify-center w-full">
                 <IconButton className="xs:h-12 xs:w-12 h-6 w-6" type='button' onClick={() => navigate('/')}>
                   <ArrowBackIosNewIcon />
