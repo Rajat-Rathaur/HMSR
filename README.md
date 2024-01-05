@@ -64,7 +64,7 @@ Certainly! Here's an enhanced version:
 
 ## frontend
 
-1. Create a `.env` file in the `frontend` folder with the following content:
+1. Create a `.env` file in the `Frontend` folder with the following content:
 
    ```dotenv
    # API URL for server communication
@@ -75,7 +75,7 @@ Certainly! Here's an enhanced version:
 2. Installation:
 
    ```bash
-   cd frontend
+   cd Frontend
    ```
    ```
    npm install
