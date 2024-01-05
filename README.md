@@ -1,7 +1,8 @@
 
 # DASK homecoming
 
-DASK is a  platform web application that combines advanced development skills with a user-friendly interface, offering features of hostel management. 
+DASK revolutionizes hostel management with its cutting-edge web platform, seamlessly integrating advanced development capabilities with an intuitive user-friendly interface. This innovative application not only showcases unparalleled technical prowess but also delivers a comprehensive suite of features, redefining the landscape of hostel management for an unparalleled user experience.
+
 
 
 ![Pic1](assets/pic1.png)
@@ -12,14 +13,18 @@ Certainly! Here's an enhanced version:
 ## Technologies Used
 
 - **MERN STACK**: Leveraging the power of MySQL, Express.js, React, and Node.js for a robust and efficient stack.
-- **Powered by Tailwind**: Utilizing Tailwind to enhance the user interface and provide a modern and cohesive design.
 
+- **Powered by MUI**: Utilizing Material-UI to enhance the user interface and provide a modern and cohesive design.
+- 
 ## Features
 
 - **Minimalistic Designs**
 - **Fully Responsive** 
 - **Mess, Laundry, Payments , Attendance**
-
+- **Admin Dashboard , Transparency of services, Complain , Feedback, Notifications**
+-**All solutions at one step**
+-**Easy to use**
+  
 # Configuring Project
 ## Backend
 
@@ -37,12 +42,6 @@ Certainly! Here's an enhanced version:
    # JWT secret for token generation
    SECRET=YOUR_JWT_SECRET
 
-
-   ```
-
-  - If you haven't set up an account on Backblaze B2 yet, you can [create one here](https://www.backblaze.com)
-
----
 
 **Note:** If you encounter CORS issues during deployment, ensure that the CORS policy is set up using the BlackBlaze CLI. Use the following command (for windows only):
 
