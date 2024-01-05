@@ -28,7 +28,7 @@ const NavButton = ({ location, name, icon, active }) => {
             backgroundColor: active ? '#faf5ff' : 'inherit',
             color: active ? '#1d4ed8' : 'inherit',
             '& .MuiSvgIcon-root': {
-              marginRight: isLargeScreen ? '30px' : '10px',
+              marginRight: isLargeScreen ? '20px' : '10px',
             },
           }}
           startIcon={icon}

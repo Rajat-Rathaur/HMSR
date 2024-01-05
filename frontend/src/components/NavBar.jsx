@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-import { Button } from '@mui/material';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import PaymentIcon from '@mui/icons-material/Payment';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import HomeIcon from '@mui/icons-material/Home';
-import VerifiedIcon from '@mui/icons-material/Verified';
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import NavButton from "../mui/NavButton";
+
+import { useSnackbar } from "../hooks/useSnackbar";
 import { useLocation, useNavigate } from 'react-router-dom';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import SideDrawer from "../mui/SideDrawer";
 import PortalPopup from "./PortalPopup";
 import Popup from "./popups/Popup";
-import { useSnackbar } from "../hooks/useSnackbar";
+import SideDrawer from "../mui/SideDrawer";
+import { Button } from '@mui/material';
+import {
+  ExitToApp, DateRange, Person, Person4, Payment,
+  AddBusiness, Home, Verified, Feedback, Notifications,
+  ManageAccounts, Bed, PersonAdd
+} from '@mui/icons-material'
 
 const NavBar = () => {
   const { handleSnackbarOpen } = useSnackbar();
@@ -27,6 +24,8 @@ const NavBar = () => {
   const openLogoutPopup = () => {
     setLogoutPopup(true);
   }
+
+  const role = sessionStorage.getItem('role');
 
   const closeLogoutPopup = () => {
     setLogoutPopup(false);
@@ -71,49 +70,48 @@ const NavBar = () => {
   //   };
   // }, []);
 
-  const tabs = [
+  const userTabs = [
     {
-      icon: <HomeIcon />,
+      icon: <Home />,
       name: "Home",
       active: currentPage === '/home',
       location: "/home"
     },
     {
-      icon: <AddBusinessIcon />,
+      icon: <AddBusiness />,
       name: "Services",
       active: currentPage === '/services',
       location: "/services"
     },
     {
-      icon: <PaymentIcon />,
+      icon: <Payment />,
       name: "Payments",
       active: currentPage === '/payments',
       location: "/payments"
     },
     {
-      icon: <DateRangeIcon />,
+      icon: <DateRange />,
       name: "Attendance",
       active: currentPage === '/attendance',
       location: "/attendance"
     },
     {
-      icon: <FeedbackIcon />,
+      icon: <Feedback />,
       name: "Feedback",
       active: currentPage.startsWith('/feeds'),
       location: "/feeds?tab=Complaint"
     },
     {
-      icon: <NotificationsIcon />,
+      icon: <Notifications />,
       name: "Notification",
       active: currentPage === '/notifications',
       location: "/notifications"
     }
   ];
 
-
   return (
     <>
-      <SideDrawer tabs={tabs} header={true} logout={true} onLogout={onLogout} />
+      <SideDrawer tabs={userTabs} header={true} logout={true} onLogout={onLogout} />
 
       <nav className=" hidden tab:flex tab:w-[300px] bg-slate-100 fixed h-screen overflow-y-auto">
         <div className="flex flex-col w-full space-y-5">
@@ -131,26 +129,42 @@ const NavBar = () => {
               </p>
             </div>
             <span className="hidden xl:flex items-center">
-              <VerifiedIcon className="text-green-700" />
+              <Verified className="text-green-700" />
             </span>
           </div>
 
-          {tabs.map((tab, index) => (
+          {role === 'user' && userTabs.map((tab, index) => (
             <NavButton key={index} icon={tab.icon} name={tab.name} active={tab.active} location={tab.location} />
           ))}
+
+          {role === 'admin' &&
+            <>
+              <NavButton icon={<Home />} name={'Home'} active={currentPage.startsWith('/home')} location={'/home'} />
+              <p className="lb-p mx-4 ">Hostelite</p>
+              <NavButton icon={<Person />} name={'Hostelite'} active={currentPage === ('/hostelite')} location={'/hostelite'} />
+              <NavButton icon={<PersonAdd />} name={'Hostelite Enrollment'} active={currentPage.startsWith('/hosteliteEnrollment')} location={'/hosteliteEnrollment'} />
+              <p className="lb-p mx-4 ">Employee</p>
+              <NavButton icon={<Person4 />} name={'Employee'} active={currentPage === ('/employee')} location={'/employee'} />
+              <NavButton icon={<PersonAdd />} name={'Employee Enrollment'} active={currentPage.startsWith('/employeeEnrollment')} location={'/employeeEnrollment'} />
+              <p className="lb-p mx-4 ">Branch</p>
+              <NavButton icon={<Bed />} name={'Rooms'} active={currentPage.startsWith('/rooms')} location={'/rooms'} />
+              <NavButton icon={<Payment />} name={'Finance'} active={currentPage.startsWith('/finance')} location={'/finance'} />
+              <NavButton icon={<Feedback />} name={'Request'} active={currentPage.startsWith('/request')} location={'/request'} />
+              <NavButton icon={<Notifications />} name={'Notifications'} active={currentPage.startsWith('/notifications')} location={'/notifications'} />
+            </>
+          }
 
           <hr className="bg-gray-300 h-[2px] " />
 
           <div className="px-5">
-            <NavButton icon={<ManageAccountsIcon />} name={'User Settings'} active={currentPage.startsWith('/updateDetails')} location={'/updateDetails?tab=Update+Details'} />
-
+            <NavButton icon={<ManageAccounts />} name={'User Settings'} active={currentPage.startsWith('/updateDetails')} location={'/updateDetails?tab=Update+Details'} />
             <div className="hidden tab:flex items-center justify-center">
               <Button
                 color="error"
                 fullWidth
                 size="large"
                 sx={{ paddingY: '12px', backgroundColor: '#fee2e2' }}
-                endIcon={<ExitToAppIcon sx={{ marginLeft: '8px' }} />}
+                end={<ExitToApp sx={{ marginLeft: '8px' }} />}
                 onClick={openLogoutPopup}
               >Logout</Button>
             </div>

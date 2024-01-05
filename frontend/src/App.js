@@ -7,8 +7,13 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import useAuthenticate from "./hooks/useAuthenticate"
+
+import Index from "./pages/Index";
 import Login from "./pages/Login";
-import Home from "./pages/user/Home";
+import DefaultPage from "./pages/DefaultPage";
+
+import UserHome from "./pages/user/Home";
 import Services from "./pages/user/Services";
 import Payments from "./pages/user/Payments";
 import Attendance from "./pages/user/Attendance";
@@ -16,12 +21,13 @@ import Feeds from "./pages/user/Feeds";
 import EditDetails from "./pages/user/EditDetails";
 import Notifications from "./pages/user/Notifications";
 
-import NavBar from "./components/NavBar";
+
+import AdminHome from "./pages/admin/Home";
+import AddHostelite from "./pages/admin/AddHostelite";
 
 import TopNavBar from "./components/TopNavBar";
-import Index from "./pages/Index";
-import useAuthenticate from "./hooks/useAuthenticate";
-import DefaultPage from "./pages/DefaultPage";
+import NavBar from "./components/NavBar";
+
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -113,7 +119,7 @@ function App() {
           {isUser &&
             <Routes>
               <Route path="*" element={<DefaultPage />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={<UserHome />} />
               <Route path="/updateDetails" element={<EditDetails />} />
               <Route path="/services" element={<Services />} />
               <Route path="/payments" element={<Payments />} />
@@ -125,8 +131,16 @@ function App() {
 
           {isAdmin &&
             <Routes>
-              <Route path="/home" element={<Home />} />
-              {/* <Route path="/addHostelite" element={<A />} /> */}
+              <Route path="*" element={<DefaultPage />} />
+              <Route path="/home" element={<AdminHome />} />
+              {/* <Route path="/hostelite" element={<Hostelite />} /> */}
+              <Route path="/hosteliteEnrollment" element={<AddHostelite />} />
+              {/* <Route path="/employee" element={<Employee />} /> */}
+              {/* <Route path="/employeeEnrollment" element={<EmployeeEnrollment />} /> */}
+              {/* <Route path="/finance" element={<Finance />} /> */}
+              {/* <Route path="/rooms" element={<Rooms />} /> */}
+              {/* <Route path="/request" element={<Request />} /> */}
+              <Route path="/notification" element={<Notifications />} />
             </Routes>
           }
         </div>
