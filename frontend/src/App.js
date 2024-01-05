@@ -126,6 +126,7 @@ function App() {
           {isAdmin &&
             <Routes>
               <Route path="/home" element={<Home />} />
+              {/* <Route path="/addHostelite" element={<A />} /> */}
             </Routes>
           }
         </div>

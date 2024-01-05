@@ -29,11 +29,16 @@ function Carousel({ data }) {
     };
 
     return (
-        <div className='w-full'>
+        <div>
 
-            {data[activeStep]?.label && <div className='flex h-20 flex-col justify-center items-center w-full'>
-                <h5 className="lb-p">{data[activeStep].label}</h5>
-                <span className="text-p">{data[activeStep].label}</span>
+            {data[activeStep]?.name && <div className='flex w-full py-3 px-3'>
+                <img className='mt-1 w-12 h-12 rounded-full' src={data[activeStep].icon} alt="" />
+                <div className='px-2 py-0.5 flex flex-col space-y-0.5'>
+                    <h5 className="text-slate-800 font-semibold ">{data[activeStep].name}  </h5>
+                    <h5 className="lb-p">{data[activeStep].branch}</h5>
+                    <p className="text-sm leading-6 font-medium text-zinc-400">📍{data[activeStep].address}</p>
+                    <p className='text-sm font-medium text-blue-500 hover:cursor-pointer' onClick={() => window.open(`tel:+91${data[activeStep].phone}`)}>📞 +91 {data[activeStep].phone}</p>
+                </div>
             </div>}
 
             <AutoPlaySwipeableViews
@@ -57,6 +62,7 @@ function Carousel({ data }) {
                     </div>
                 ))}
             </AutoPlaySwipeableViews>
+
             <MobileStepper
                 steps={maxSteps}
                 position="static"

@@ -25,29 +25,22 @@ import SideDrawer from '../mui/SideDrawer';
 
 
 const data = [
-    {
-        imgPath: '/icons/carousel/img1.png'
-    },
-    {
-        imgPath: '/icons/carousel/img2.png'
-    },
-    {
-        imgPath: '/icons/carousel/img3.png'
-    },
-    {
-        imgPath: '/icons/carousel/img4.png'
-    },
-    {
-        imgPath: '/icons/carousel/img5.png'
-    },
-    {
-        imgPath: '/icons/carousel/img6.png'
-    },
+    { imgPath: '/icons/carousel/img1.png' },
+    { imgPath: '/icons/carousel/img2.png' },
+    { imgPath: '/icons/carousel/img3.png' },
+    { imgPath: '/icons/carousel/img4.png' },
+    { imgPath: '/icons/carousel/img5.png' },
+    { imgPath: '/icons/carousel/img6.png' },
+];
+
+const managerData = [
+    { name: 'Alice Roy', icon: '/icons/manager/m1.jpg', branch: 'Mumbai Central', address: 'Tranquil, 321 Road, Colaba', phone: '666 99999 33' },
+    { name: 'Bob Smith', icon: '/icons/manager/m2.jpeg', branch: 'Downtown Delhi', address: 'Harmony, 123 Avenue, Connaught', phone: '777 55555 44' },
+    { name: 'Charlie Brown', icon: '/icons/manager/m3.png', branch: 'Pune Central', address: 'Serenity, 456 Lane, Koregaon Park', phone: '999 66666 11' },
 ];
 
 
 const Index = () => {
-
     const isTabScreen = useMediaQuery('(max-width:890px)');
     const isSmallScreen = useMediaQuery('(max-width:500px)');
 
@@ -55,13 +48,13 @@ const Index = () => {
         color: 'white',
         WebkitTextStroke: '1.2px black',
     };
+
     const navigate = useNavigate();
     const onClickLogin = () => {
         navigate('/login')
     }
 
     const smoothScrollTo = (elementId) => {
-        console.log(elementId)
         const element = document.getElementById(elementId);
         if (element) {
             window.scrollTo({
@@ -77,23 +70,10 @@ const Index = () => {
     }
 
     const tabs = [
-        {
-            name: "Home",
-            section: "home"
-        },
-        {
-            name: "Services",
-            section: "services"
-        },
-        {
-            name: "Connect",
-            section: "connect"
-        },
-        {
-            name: "About us",
-            section: "aboutUs"
-        },
-
+        { name: "Home", section: "home" },
+        { name: "Services", section: "services" },
+        { name: "Connect", section: "connect" },
+        { name: "About us", section: "aboutUs" },
     ];
 
     return (
@@ -143,8 +123,8 @@ const Index = () => {
                         <p className='p-2 xs:p-0 text-zinc-400 mt-10 leading-7 sm:text-left text-center'>Everything you need about finding your place to live will be here, where it will be easier for you
                             The DASK provides an extensive number of facilities to make your stay as comfortable as possible. Our hostels spread all around, are equipped with modern facilities</p>
 
-                        <div className='bg-slate-100  h-40  w-96 p-3 rounded-lg mt-10'>
-                            {/* <Carousel /> */}
+                        <div className='bg-slate-100 xss:w-96 w-80  rounded-lg mt-10'>
+                            <Carousel data={managerData} />
                         </div>
                     </div>
                 </div>
