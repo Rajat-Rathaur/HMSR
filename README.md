@@ -1,49 +1,43 @@
 
-# Sociopedia
+# DASK homecoming
 
-Sociopedia is a social platform web application that combines advanced development skills with a user-friendly interface, offering features similar to Twitter. 
+DASK is a  platform web application that combines advanced development skills with a user-friendly interface, offering features of hostel management. 
 
 
 ![Pic1](assets/pic1.png)
 
-This README provides information on setting up and running the Sociopedia project, which is organized into two main folders : `server` and `client`.
+This README provides information on setting up and running the DASK project, which is organized into two main folders : `frontend` and `Backend`.
 Certainly! Here's an enhanced version:
 
 ## Technologies Used
 
-- **MERN STACK**: Leveraging the power of MongoDB, Express.js, React, and Node.js for a robust and efficient stack.
-- **Powered by MUI**: Utilizing Material-UI to enhance the user interface and provide a modern and cohesive design.
-- **BLACKBLAZE B2 CLOUD**: Leveraging Blackblaze B2 Cloud for reliable and scalable cloud storage.
+- **MERN STACK**: Leveraging the power of MySQL, Express.js, React, and Node.js for a robust and efficient stack.
+- **Powered by Tailwind**: Utilizing Tailwind to enhance the user interface and provide a modern and cohesive design.
 
 ## Features
 
-- **Dark Mode**
 - **Minimalistic Designs**
 - **Fully Responsive** 
-- **Chat, Comment, Like Posts**
+- **Mess, Laundry, Payments , Attendance**
 
 # Configuring Project
-## Server
+## Backend
 
-1. Create a `.env` file in the **server** folder with the following content:
+1. Create a `config.env` file in the **Backend** folder with the following content:
 
    ```dotenv
    Replace placeholder values with your actual credentials.
 
-   # MongoDB Atlas connection string
-   MONGO_URL=YOUR_MONGODB_ATLAS_CONNECTION_STRING
+   # MySQL connection string
+   URL=YOUR_MySQL_CONNECTION_STRING
 
    # Port for the server
-   PORT=3001
+   PORT=4000
 
    # JWT secret for token generation
-   JWT_SECRET=YOUR_JWT_SECRET
+   SECRET=YOUR_JWT_SECRET
 
-   # Backblaze B2 credentials
-   B2_ENDPOINT=YOUR_B2_ENDPOINT
-   B2_ACCESS_KEY_ID=YOUR_B2_ACCESS_KEY_ID
-   B2_SECRET_ACCESS_KEY=YOUR_B2_SECRET_ACCESS_KEY
-   B2_REGION=YOUR_B2_REGION
+
    ```
 
   - If you haven't set up an account on Backblaze B2 yet, you can [create one here](https://www.backblaze.com)
@@ -66,7 +60,7 @@ b2-windows.exe update-bucket --corsRules "[{\"corsRuleName\":\"downloadFromAnyOr
 3. Installation:
 
    ```bash
-   cd server
+   cd Backend
    ```
 
    ```
@@ -78,20 +72,20 @@ b2-windows.exe update-bucket --corsRules "[{\"corsRuleName\":\"downloadFromAnyOr
    ```
 
 
-## Client
+## frontend
 
-1. Create a `.env.local` file in the `client` folder with the following content:
+1. Create a `.env` file in the `frontend` folder with the following content:
 
    ```dotenv
    # API URL for server communication
-   REACT_APP_API_URL=http://localhost:3001
-   REACT_APP_CLOUD=END_POINT_BLACKBLAZE
+   REACT_APP_SERVER_URL='http://localhost:4000'
+   
    ```
 
 2. Installation:
 
    ```bash
-   cd client
+   cd frontend
    ```
    ```
    npm install
@@ -102,7 +96,7 @@ b2-windows.exe update-bucket --corsRules "[{\"corsRuleName\":\"downloadFromAnyOr
 
 ## Contributing
 
-Contributions to Sociopedia are welcome! Feel free to open issues or pull requests.
+Contributions to DASK are welcome! Feel free to open issues or pull requests.
 
 ## License
 
