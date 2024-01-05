@@ -1,7 +1,7 @@
 
 # DASK homecoming
 
-DASK revolutionizes hostel management with its cutting-edge web platform, seamlessly integrating advanced development capabilities with an intuitive user-friendly interface. This innovative application not only showcases unparalleled technical prowess but also delivers a comprehensive suite of features, redefining the landscape of hostel management for an unparalleled user experience.
+DASK revolutionizes hostel management with its cutting-edge web platform, seamlessly integrating advanced development capabilities. This innovative application not only showcases unparalleled technical prowess but also delivers a comprehensive suite of features, redefining the landscape of hostel management for an unparalleled user experience.
 
 
 
