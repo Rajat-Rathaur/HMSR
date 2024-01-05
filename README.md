@@ -15,15 +15,15 @@ Certainly! Here's an enhanced version:
 - **MERN STACK**: Leveraging the power of MySQL, Express.js, React, and Node.js for a robust and efficient stack.
 
 - **Powered by MUI**: Utilizing Material-UI to enhance the user interface and provide a modern and cohesive design.
-- 
+
 ## Features
 
 - **Minimalistic Designs**
 - **Fully Responsive** 
-- **Mess, Laundry, Payments , Attendance**
-- **Admin Dashboard , Transparency of services, Complain , Feedback, Notifications**
--**All solutions at one step**
--**Easy to use**
+- **Real-time Analytics**
+- **Automated Communication**  
+
+
   
 # Configuring Project
 ## Backend
@@ -43,16 +43,7 @@ Certainly! Here's an enhanced version:
    SECRET=YOUR_JWT_SECRET
 
 
-**Note:** If you encounter CORS issues during deployment, ensure that the CORS policy is set up using the BlackBlaze CLI. Use the following command (for windows only):
 
-```bash
-b2-windows.exe update-bucket --corsRules "[{\"corsRuleName\":\"downloadFromAnyOrigin\",
-\"allowedOrigins\": [\"https\"], \"allowedHeaders\": [\"range\"],
-\"allowedOperations\": [\"s3_delete\", \"s3_get\", \"s3_head\", \"s3_post\", \"s3_put\"],
-\"exposeHeaders\": [\"x-bz-content-sha1\"],
-\"maxAgeSeconds\": 3600
-}]" bucket_Name allPublic
-```
 ---
 
 
